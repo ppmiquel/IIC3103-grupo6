@@ -11,6 +11,8 @@ Rails.application.routes.draw do
 
   post 'api/oc/recibir/:idoc' => 'api#recibir'
 
+  post 'api/pagos/recibir/.:idtrx' => 'api#pago_recibir'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

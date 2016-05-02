@@ -7,6 +7,8 @@ require "json"
 
 class ApiController < ApplicationController
 	
+
+##################Métodos de API #############
 	def consultar
 		id = params[:sku]
 		stock = getProductStock(id)
@@ -32,7 +34,19 @@ class ApiController < ApplicationController
 
 	end
 
+	def pago_recibir
+		idtrx = params[:idtrx]
+		trx = getTrx(idtrx)
+		#####sE recibe el pago, se debe validar que corresponda a una transacción y que se haga el despacho
+	end
 
+
+
+
+################## Métodos auxliares ##############
+
+
+############# RECIBIR: 
 	def getAcceptance(idoc)
 		params = {:idoc => idoc}.to_json
 		orden= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").get("http://mare.ing.puc.cl/oc/obtener"+idoc, params).to_s)
@@ -57,6 +71,36 @@ class ApiController < ApplicationController
 	end
 
 
+###SE necesita el url del grupo|||
+	def generateFact(idoc)
+		factura = putFactura(idoc)
+		idfact= factura[:id]
+		grupo
+		envio= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").post("http://"+grupo+".ing.puc.cl/api/facturas/recibir/"+idfact, params).to_s)
+		
+
+	end
+
+	def putFacura(idoc)
+		params = {:idoc => idoc}.to_json
+		factura= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").put("http://mare.ing.puc.cl/facturas", params).to_s)
+		return factura
+	end
+
+
+
+
+############### pago recibir:
+
+	def getTrx(idtrx)
+		params = {:idoc => idtrx}.to_json
+		trx= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").get("http://mare.ing.puc.cl/banco/trx/"+idtrx, params).to_s)
+		return trx
+	end
+
+
+
+##############ACCESO A BODEGA:
 	def createHash(data)
 		key = 'cd0A9ZK#u#vxES9'
 		hmac = OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha1'),key,data)
