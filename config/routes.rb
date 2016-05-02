@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   get 'api/consultar/:sku' => 'api#consultar'
 
+  post 'api/oc/recibir/:idoc' => 'api#recibir'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

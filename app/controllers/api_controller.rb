@@ -15,6 +15,48 @@ class ApiController < ApplicationController
 
 	end
 
+
+	def recibir
+		idoc = params[:idoc]
+		aceptado = getAcceptance (idoc)
+		if aceptado == false
+			rechazar idoc
+		end
+		else
+			recepcionar idoc
+		end
+		response = { :aceptado => aceptado, :idoc => idoc}
+		render :json => response
+		
+		generateFact(idoc)
+
+	end
+
+
+	def getAcceptance(idoc)
+		params = {:idoc => idoc}.to_json
+		orden= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").get("http://mare.ing.puc.cl/oc/obtener"+idoc, params).to_s)
+		sku= orden[:sku]
+		stock = getProductStock(sku)
+		if orden[:cantidad] > stock
+			return false
+		end
+		return true
+	end
+
+	def rechazar(idoc)
+		params = {:idoc => idoc , :rechazo => "No se posee stock para satisfacer demanda"}.to_json
+		HTTP.headers(:"Content-Type" => "application/json").post("http://mare.ing.puc.cl/oc/rechazar"+idoc, params)
+
+	end
+
+	def recepcionar(idoc)
+		params = {:idoc => idoc}.to_json
+		HTTP.headers(:"Content-Type" => "application/json").post("http://mare.ing.puc.cl/oc/recepcionar"+idoc, params)
+
+	end
+
+
 	def createHash(data)
 		key = 'cd0A9ZK#u#vxES9'
 		hmac = OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha1'),key,data)
