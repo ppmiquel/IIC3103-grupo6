@@ -46,7 +46,6 @@ class ApiController < ApplicationController
 
 	def getProductStock(productId)
 
-
 		stock = 0
 		almacenes = getAlmacenes()
 
