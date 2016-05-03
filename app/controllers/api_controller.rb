@@ -30,7 +30,12 @@ class ApiController < ApplicationController
 		response = { :aceptado => aceptado, :idoc => idoc}
 		render :json => response
 		
-		generateFact(idoc)
+		validateFact = generateFact(idoc)
+
+		if !validateFact
+			return
+		end
+
 
 	end
 
@@ -38,6 +43,7 @@ class ApiController < ApplicationController
 		idtrx = params[:idtrx]
 		trx = getTrx(idtrx)
 		#####sE recibe el pago, se debe validar que corresponda a una transacción y que se haga el despacho
+		#Falta el response
 	end
 
 
@@ -77,8 +83,13 @@ class ApiController < ApplicationController
 		idfact= factura[:id]
 		grupo
 		envio= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").post("http://"+grupo+".ing.puc.cl/api/facturas/recibir/"+idfact, params).to_s)
-		
+		if !envio[:valido]
+			params = {:id => idfact, :motivo => "Factunar no valiada por el cliente"}.to_json
+			JSON.parse(HTTP.headers(:"Content-Type" => "application/json").post("http://mare.ing.puc.cl/api/facturas/cancel", params).to_s)
+			return false
+		end
 
+		return true
 	end
 
 	def putFacura(idoc)
