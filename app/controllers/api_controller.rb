@@ -1,10 +1,3 @@
-require "http"
-require "base64"
-require "cgi"
-require "openssl"
-require "json"
-
-
 class ApiController < ApplicationController
 	
 
@@ -14,16 +7,14 @@ class ApiController < ApplicationController
 		stock = getProductStock(id)
 		response = { :stock => stock, :sku => id}
 		render :json => response
-
 	end
 
 
 	def recibir
 		idoc = params[:idoc]
-		aceptado = getAcceptance (idoc)
+		aceptado = getAcceptance(idoc)
 		if aceptado == false
 			rechazar idoc
-		end
 		else
 			recepcionar idoc
 		end
@@ -35,18 +26,21 @@ class ApiController < ApplicationController
 		if !validateFact
 			return
 		end
-
-
 	end
 
 	def pago_recibir
 		idtrx = params[:idtrx]
 		idfact = params[:idfactura]
 		trx = getTrx(idtrx)
-
+		validated = getTrxValidation(trx)
 		#algo como : #validateTrx =
 		#####sE recibe el pago, se debe validar que corresponda a una transacción y que se haga el despacho
-		#Falta el response
+		response = { :aceptado => validated, :idtrx => idtrx}
+		render :json =>response
+	end
+
+	def crear
+
 	end
 
 
@@ -84,10 +78,10 @@ class ApiController < ApplicationController
 	def generateFact(idoc)
 		factura = putFactura(idoc)
 		idfact= factura[:id]
-		grupo
+		#grupo = url del grupo
 		envio= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").post("http://"+grupo+".ing.puc.cl/api/facturas/recibir/"+idfact, params).to_s)
 		if !envio[:valido]
-			params = {:id => idfact, :motivo => "Factunar no valiada por el cliente"}.to_json
+			params = {:id => idfact, :motivo => "Factura no valiada por el cliente"}.to_json
 			JSON.parse(HTTP.headers(:"Content-Type" => "application/json").post("http://mare.ing.puc.cl/api/facturas/cancel", params).to_s)
 			return false
 		end
@@ -111,6 +105,10 @@ class ApiController < ApplicationController
 		trx= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").get("http://mare.ing.puc.cl/banco/trx/"+idtrx, params).to_s)
 		return trx
 	end
+
+	def getTrxValidation(trx)
+		return true
+	end	
 
 
 
