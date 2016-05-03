@@ -1,3 +1,2 @@
-
-class Bank
+class BankController
 end

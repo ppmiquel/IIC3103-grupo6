@@ -1,3 +1,2 @@
-
-class Warehouse
+class WarehouseController
 end
