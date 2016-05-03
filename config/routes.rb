@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   get 'api/consultar/:sku' => 'api#consultar'
 
-  post 'api/oc/recibir/:idoc' => 'api#recibir'
+  get 'api/oc/recibir/:idoc' => 'api#recibir'
 
   post 'api/pagos/recibir/.:idtrx' => 'api#pago_recibir'
 
