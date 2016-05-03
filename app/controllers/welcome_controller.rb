@@ -13,7 +13,6 @@ class WelcomeController < ApplicationController
 	end
 
 
-
 	def createHash(data)
 		key = 'cd0A9ZK#u#vxES9'
 		hmac = OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha1'),key,data)
