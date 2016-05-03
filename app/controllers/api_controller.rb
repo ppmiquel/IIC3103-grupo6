@@ -41,7 +41,10 @@ class ApiController < ApplicationController
 
 	def pago_recibir
 		idtrx = params[:idtrx]
+		idfact = params[:idfactura]
 		trx = getTrx(idtrx)
+
+		#algo como : #validateTrx =
 		#####sE recibe el pago, se debe validar que corresponda a una transacción y que se haga el despacho
 		#Falta el response
 	end
