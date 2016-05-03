@@ -1,3 +1,2 @@
-
-class Invoice
+class InvoiceController
 end
