@@ -18,8 +18,8 @@ class ApiController < ApplicationController
 	end
 
 	def pago_recibir
-		idtrx = params[0][:idtrx]
-		idfact = params[0][:idfactura]
+		idtrx = params[:idtrx]
+		idfact = params[:idfactura]
 		trx = obtenerTransaccion(idtrx)
 		validated = ValidacionTransaccion(trx)
 		response = { :aceptado => validated, :idtrx => idtrx}
