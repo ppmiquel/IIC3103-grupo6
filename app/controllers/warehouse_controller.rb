@@ -1,6 +1,7 @@
 require 'warehouse_module'
 
 class WarehouseController < ApplicationController
+
   include WarehouseModule
 
   def consultar
@@ -9,13 +10,5 @@ class WarehouseController < ApplicationController
     response = { :stock => product_stock, :sku => id}
     render :json => response
   end
-
-
-
-
-
-
-
-
 
 end
