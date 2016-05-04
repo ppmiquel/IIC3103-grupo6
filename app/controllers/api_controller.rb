@@ -20,11 +20,9 @@ class ApiController < ApplicationController
 	def pago_recibir
 		idtrx = params[0][:idtrx]
 		idfact = params[0][:idfactura]
-		trx = getTrx(idtrx)
-		validated = getTrxValidation(trx)
-		#algo como : #validateTrx =
-		#####sE recibe el pago, se debe validar que corresponda a una transacción y que se haga el despacho
-		response = { :aceptado => validated, :idtrx => idtrx}
+		trx = obtenerTransaccion(idtrx)
+		validated = ValidacionTransaccion(trx)
+	response = { :aceptado => validated, :idtrx => idtrx}
 		render :json =>response
 	end
 

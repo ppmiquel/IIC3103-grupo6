@@ -1,5 +1,5 @@
 module BankModule
-	
+
   def obtenerTransaccion(idtrx)
     trx= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").get("http://mare.ing.puc.cl/banco/trx/"+idtrx,).to_s, :symbolize_names => true)
     return trx
@@ -10,12 +10,12 @@ module BankModule
   end
 
   def transferir(monto, origen, destino)
-  	trx= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").put("http://mare.ing.puc.cl/trx", :params => {:monto => monto, :origen => origen, :destino => destino} ).to_s, :symbolize_names => true)
+  	trx= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").put("http://mare.ing.puc.cl/banco/trx", :params => {:monto => monto, :origen => origen, :destino => destino} ).to_s, :symbolize_names => true)
   	return trx
   end
 
   def obtenerCartola(fechaInicio, fechaFin, id)
-  	cartola = JSON.parse(HTTP.headers(:"Content-Type" => "application/json").post("http://mare.ing.puc.cl/cartola"+id, :params => {:fechaInicio => fechaInicio , :fechaFin => fechaFin, :id => id}).to_s, :symbolize_names => true)
+  	cartola = JSON.parse(HTTP.headers(:"Content-Type" => "application/json").post("http://mare.ing.puc.cl/banco/cartola"+id, :params => {:fechaInicio => fechaInicio , :fechaFin => fechaFin, :id => id}).to_s, :symbolize_names => true)
   	return cartola
   end
 
