@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'welcome#index'
 
+  get 'doc' => 'welcome#doc'
+
   get 'api/consultar/:sku' => 'warehouse#consultar'
 
   get 'api/oc/recibir/:idoc' => 'oc#recibir'

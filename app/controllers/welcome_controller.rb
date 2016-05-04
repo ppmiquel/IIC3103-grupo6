@@ -11,6 +11,8 @@ class WelcomeController < ApplicationController
   		puts getProductStock('13')
 
 	end
+	def doc
+	end
 
 
 	def createHash(data)
