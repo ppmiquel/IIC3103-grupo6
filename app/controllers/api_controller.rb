@@ -22,7 +22,7 @@ class ApiController < ApplicationController
 		idfact = params[0][:idfactura]
 		trx = obtenerTransaccion(idtrx)
 		validated = ValidacionTransaccion(trx)
-	response = { :aceptado => validated, :idtrx => idtrx}
+		response = { :aceptado => validated, :idtrx => idtrx}
 		render :json =>response
 	end
 
@@ -37,7 +37,6 @@ class ApiController < ApplicationController
 		end
 		response = { :aceptado => aceptado, :idoc => idoc}
 		render :json => response
-
 		#	validateFact = generateFact(idoc)
 
 		#	if !validateFact
