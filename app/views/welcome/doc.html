@@ -1,0 +1,19 @@
+<h1>Documentación Grupo 6</h1>
+
+<h2>Métodos</h2>
+<h3>1. /api/consultar/:sku</h3>
+<p> GET. Como parámetro se necesita el sku del producto que se está consultando</p>
+<p>Como respuesta retorna el stock que hay del producto como un Json de la forma: {“stock”: int, “sku”: int}</p>
+
+
+<h3>2. /api/oc/recibir/:idoc</h3>
+<p> GET. Como parámetro se necesita id de la orden de compra</p>
+<p>Como respuesta retorna si se aceptó o no la orden de compra como Json de la forma: {“aceptado”: boolean, “idoc”: string}</p>
+
+<h3>3. /api/pagos/recibir/.:idtrx?idfactura=.:idfactura</h3>
+<p> GET. Como parámetro se necesita id de la transacción y de la factura</p>
+<p>Como respuesta retorna la validación de la factura con un Json de la forma: {“validado”: boolean, “idtrx”: string}</p>
+
+<h3>4. /api/despachos/recibir/.:idfactura</h3>
+<p> GET. Como parámetro se necesita id de la factura para consultar que es valido</p>
+<p>Como respuesta retorna la validación del despacho con un Json de la forma: {“validado”: boolean}</p>
