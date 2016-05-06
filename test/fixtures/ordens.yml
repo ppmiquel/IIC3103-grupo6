@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  idoc: MyString
+  canal: MyString
+  cliente: MyString
+  sku: MyString
+  cantidad: 1
+  precio: 1
+  fecha_entrega: 1
+  idtrx: MyString
+  idfact: MyString
+
+two:
+  idoc: MyString
+  canal: MyString
+  cliente: MyString
+  sku: MyString
+  cantidad: 1
+  precio: 1
+  fecha_entrega: 1
+  idtrx: MyString
+  idfact: MyString

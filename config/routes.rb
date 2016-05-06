@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'welcome#index'
 
-  get 'doc' => 'welcome#doc'
+  get 'doc' => 'welcome#doc', path: 'api/documentacion'
 
   get 'api/consultar/:sku' => 'api#consultar'
 

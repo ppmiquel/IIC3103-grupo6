@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  idtrx: MyString
+  monto: 1
+  cuenta_o: MyString
+  cuenta_d: MyString
+  grupo_o: MyString
+  grupo_d: MyString
+  usada: false
+
+two:
+  idtrx: MyString
+  monto: 1
+  cuenta_o: MyString
+  cuenta_d: MyString
+  grupo_o: MyString
+  grupo_d: MyString
+  usada: false

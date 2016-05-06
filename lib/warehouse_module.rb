@@ -52,10 +52,11 @@ module WarehouseModule
 
   end
 
-  def moverStockBodega(productId, almacenId)
+######PARA B2B
+  def moverStockBodega(productId, almacenId, idoc, precio)
 
-    hash = createHash('POST' + productId + almacenId)
-    return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).get("http://integracion-2016-dev.herokuapp.com/bodega/moverStockBodega?sku=" + productId + "&alamcenId=" + alamcenId + "&limit=100").to_s)
+    hash = createHash('POST' + productId + almacenId + idoc + precio)
+    return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).get("http://integracion-2016-dev.herokuapp.com/bodega/moverStockBodega?sku=" + productId + "&alamcenId=" + alamcenId + "&oc=" + idoc +"&precio=" + precio).to_s)
 
   end
 
@@ -65,4 +66,14 @@ module WarehouseModule
     return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).get("http://integracion-2016-dev.herokuapp.com/bodega/getCuentaFabrica").to_s)
 
   end
+
+
+####SOLO PARA EL CASO DEL CANAL INTERNACIONAL!!!!!!
+  def despacharOrden(productId, direccion, precio, idoc)
+
+    hash = createHash('DELETE' + productId + direccion + precio + idoc)
+    return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).delete("http://integracion-2016-dev.herokuapp.com/bodega/stock").to_s, :params => {:productId => productId , :direccion => direccion , :precio => precio , :idoc => idoc })
+
+  end
+
 end
