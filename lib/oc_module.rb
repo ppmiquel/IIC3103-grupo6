@@ -26,4 +26,24 @@ module OcModule
     return orden
   end
 
+
+   def anularOC(idoc , razon)
+
+    HTTP.headers(:"Content-Type" => "application/json").delete("http://mare.ing.puc.cl/oc/anular/"+idoc, :params => {:idoc => idoc , :razon => razon})   
+
+  end
+
+  def obtenerOC(idoc)
+
+    oc = JSON.parse(HTTP.headers(:"Content-Type" => "application/json").get("http://mare.ing.puc.cl/oc/obtener/"+idoc, :params => {:idoc => idoc}), :symbolize_names => true)       
+    return oc
+
+  end
+
+  # No esta listo
+  def crearOC(canal, cantidad, sku, proveedor, precio, notas)
+    HTTP.headers(:"Content-Type" => "application/json").get("http://mare.ing.puc.cl/oc/obtener/"+idoc, :params => {:idoc => idoc})
+
+  end
+
 end
