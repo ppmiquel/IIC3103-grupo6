@@ -52,6 +52,13 @@ module WarehouseModule
 
   end
 
+  def producirStock(productId, trxId, cantidad)
+
+    hash = createHash('PUT' + productId + cantidad.to_s + trxId )
+    return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).get("http://integracion-2016-dev.herokuapp.com/fabrica/fabricar?sku=" + productId + "&trxId=" + trxId + "&cantidad" + cantidad).to_s)
+
+  end
+
 ######PARA B2B
   def moverStockBodega(productId, almacenId, idoc, precio)
 
