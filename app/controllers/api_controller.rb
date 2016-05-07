@@ -17,9 +17,6 @@ class ApiController < ApplicationController
 		render :json => response
 	end
 
-
-
-
 #### recibir trx
 	def pago_recibir
 		idtrx = params[:idtrx]
@@ -35,7 +32,7 @@ class ApiController < ApplicationController
 			checkFact(idtrx) ## sE envìa a validar segùn enunciado
 			trans.usada = true ##SE dice que q la transacciǹ ya fue usada
 			####se debe conectar el modelo, diciendo que esa transacciòn pertenece a un orden y una factura
-			fact = Factura.where(idfact: idfact) 
+			fact = Factura.where(idfact: idfact)
 			orden = Orden.where(ifoc: fact.idoc)
 			fact.idtrx = idtrx
 			orden.idtrx =idtrx
@@ -64,7 +61,7 @@ class ApiController < ApplicationController
 			rechazar idoc
 			response = { :aceptado => aceptado, :idoc => idoc}
 			render(:json => response) and return
-			
+
 		else
 			orden = recepcionar idoc
 			Orden.create(idoc: orden[0][:_id], canal:orden[0][:canal], cliente: orden[0][:cliente], sku: orden[0][:sku], cantidad: orden[0][:cantidad], precio:orden[0][:precioUnitario], fecha_entrega: (orden[0][:fechaEntrega]).to_i )
@@ -88,9 +85,9 @@ class ApiController < ApplicationController
 		puts "a a antes an antes"
 
 		ord = Orden.getOrden(idoc)
-######### FIN DE inicializar factura		
-		
-		
+######### FIN DE inicializar factura
+
+
 		group= Grupo.where(idgrupo: ord.cliente)
 		grupoSend= group.numero ###############################Falta implmentar
 		validateFact = sendFact(idfact, grupoSend)

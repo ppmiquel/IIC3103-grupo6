@@ -24,13 +24,15 @@ module WarehouseModule
     return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).get("http://integracion-2016-dev.herokuapp.com/bodega/almacenes").to_s)
 
   end
+
+  ##cambiar clave!
   def createHash(data)
     key = 'cd0A9ZK#u#vxES9'
     hmac = OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha1'),key,data)
     hash = Base64.encode64(hmac).chomp
     return hash
   end
-  
+
   def getProductsWithStock(almacenId)
 
     hash = createHash('GET' + almacenId)
