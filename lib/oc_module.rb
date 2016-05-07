@@ -2,7 +2,7 @@ module OcModule
 
   def getAcceptance(idoc)
     # params = {:idoc => idoc}.to_json
-    orden= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").get("http://mare.ing.puc.cl/oc/obtener/"+idoc).to_s, :symbolize_names => true)
+    orden= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").get("http://moto.ing.puc.cl/oc/obtener/"+idoc).to_s, :symbolize_names => true)
     cantidad=orden[0][:cantidad]
 
     sku = orden[0][:sku]
@@ -15,13 +15,13 @@ module OcModule
 
   def rechazar(idoc)
 
-    HTTP.headers(:"Content-Type" => "application/json").post("http://mare.ing.puc.cl/oc/rechazar/"+idoc, :params => {:idoc => idoc , :rechazo => "No se posee stock para satisfacer demanda"})
+    HTTP.headers(:"Content-Type" => "application/json").post("http://moto.ing.puc.cl/oc/rechazar/"+idoc, :params => {:idoc => idoc , :rechazo => "No se posee stock para satisfacer demanda"})
 
   end
 
   def recepcionar(idoc)
 
-    HTTP.headers(:"Content-Type" => "application/json").post("http://mare.ing.puc.cl/oc/recepcionar"+idoc, :params => {:idoc => idoc})
+    HTTP.headers(:"Content-Type" => "application/json").post("http://moto.ing.puc.cl/oc/recepcionar"+idoc, :params => {:idoc => idoc})
 
   end
 

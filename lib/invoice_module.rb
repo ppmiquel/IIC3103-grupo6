@@ -7,7 +7,7 @@ module InvoiceModule
     envio= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").get("http://"+grupo+".ing.puc.cl/api/facturas/recibir/"+idfact).to_s, :symbolize_names => true)
     if !envio[0][:valido]
 
-      JSON.parse(HTTP.headers(:"Content-Type" => "application/json").post("http://mare.ing.puc.cl/api/facturas/cancel", :params => {:id => idfact, :motivo => "Factura no valiada por el cliente"}).to_s)
+      JSON.parse(HTTP.headers(:"Content-Type" => "application/json").post("http://moto.ing.puc.cl/api/facturas/cancel", :params => {:id => idfact, :motivo => "Factura no valiada por el cliente"}).to_s)
       return false
     end
 
@@ -16,7 +16,7 @@ module InvoiceModule
 
   def putFactura(idoc)
 
-    factura= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").put("http://mare.ing.puc.cl/facturas", :params => {:idoc => idoc} ).to_s, :symbolize_names => true)
+    factura= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").put("http://moto.ing.puc.cl/facturas", :params => {:idoc => idoc} ).to_s, :symbolize_names => true)
     return factura
   end
 end
