@@ -6,7 +6,6 @@ module InvoiceModule
 
   end
 
-
   def sendFact(idfact, grupo)
 #hay que tener un get grupo segùn OC
     urlGrupo = "integra"+grupo
@@ -22,26 +21,54 @@ module InvoiceModule
     return true
   end
 
-
-
 #consumo api para generar un factura
   def putFactura(oc)  
     
-    facturax= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").put("http://mare.ing.puc.cl/facturas/", :json => {:oc => oc}), :symbolize_names => true)
+    facturax= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").put("http://mare.ing.puc.cl/facturas/", :json => {:oc => oc}).to_s, :symbolize_names => true)
     return facturax
   end
 
+  ####PAGAR FACTURA
   def checkFact(idtrx)
     JSON.parse(HTTP.headers(:"Content-Type" => "application/json").post("http://mare.ing.puc.cl/facturas/pay", :json => {:id => idtrx} ).to_s, :symbolize_names => true)
 
   end
 
-
   #Metodos
 
   def obtenerFactura(idfact)
 
-  factura = JSON.parse(HTTP.headers(:"Content-Type" => "application/json").get("http://mare.ing.puc.cl/facturas/"+idfact, :params => {:id => idfact}), :symbolize_names => true)
-  return factura
+    factura = JSON.parse(HTTP.headers(:"Content-Type" => "application/json").get("http://mare.ing.puc.cl/facturas/"+idfact, :params => {:id => idfact}).to_s, :symbolize_names => true)
+    return factura
+
+  end
+
+###NUEVOOO
+
+  ### RECHAZAR FACTURA
+  def rechazarFact(idfact,motivo)
+
+    facturaRechazada = JSON.parse(HTTP.headers(:"Content-Type" => "application/json").post("http://mare.ing.puc.cl/facturas/reject", :json => {:id => idfact, :motivo => motivo} ).to_s, :symbolize_names => true)
+
+    return facturaRechazada
+
+  end
+
+### ANULAR FACTURA
+  def anularFactura(idfact,motivo)
+
+    facturaAnulada = JSON.parse(HTTP.headers(:"Content-Type" => "application/json").post("http://mare.ing.puc.cl/facturas/cancel", :json => {:id => idfact, :motivo => motivo} ).to_s, :symbolize_names => true)
+
+    return facturaAnulada
+
+  end
+
+### ANULAR FACTURA
+  def crearBoleta(idproveedor,cliente,total)
+
+    facturax= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").put("http://mare.ing.puc.cl/facturas/boleta", :json => {:proveedor => idproveedor,:cliente=>cliente,:total=> total}).to_s, :symbolize_names => true)
+    return facturax
+
+  end
 
 end
