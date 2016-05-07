@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  idgrupo: MyString
+  numero: 1
+  cuenta: MyString
+  importa: false
+  sku1: MyString
+  sku2: MyString
+  sku3: MyString
+  sku4: MyString
+  sku5: MyString
+  sku6: MyString
+
+two:
+  idgrupo: MyString
+  numero: 1
+  cuenta: MyString
+  importa: false
+  sku1: MyString
+  sku2: MyString
+  sku3: MyString
+  sku4: MyString
+  sku5: MyString
+  sku6: MyString
