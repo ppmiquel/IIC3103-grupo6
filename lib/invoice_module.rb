@@ -36,4 +36,12 @@ module InvoiceModule
 
   end
 
+
+  #Metodos
+
+  def obtenerFactura(idfact)
+
+  factura = JSON.parse(HTTP.headers(:"Content-Type" => "application/json").get("http://mare.ing.puc.cl/facturas/"+idfact, :params => {:id => idfact}), :symbolize_names => true)
+  return factura
+
 end
