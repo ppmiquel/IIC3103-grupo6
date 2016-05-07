@@ -63,7 +63,7 @@ module InvoiceModule
 
   end
 
-### ANULAR FACTURA
+### CREAR BOLETA
   def crearBoleta(idproveedor,cliente,total)
 
     boleta= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").put("http://mare.ing.puc.cl/facturas/boleta", :json => {:proveedor => idproveedor,:cliente=>cliente,:total=> total}).to_s, :symbolize_names => true)
