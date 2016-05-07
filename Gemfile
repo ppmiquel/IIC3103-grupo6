@@ -36,7 +36,7 @@ gem 'autoprefixer-rails'
 
 gem  'net/ssh'
 gem  'nokogiri'
-gem  'bundle'
+#gem  'bundle'
 
 gem 'font-awesome-sass'
 # Use ActiveModel has_secure_password
