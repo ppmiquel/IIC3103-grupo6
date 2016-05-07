@@ -27,7 +27,7 @@ module WarehouseModule
 
   ##cambiar clave!
   def createHash(data)
-    key = 'cd0A9ZK#u#vxES9'
+    key = 'zHHatno@hjie%xU'
     hmac = OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha1'),key,data)
     hash = Base64.encode64(hmac).chomp
     return hash
