@@ -48,4 +48,16 @@ module OcModule
     
   end
 
+
+  ### NUEVO
+
+    ### DESPACHAR PRODUCTO
+
+  def despacharProducto(idoc)
+
+    oc = JSON.parse(HTTP.headers(:"Content-Type" => "application/json").get("http://mare.ing.puc.cl/oc/", :params => {:id => idoc}), :symbolize_names => true)
+    return oc
+
+  end
+
 end
