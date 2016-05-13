@@ -6,7 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 if Grupo.first.nil?
-	if false ### esperemos tener todos los datos
+	if ### esperemos tener todos los datos
 
 	####nos compran
 		Grupo.create(idgrupo: 572aac69bdb6d403005fb042 , numero: 1, cuenta: 572aac69bdb6d403005fb04e , importa: true ,sku1: ,sku2: ,sku3: ,sku4: ,sku5: ,sku6: )
