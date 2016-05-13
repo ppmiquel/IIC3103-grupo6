@@ -64,6 +64,7 @@ class ApiController < ApplicationController
 
 		else
 			orden = recepcionar idoc
+			#guardar enbd
 			Orden.create(idoc: orden[0][:_id], canal:orden[0][:canal], cliente: orden[0][:cliente], sku: orden[0][:sku], cantidad: orden[0][:cantidad], precio:orden[0][:precioUnitario], fecha_entrega: (orden[0][:fechaEntrega]).to_i )
 		end
 		response = { :aceptado => aceptado, :idoc => idoc}
@@ -89,7 +90,7 @@ class ApiController < ApplicationController
 
 
 		group= Grupo.where(idgrupo: ord.cliente)
-		grupoSend= group.numero ###############################Falta implmentar
+		grupoSend= group.numero
 		validateFact = sendFact(idfact, grupoSend)
 
 			if !validateFact #Puede ser que la factura no se aceptada,entonces no vale seguir /viviendo/

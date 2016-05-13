@@ -34,9 +34,10 @@ gem 'bootstrap-sass', '~> 3.2.0'
 gem 'autoprefixer-rails'
 
 
-#gem  'net/ssh'
-#gem  'nokogiri'
-#gem  'bundle'
+gem  'net/sftp'
+gem  'net/ssh'
+gem  'nokogiri'
+
 
 #gem 'font-awesome-sass'
 # Use ActiveModel has_secure_password
