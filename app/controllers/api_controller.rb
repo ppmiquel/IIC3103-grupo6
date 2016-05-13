@@ -37,7 +37,9 @@ class ApiController < ApplicationController
 			fact.idtrx = idtrx
 			orden.idtrx =idtrx
 
-			almacenId= #####falta mètodo para obtener el almacén
+
+			group= Grupo.where(idgrupo: orden.cliente)
+			almacenId= group.warehouse
 			moverStockBodega(orden.sku, almacenId, orden.idoc, orden.precio,)
 
 #################
