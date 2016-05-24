@@ -1,5 +1,8 @@
 module WarehouseModule
 
+include BankModule
+
+
   def obtenerIdAlmacenDespacho()
     almacenes = getAlmacenes()
     id = ""
@@ -151,9 +154,9 @@ def pagarProduccion(precio)
   cuenta = getCuentaFabrica()
   idCuenta = cuenta['cuentaId']
   # Metodo transferir Banco
-  #trx = transferir(precio,'572aac69bdb6d403005fb053',idCuenta)
-  #trxId = trx['_id']
-  # return trxId
+  trx = transferir(precio,'572aac69bdb6d403005fb053',idCuenta)
+  trxId = trx['_id']
+  return trxId
 end
 
 def moverInsumo(productId,cantidad)
@@ -199,6 +202,129 @@ def producirCerealArroz(lote)
   producirStock(productId,trxId,cantidad)
 end
 
+def materialesPanIntegral(lote)
 
+  lotes = lote.to_i
+  harina = getProductStock(52)
+  sal = getProductStock(26)
+  semillas = getProductStock(38)
+  leche = getProductStock(7)
+
+  hayHarina = false
+  haySal = false
+  haySemillas = false
+  hayLeche = false
+  if(harina >= 500*lotes)
+    hayHarina = true
+  end
+  if(sal >= 63*lotes)
+    haySal = true
+  end
+  if(semillas >= 250*lotes)
+    haySemillas = true
+  end
+  if(leche >= 651*lotes)
+    hayLeche = true
+  end
+
+  return JSON.parse({harina: => hayHarina, sal: => haySal, :semillas => haySemillas, :leche => hayLeche})
+
+end
+
+def materialesCerealArroz(lote)
+
+  lotes = lote.to_i
+  azucar = getProductStock(25)
+  cacao = getProductStock(20)
+  arroz = getProductStock(13)
+
+  hayAzucar = false
+  hayCacao = false
+  hayArroz = false
+  if(azucar >= 360*lotes)
+    hayAzucar = true
+  end
+  if(cacao >= 350*lotes)
+    hayCacao = true
+  end
+  if(arroz >= 290*lotes)
+    hayArroz = true
+  end
+
+  return JSON.parse({azucar: => hayAzucar, cacao: => hayCacao, :arroz => hayArroz})
+end
+
+def mandarProducirArroz()
+
+  arroz = getProductStock(13)
+  if(arroz < 5000)
+    cantidad = 5000 - arroz
+    lote = cantidad/1000
+    producirArroz(lote)
+  end
+end
+
+def mandarProducirAzucar()
+
+  azucar = getProductStock(25)
+  if(azucar < 5000)
+    cantidad = 5000 - azucar
+    lote = cantidad/560
+    producirAzucar(lote)
+  end
+end
+
+def mandarProducirPanIntegral()
+
+  panIntegral = getProductStock(53)
+  if(panIntegral <= 5000)
+    cantidad = 5000 - panIntegral
+    lote = cantidad/620
+    materiales = materialesPanIntegral(lote)
+    if(materiales['harina']&&materiales['sal']&&materiales['semillas']&&materiales['leche'])
+      producirPanIntegral(lote)
+    end
+    if(materiales['harina'] == false)
+      ##Comprar harina 
+    end
+    if(materiales['sal'] == false)
+      ##Comprar sal
+    end
+    if(materiales['semillas'] == false)
+      ##Comprar semillas
+    end
+    if(materiales['leche'] == false)
+      ##Comprar leche
+    end
+  end
+end
+
+def mandarProducirCerealArroz()
+
+  cerealArroz = getProductStock(17)
+  if(cerealArroz <= 5000)
+    cantidad = 5000 - cerealArroz
+    lote = cantidad/1000
+    materiales = materialesCerealArroz(lote)
+    if(materiales['azucar']&&materiales['cacao']&&materiales['arroz'])
+      producirCerealArroz(lote)
+    end
+    if(materiales['cacao'] == false)
+      ##Comprar cacao
+    end
+  end
+end
+
+## Metodos ordenar bodegas##
+
+def vaciarBodegaPulmon()
+
+
+end
+
+def vaciarBodegaRecepcion()
+
+
+end
 
 end
