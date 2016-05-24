@@ -32,7 +32,7 @@ include BankModule
   def getAlmacenes
 
     hash = createHash('GET')
-    return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).get("http://integracion-2016-dev.herokuapp.com/bodega/almacenes").to_s)
+    return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).get("http://integracion-2016-dev.herokuapp.com/bodega/").to_s)
   end
 
   ##cambiar clave!
@@ -318,13 +318,67 @@ end
 ## Metodos ordenar bodegas##
 
 def vaciarBodegaPulmon()
+  
+  #id de Desarrollo#
+  idPulmon = '571262aaa980ba030058a2f6'
+  idPrincipal = '571262aaa980ba030058a2f5'
+  idPrincipal2 = '571262aaa980ba030058a2bd'
 
-
+  productosPulmon = getProductsWithStock(idPulmon)
+  if(productosPulmon.size() > 0)
+    productosPulmon.each do |productos|
+      productId = productos['_id']
+      stockProducto = getProductStock2(productId,idPulmon)
+      stockProducto.each do |stock|
+        movido = false
+        almacenes = getAlmacenes()
+        almacenes.each do |almacen|
+          if(almacen['_id']=idPrincipal && almacen['totalSpace'] > almacen['usedSpace'] && movido = false)
+            moverStock(stock['_id'],idPrincipal)
+            movido = true
+          end
+          elsif(almacen['_id']=idPrincipal2 && almacen['totalSpace'] > almacen['usedSpace'] && movido = false)
+            moverStock(stock['_id'],idPrincipal2)
+            movido = true
+          end
+        end  
+      end
+    end
+  end
 end
 
 def vaciarBodegaRecepcion()
+  
+  #id de Desarrollo#
+  idPulmon = '571262aaa980ba030058a2f6'
+  idRecepcion = '571262aaa980ba030058a2bb'
+  idPrincipal = '571262aaa980ba030058a2f5'
+  idPrincipal2 = '571262aaa980ba030058a2bd'
 
-
+  productosRecepcion = getProductsWithStock(idRecepcion)
+  if(productosRecepcion.size() > 0)
+    productosRecepcion.each do |productos|
+      productId = productos['_id']
+      stockProducto = getProductStock2(productId,idRecepcion)
+      stockProducto.each do |stock|
+        movido = false
+        almacenes = getAlmacenes()
+        almacenes.each do |almacen|
+          if(almacen['_id']=idPrincipal && almacen['totalSpace'] > almacen['usedSpace'] && movido = false)
+            moverStock(stock['_id'],idPrincipal)
+            movido = true
+          end
+          elsif(almacen['_id']=idPrincipal2 && almacen['totalSpace'] > almacen['usedSpace'] && movido = false)
+            moverStock(stock['_id'],idPrincipal2)
+            movido = true
+          end
+          elsif(almacen['_id']=idPulmon && almacen['totalSpace'] > almacen['usedSpace'] && movido = false)
+            moverStock(stock['_id'],idPulmon)
+            movido = true
+          end  
+        end  
+      end
+    end
+  end
 end
-
 end
