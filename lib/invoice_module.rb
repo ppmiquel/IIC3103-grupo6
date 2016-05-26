@@ -8,9 +8,16 @@ module InvoiceModule
 
   def sendFact(idfact, grupo)
 #hay que tener un get grupo segùn OC
-    urlGrupo = "integra"+grupo
-    envio= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").get("http://"+urlGrupo+".ing.puc.cl/api/facturas/recibir/"+idfact).to_s, :symbolize_names => true)
 
+    urlGrupo = "integra"+grupo.to_s
+    #urlGrupo = "localhost:3000"
+    envio= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").get("http://"+urlGrupo+".ing.puc.cl/api/facturas/recibir/"+idfact).to_s, :symbolize_names => true)
+    puts " aaa ahora vamos a a hacer"
+    puts " ."
+    puts " ."
+    puts idfact
+    puts " ."
+    puts " ."
     # no me acpeta la factura?
     if !(envio[:valido])  ##OJO!! PUEDE QUE SE NECESITE HACER envio[0][:valido] (agregar [0])
       #Cancelo la factura

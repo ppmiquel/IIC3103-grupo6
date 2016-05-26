@@ -9,11 +9,16 @@ Rails.application.routes.draw do
 
   get 'doc' => 'welcome#doc', path: 'api/documentacion'
 
+  get 'api/facturas/recibir/:idfact' => 'api#fact_recibir'
+
   get 'api/consultar/:sku' => 'api#consultar'
 
   get 'api/oc/recibir/:idoc' => 'api#recibir'
 
-  get 'api/pagos/recibir/idtrx=:idtrx&idfactura=:idfactura' => 'api#pago_recibir'
+  get 'api/pagos/recibir' => 'api#pago_recibir'
+
+
+  get 'api/despachos/recibir/:idfactura' =>'api#recibir_despacho'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
