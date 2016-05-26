@@ -19,10 +19,7 @@ module WarehouseModule
   end
   def getAlmacenes
 
-    hash = createHash('GET')
-
-    return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).get("http://integracion-2016-dev.herokuapp.com/bodega/almacenes").to_s)
-
+   
 
     hash = createHash('GET')
 

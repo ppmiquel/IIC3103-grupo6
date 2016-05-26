@@ -10,10 +10,47 @@ class ApiController < ApplicationController
 	include OcModule
 	include InvoiceModule
 
+###################
+	
+	def pedir (cantidad, sku, dias, ngrupo)
+		canal="b2b"
+		##proveedor= Group.vendeor(sku)
+		#proveedor = idgrupo
+		proveedor = Group.where(numero: ngrupo).take.idgrupo
+		#proveedor= Group.where(numero: 6).take.idgrupo
+		cliente= Group.where(numero: 6).take.idgrupo
+		############# q pasa con el precio??
+		precio= 10 
+		#que pasa con el precio?
+		notas ="sjjd"
+		fecha = Time.now.to_i * 1000 + dias*24*60*60*1000
+		oc = crearOC(canal, cantidad, sku, cliente, proveedor, precio, notas, fecha)
+		
+		ord =Orden.create(idoc: oc[:_id], canal:oc[:canal], cliente: oc[:cliente], sku: oc[:sku], cantidad: oc[:cantidad], precio:oc[:precioUnitario], fecha_entrega: (oc[:fechaEntrega]).to_i )
+		
+		numerox = Group.where(idgrupo: proveedor).take.numero
+		acepted? = solicitar(oc[:_id], numerox)
+		return acepted?
+
+
+	end
+
+	def solicitar (idoc, numerox)
+		urlGrupo = "integra" + numerox.to_s
+	    envio= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").get("http://"+urlGrupo+".ing.puc.cl/api/oc/recibir/"+idoc).to_s, :symbolize_names => true)
+	   return envio[aceptado:]
+
+	end
+
+
+##############################
+##############################
+
 	def consultar
 		id = params[:sku]
 		product_stock = getProductStock(id)
 		response = { :stock => product_stock, :sku => id}
+		#pedir(10, id, 2, 6)
 		render :json => response
 	end
 

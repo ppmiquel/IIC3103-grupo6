@@ -40,9 +40,9 @@ module OcModule
   end
 
   # No esta listo
-  def crearOC(canal, cantidad, sku, proveedor, precio, notas)
+  def crearOC(canal, cantidad, sku, cliente,  proveedor, precio, notas, fecha)
 
-    oc = JSON.parse(HTTP.headers(:"Content-Type" => "application/json").get("http://mare.ing.puc.cl/oc/obtener/"+idoc, :params => {:canal => canal , :cantidad => cantidad, :sku => sku, :proveedor => proveedor,:precio => precio, :notas => notas}), :symbolize_names => true)
+    oc = JSON.parse(HTTP.headers(:"Content-Type" => "application/json").put("http://mare.ing.puc.cl/oc/crear", :json => {:canal => canal , :cantidad => cantidad, :sku => sku, :cliente => cliente, :proveedor => proveedor,:precioUnitario => precio, :notas => notas, :fechaEntrega => fecha}), :symbolize_names => true)
     return oc
 
   end

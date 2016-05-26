@@ -28,6 +28,7 @@ module InvoiceModule
     return true
   end
 
+
 #consumo api para generar un factura
   def putFactura(oc)
 
