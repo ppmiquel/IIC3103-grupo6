@@ -1,3 +1,5 @@
+require 'bank_module'
+
 module WarehouseModule
 
 include BankModule
@@ -171,7 +173,7 @@ def moverInsumo(productId,cantidad)
         if(movidos < cantidad.to_i)
           moverStock(producto['_id'],despacho)
         end
-      end  
+      end
     end
   end
 end
@@ -191,7 +193,7 @@ end
 
 
 def producirCerealArroz(lote)
-  
+
   moverInsumo(25,360)
   moverInsumo(20,350)
   moverInsumo(13,290)
@@ -227,7 +229,7 @@ def materialesPanIntegral(lote)
     hayLeche = true
   end
 
-  return JSON.parse({harina: => hayHarina, sal: => haySal, :semillas => haySemillas, :leche => hayLeche})
+  return JSON.parse({:harina => hayHarina, :sal => haySal, :semillas => haySemillas, :leche => hayLeche})
 
 end
 
@@ -251,7 +253,7 @@ def materialesCerealArroz(lote)
     hayArroz = true
   end
 
-  return JSON.parse({azucar: => hayAzucar, cacao: => hayCacao, :arroz => hayArroz})
+  return JSON.parse({:azucar => hayAzucar, :cacao => hayCacao, :arroz => hayArroz})
 end
 
 def mandarProducirArroz()
@@ -285,7 +287,7 @@ def mandarProducirPanIntegral()
       producirPanIntegral(lote)
     end
     if(materiales['harina'] == false)
-      ##Comprar harina 
+      ##Comprar harina
     end
     if(materiales['sal'] == false)
       ##Comprar sal
@@ -318,7 +320,7 @@ end
 ## Metodos ordenar bodegas##
 
 def vaciarBodegaPulmon()
-  
+
   #id de Desarrollo#
   idPulmon = '571262aaa980ba030058a2f6'
   idPrincipal = '571262aaa980ba030058a2f5'
@@ -336,19 +338,18 @@ def vaciarBodegaPulmon()
           if(almacen['_id']=idPrincipal && almacen['totalSpace'] > almacen['usedSpace'] && movido = false)
             moverStock(stock['_id'],idPrincipal)
             movido = true
-          end
           elsif(almacen['_id']=idPrincipal2 && almacen['totalSpace'] > almacen['usedSpace'] && movido = false)
             moverStock(stock['_id'],idPrincipal2)
             movido = true
           end
-        end  
+        end
       end
     end
   end
 end
 
 def vaciarBodegaRecepcion()
-  
+
   #id de Desarrollo#
   idPulmon = '571262aaa980ba030058a2f6'
   idRecepcion = '571262aaa980ba030058a2bb'
@@ -367,16 +368,14 @@ def vaciarBodegaRecepcion()
           if(almacen['_id']=idPrincipal && almacen['totalSpace'] > almacen['usedSpace'] && movido = false)
             moverStock(stock['_id'],idPrincipal)
             movido = true
-          end
           elsif(almacen['_id']=idPrincipal2 && almacen['totalSpace'] > almacen['usedSpace'] && movido = false)
             moverStock(stock['_id'],idPrincipal2)
             movido = true
-          end
           elsif(almacen['_id']=idPulmon && almacen['totalSpace'] > almacen['usedSpace'] && movido = false)
             moverStock(stock['_id'],idPulmon)
             movido = true
-          end  
-        end  
+          end
+        end
       end
     end
   end
