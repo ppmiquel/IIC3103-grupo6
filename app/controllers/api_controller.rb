@@ -10,15 +10,20 @@ class ApiController < ApplicationController
 	include OcModule
 	include InvoiceModule
 
+
+	def test
+		hash = createHash('GET')
+		respuesta= JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).get("http://integracion-2016-dev.herokuapp.com/bodega/almacenes").to_s)
+		response = respuesta
+		render :json => response
+	end
+
 	def consultar
 		id = params[:sku]
 		product_stock = getProductStock(id)
 		response = { :stock => product_stock, :sku => id}
 		render :json => response
 	end
-
-
-
 
 #### recibir trx
 	def pago_recibir
@@ -35,12 +40,14 @@ class ApiController < ApplicationController
 			checkFact(idtrx) ## sE envìa a validar segùn enunciado
 			trans.usada = true ##SE dice que q la transacciǹ ya fue usada
 			####se debe conectar el modelo, diciendo que esa transacciòn pertenece a un orden y una factura
-			fact = Factura.where(idfact: idfact) 
+			fact = Factura.where(idfact: idfact)
 			orden = Orden.where(ifoc: fact.idoc)
 			fact.idtrx = idtrx
 			orden.idtrx =idtrx
 
-			almacenId= #####falta mètodo para obtener el almacén
+
+			group= Grupo.where(idgrupo: orden.cliente)
+			almacenId= group.warehouse
 			moverStockBodega(orden.sku, almacenId, orden.idoc, orden.precio,)
 
 #################
@@ -64,9 +71,10 @@ class ApiController < ApplicationController
 			rechazar idoc
 			response = { :aceptado => aceptado, :idoc => idoc}
 			render(:json => response) and return
-			
+
 		else
 			orden = recepcionar idoc
+			#guardar enbd
 			Orden.create(idoc: orden[0][:_id], canal:orden[0][:canal], cliente: orden[0][:cliente], sku: orden[0][:sku], cantidad: orden[0][:cantidad], precio:orden[0][:precioUnitario], fecha_entrega: (orden[0][:fechaEntrega]).to_i )
 		end
 		response = { :aceptado => aceptado, :idoc => idoc}
@@ -88,11 +96,11 @@ class ApiController < ApplicationController
 		puts "a a antes an antes"
 
 		ord = Orden.getOrden(idoc)
-######### FIN DE inicializar factura		
-		
-		
+######### FIN DE inicializar factura
+
+
 		group= Grupo.where(idgrupo: ord.cliente)
-		grupoSend= group.numero ###############################Falta implmentar
+		grupoSend= group.numero
 		validateFact = sendFact(idfact, grupoSend)
 
 			if !validateFact #Puede ser que la factura no se aceptada,entonces no vale seguir /viviendo/

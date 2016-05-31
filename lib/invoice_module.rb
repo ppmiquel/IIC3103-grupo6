@@ -10,7 +10,7 @@ module InvoiceModule
 #hay que tener un get grupo segùn OC
     urlGrupo = "integra"+grupo
     envio= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").get("http://"+urlGrupo+".ing.puc.cl/api/facturas/recibir/"+idfact).to_s, :symbolize_names => true)
-    
+
     # no me acpeta la factura?
     if !(envio[:valido])  ##OJO!! PUEDE QUE SE NECESITE HACER envio[0][:valido] (agregar [0])
       #Cancelo la factura
@@ -22,8 +22,8 @@ module InvoiceModule
   end
 
 #consumo api para generar un factura
-  def putFactura(oc)  
-    
+  def putFactura(oc)
+
     facturax= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").put("http://mare.ing.puc.cl/facturas/", :json => {:oc => oc}).to_s, :symbolize_names => true)
     return facturax
   end

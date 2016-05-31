@@ -90,6 +90,9 @@ GEM
     mini_portile2 (2.0.0)
     minitest (5.8.4)
     multi_json (1.11.3)
+    net-sftp (2.1.2)
+      net-ssh (>= 2.6.5)
+    net-ssh (3.1.1)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
     rack (1.6.4)
@@ -175,6 +178,9 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   json
+  net-sftp
+  net-ssh
+  nokogiri
   rails (= 4.2.6)
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)

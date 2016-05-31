@@ -4,7 +4,6 @@ module OcModule
     # params = {:idoc => idoc}.to_json
     orden= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").get("http://mare.ing.puc.cl/oc/obtener/"+idoc).to_s, :symbolize_names => true)
     cantidad=orden[0][:cantidad]
-
     sku = orden[0][:sku]
     stock = getProductStock(sku)
     if ((orden[0][:cantidad]) > stock)
@@ -29,7 +28,7 @@ module OcModule
 
    def anularOC(idoc , razon)
 
-    HTTP.headers(:"Content-Type" => "application/json").delete("http://mare.ing.puc.cl/oc/anular/"+idoc, :params => {:idoc => idoc , :razon => razon})   
+    HTTP.headers(:"Content-Type" => "application/json").delete("http://mare.ing.puc.cl/oc/anular/"+idoc, :params => {:idoc => idoc , :razon => razon})
 
   end
 
@@ -42,10 +41,10 @@ module OcModule
 
   # No esta listo
   def crearOC(canal, cantidad, sku, proveedor, precio, notas)
-    
+
     oc = JSON.parse(HTTP.headers(:"Content-Type" => "application/json").get("http://mare.ing.puc.cl/oc/obtener/"+idoc, :params => {:canal => canal , :cantidad => cantidad, :sku => sku, :proveedor => proveedor,:precio => precio, :notas => notas}), :symbolize_names => true)
     return oc
-    
+
   end
 
 
