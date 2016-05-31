@@ -10,6 +10,14 @@ class ApiController < ApplicationController
 	include OcModule
 	include InvoiceModule
 
+
+	def test
+		hash = createHash('GET')
+		respuesta= JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).get("http://integracion-2016-dev.herokuapp.com/bodega/almacenes").to_s)
+		response = respuesta
+		render :json => response
+	end
+
 	def consultar
 		id = params[:sku]
 		product_stock = getProductStock(id)
