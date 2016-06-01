@@ -16,8 +16,8 @@ include BankModule
     return id
   end
 
-
-  def getProductStock(productId)
+#OK
+def getProductStock(productId)
     stock = 0
     almacenes = getAlmacenes()
     almacenes.each do |almacen|
@@ -56,27 +56,27 @@ include BankModule
   end
 
 #OK
-  def getProductStock2(productId, almacenId)
-    hash = createHash('GET' + almacenId + productId)
-    return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).get("http://integracion-2016-dev.herokuapp.com/bodega/stock?almacenId=" + almacenId + "&sku=" + productId + "&limit=100").to_s)
+  def getProductStock2(sku, almacenId)
+    hash = createHash('GET' + almacenId + sku)
+    return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).get("http://integracion-2016-dev.herokuapp.com/bodega/stock?almacenId=" + almacenId + "&sku=" + sku + "&limit=100").to_s)
   end
 
 #OK
-  def moverStock(productId, almacenId)
-    hash = createHash('POST' + productId + almacenId)
-    return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).post("http://integracion-2016-dev.herokuapp.com/bodega/moveStock", :json => {:productoId => productId, :almacenId => almacenId}))
+  def moverStock(productoId, almacenId)
+    hash = createHash('POST' + productoId + almacenId)
+    return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).post("http://integracion-2016-dev.herokuapp.com/bodega/moveStock", :json => {:productoId => productoId, :almacenId => almacenId}))
  end
-
-  def producirStock(productId, trxId, cantidad)
-    hash = createHash('PUT' + productId + cantidad.to_s + trxId )
-    return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).get("http://integracion-2016-dev.herokuapp.com/fabrica/fabricar?sku=" + productId + "&trxId=" + trxId + "&cantidad" + cantidad).to_s)
+#OK
+  def producirStock(sku, trxId, cantidad)
+    hash = createHash('PUT' + sku + cantidad.to_s + trxId )
+    return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).put("http://integracion-2016-dev.herokuapp.com/bodega/fabrica/fabricar", :json => {:sku => sku ,:trxId => trxId, :cantidad => cantidad}).to_s, :symbolize_names => true)
   end
 
 ######PARA B2B
-  def moverStockBodega(productId, almacenId, idoc, precio)
-
-    hash = createHash('POST' + productId + almacenId + idoc + precio)
-    return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).get("http://integracion-2016-dev.herokuapp.com/bodega/moverStockBodega?sku=" + productId + "&alamcenId=" + alamcenId + "&oc=" + idoc +"&precio=" + precio).to_s)
+#OK
+  def moverStockBodega(sku, almacenId, idoc, precio)
+    hash = createHash('POST' + sku + almacenId + idoc + precio)
+    return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).post("http://integracion-2016-dev.herokuapp.com/bodega/moveStockBodega", :json => {:sku=> sku,:almacenId=> almacenId, :oc=>idoc, :precio=> precio}))
   end
 
 
@@ -88,9 +88,10 @@ include BankModule
 
 
 ####SOLO PARA EL CASO DEL CANAL INTERNACIONAL!!!!!!
-  def despacharOrden(productId, direccion, precio, idoc)
-    hash = createHash('DELETE' + productId + direccion + precio + idoc)
-    return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).delete("http://integracion-2016-dev.herokuapp.com/bodega/stock").to_s, :params => {:productId => productId , :direccion => direccion , :precio => precio , :idoc => idoc })
+
+  def despacharOrden(productoId, direccion, precio, idoc)
+    hash = createHash('DELETE' + productoId + direccion + precio.to_s + idoc)
+    response = JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).delete("http://integracion-2016-dev.herokuapp.com/bodega/stock", :json => {:productId => productoId , :direccion => direccion , :precio => precio , :idoc => idoc }).to_s, :symbolize_names => true)
   end
 
 
@@ -137,9 +138,9 @@ def producirArroz(lote)
   lotes = lote.to_i
   cantidad = lote*1000
   precioArroz = 1286*cantidad
-  productId = 13
+  sku = '13'
   trxId = pagarProduccion(precioArroz)
-  producirStock(productId,trxId,cantidad)
+  producirStock(sku,trxId,cantidad)
 end
 
 def producirAzucar(lote)
@@ -147,9 +148,9 @@ def producirAzucar(lote)
   lotes = lote.to_i
   cantidad = lote*560
   precioArroz = 782*cantidad
-  productId = 25
+  sku = '25'
   trxId = pagarProduccion(precioArroz)
-  producirStock(productId,trxId,cantidad)
+  producirStock(sku,trxId,cantidad)
 end
 
 
@@ -163,14 +164,14 @@ def pagarProduccion(precio)
   return trxId
 end
 
-def moverInsumo(productId,cantidad)
+def moverInsumo(sku,cantidad)
 
   almacenes = getAlmacenes()
   movidos = 0
   idDespacho = obtenerIdAlmacenDespacho()
   almacenes.each do |almacen|
     if almacen['despacho'] == false
-      productos = getProductStock2(alamcenId['_id'],productId)
+      productos = getProductStock2(sku,alamcenId['_id'])
       productos.each do |producto|
         if(movidos < cantidad.to_i)
           moverStock(producto['_id'],despacho)
@@ -182,37 +183,37 @@ end
 
 def producirPanIntegral(lote)
 
-  moverInsumo(52,500)
-  moverInsumo(26,63)
-  moverInsumo(38,250)
-  moverInsumo(7,651)
+  moverInsumo('52',500)
+  moverInsumo('26',63)
+  moverInsumo('38',250)
+  moverInsumo('7',651)
   cantidad = lote*620
   precioPanIntegral = 2632*cantidad
-  productId = 53
+  sku = '53'
   trxId = pagarProduccion(precioPanIntegral)
-  producirStock(productId,trxId,cantidad)
+  producirStock(sku,trxId,cantidad)
 end
 
 
 def producirCerealArroz(lote)
 
-  moverInsumo(25,360)
-  moverInsumo(20,350)
-  moverInsumo(13,290)
+  moverInsumo('25',360)
+  moverInsumo('20',350)
+  moverInsumo('13',290)
   cantidad = lote*1000
   precioCerealArroz = 2184*cantidad
-  productId = 17
+  sku = '17'
   trxId = pagarProduccion(precioCerealArroz)
-  producirStock(productId,trxId,cantidad)
+  producirStock(sku,trxId,cantidad)
 end
 
 def materialesPanIntegral(lote)
 
   lotes = lote.to_i
-  harina = getProductStock(52)
-  sal = getProductStock(26)
-  semillas = getProductStock(38)
-  leche = getProductStock(7)
+  harina = getProductStock('52')
+  sal = getProductStock('26')
+  semillas = getProductStock('38')
+  leche = getProductStock('7')
 
   hayHarina = false
   haySal = false
@@ -238,9 +239,9 @@ end
 def materialesCerealArroz(lote)
 
   lotes = lote.to_i
-  azucar = getProductStock(25)
-  cacao = getProductStock(20)
-  arroz = getProductStock(13)
+  azucar = getProductStock('25')
+  cacao = getProductStock('20')
+  arroz = getProductStock('13')
 
   hayAzucar = false
   hayCacao = false
@@ -260,7 +261,7 @@ end
 
 def mandarProducirArroz()
 
-  arroz = getProductStock(13)
+  arroz = getProductStock('13')
   if(arroz < 5000)
     cantidad = 5000 - arroz
     lote = cantidad/1000
@@ -270,7 +271,7 @@ end
 
 def mandarProducirAzucar()
 
-  azucar = getProductStock(25)
+  azucar = getProductStock('25')
   if(azucar < 5000)
     cantidad = 5000 - azucar
     lote = cantidad/560
@@ -280,7 +281,7 @@ end
 
 def mandarProducirPanIntegral()
 
-  panIntegral = getProductStock(53)
+  panIntegral = getProductStock('53')
   if(panIntegral <= 5000)
     cantidad = 5000 - panIntegral
     lote = cantidad/620
@@ -305,7 +306,7 @@ end
 
 def mandarProducirCerealArroz()
 
-  cerealArroz = getProductStock(17)
+  cerealArroz = getProductStock('17')
   if(cerealArroz <= 5000)
     cantidad = 5000 - cerealArroz
     lote = cantidad/1000

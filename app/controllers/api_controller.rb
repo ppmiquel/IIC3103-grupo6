@@ -11,25 +11,30 @@ class ApiController < ApplicationController
 	include InvoiceModule
 
 
-def test3
+def test
+	sku = '13'
+    stock = 0
     almacenes = getAlmacenes()
-    id = ""
     almacenes.each do |almacen|
-      if almacen['despacho'] == true
-        id = almacen['_id']
+      productos = getProductsWithStock(almacen['_id'])
+      productos.each do |producto|
+        if(producto["_sku"] == sku)
+          stock = stock + producto["total"]
+        end
       end
     end
-    response = id
+    response = stock
 	render :json => response
 end
 
 
-def test3
+def test6
 
-	productId= "571262b6a980ba030058a690"
-	almacenId= '571262aaa980ba030058a2bb'
+	productId = '13'
+	trxId = '574e518df1af1e03003c08fb'
+	cantidad = '1000'
 	key = 'cd0A9ZK#u#vxES9'
-	data = 'POST' + productId + almacenId
+	data = 'PUT' + productId + cantidad + trxId
 	hmac = OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha1'),key,data)
 	hash = Base64.encode64(hmac).chomp
 	response = hash
@@ -44,20 +49,14 @@ end
 		render :json => response
 	end
 
-	def test
-		notas = "notas"
-  	cliente= "6"
-  	proveedor= "6"
-  	sku= "13"
-  	fechaEntrega= 1495646864000
-  	precioUnitario= "1"
-  	cantidad= 3
-  	canal= "b2b"
-
-		response JSON.parse(HTTP.headers(:"Content-Type" => "application/json").put("http://mare.ing.puc.cl/oc/crear", :json => {:canal => canal , :cantidad => cantidad, :sku => sku, :cliente=>cliente, :proveedor => proveedor, :precioUnitario => precioUnitario, :fechaEntrega => fechaEntrega, :notas => notas}))
-		#response = JSON.str(response)
-		render :json => response
-
+	def test4
+	productId = '571262b6a980ba030058a68c'
+	idoc = '⁠⁠⁠57449d142a303103007ce033'
+	direccion = 'a'
+	precio = 3858
+    hash = createHash('DELETE' + productId + direccion + precio.to_s + idoc)
+    response = JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).delete("http://integracion-2016-dev.herokuapp.com/bodega/stock", :json => {:productoId => productId , :direccion => direccion , :precio => precio , :idoc => idoc }).to_s, :symbolize_names => true)
+    render :json => response
 	end
 
 	def consultar
