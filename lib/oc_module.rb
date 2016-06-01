@@ -13,23 +13,19 @@ module OcModule
   end
 
   def rechazar(idoc)
-
-    HTTP.headers(:"Content-Type" => "application/json").post("http://mare.ing.puc.cl/oc/rechazar/"+idoc, :params => {:idoc => idoc , :rechazo => "No se posee stock para satisfacer demanda"})
-
+    response = JSON.parse(HTTP.headers(:"Content-Type" => "application/json").post("http://mare.ing.puc.cl/oc/rechazar/"+idoc , :json => {:idoc => idoc , :rechazo => "No se posee stock para satisfacer demanda"}))
+    return response
   end
 
   def recepcionar(idoc)
-
-    HTTP.headers(:"Content-Type" => "application/json").post("http://mare.ing.puc.cl/oc/recepcionar"+idoc, :params => {:idoc => idoc})
-    orden= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").get("http://mare.ing.puc.cl/oc/obtener/"+idoc).to_s, :symbolize_names => true)
+    HTTP.headers(:"Content-Type" => "application/json").post("http://mare.ing.puc.cl/oc/recepcionar", :params => {:idoc => idoc})
+    orden= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").get("http://mare.ing.puc.cl/oc/obtener/"), :symbolize_names => true)
     return orden
   end
 
 
    def anularOC(idoc , razon)
-
-    HTTP.headers(:"Content-Type" => "application/json").delete("http://mare.ing.puc.cl/oc/anular/"+idoc, :params => {:idoc => idoc , :razon => razon})
-
+    HTTP.headers(:"Content-Type" => "application/json").delete("http://mare.ing.puc.cl/oc/anular/"+idoc, :params => {:idoc => idoc , :anulacion => razon})
   end
 
   def obtenerOC(idoc)

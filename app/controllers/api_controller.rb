@@ -11,15 +11,17 @@ class ApiController < ApplicationController
 	include InvoiceModule
 
 
-def test3
-    almacenes = getAlmacenes()
-    id = ""
-    almacenes.each do |almacen|
-      if almacen['despacho'] == true
-        id = almacen['_id']
-      end
-    end
-    response = id
+
+
+def test
+	idoc = "574e35adf1af1e03003c085f"
+	response = JSON.parse(HTTP.headers(:"Content-Type" => "application/json").delete("http://mare.ing.puc.cl/oc/anular/"+idoc, :params => {:idoc => idoc , :anulacion => "soy millionaria y no estoy ni ahi"}));
+	render :json => response
+end
+
+def test4
+	idoc = "57449d142a303103007ce033"
+	response = JSON.parse(HTTP.headers(:"Content-Type" => "application/json").post("http://mare.ing.puc.cl/oc/rechazar/"+idoc , :json => {:idoc => idoc , :rechazo => "No se posee stock para satisfacer demanda"}))
 	render :json => response
 end
 
@@ -44,7 +46,7 @@ end
 		render :json => response
 	end
 
-	def test
+	def test1
 		notas = "notas"
   	cliente= "6"
   	proveedor= "6"
