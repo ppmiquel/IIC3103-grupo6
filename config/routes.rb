@@ -8,6 +8,10 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   get 'doc' => 'welcome#doc', path: 'api/documentacion'
+  get 'orders' => 'ordens#index', path: 'orders'
+  get 'index' => 'welcome#index', path: 'index.html.erb'
+  get 'static_table' => 'welcome#static_table', path: 'static_table.html.erb'
+  get 'datatable' => 'welcome#datatable', path: 'datatable.html.erb'
 
   get 'api/consultar/:sku' => 'api#consultar'
 
