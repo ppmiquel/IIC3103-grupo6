@@ -29,16 +29,20 @@ class ApiController < ApplicationController
 		ord =Orden.create(idoc: oc[:_id], canal:oc[:canal], cliente: oc[:cliente], sku: oc[:sku], cantidad: oc[:cantidad], precio:oc[:precioUnitario], fecha_entrega: (oc[:fechaEntrega]).to_i )
 		
 		numerox = Group.where(idgrupo: proveedor).take.numero
-		acepted? = solicitar(oc[:_id], numerox)
-		return acepted?
+		acepted = solicitar(oc[:_id], numerox)
+		return acepted
 
 
 	end
 
 	def solicitar (idoc, numerox)
 		urlGrupo = "integra" + numerox.to_s
+
+		#puts "http://"+urlGrupo+".ing.puc.cl/api/oc/recibir/"+idoc
+
 	    envio= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").get("http://"+urlGrupo+".ing.puc.cl/api/oc/recibir/"+idoc).to_s, :symbolize_names => true)
-	   return envio[aceptado:]
+	   	return envio[:aceptado]
+
 
 	end
 
@@ -84,7 +88,13 @@ class ApiController < ApplicationController
 
 			group= Group.where(idgrupo: ordenx.cliente).take
 			almacenId= group.warehouse
-			moverStockBodega(ordenx.sku, almacenId, ordenx.idoc, ordenx.precio,)
+
+			puts "sku: "  + ordenx.sku
+			
+			puts "idoc: "  + ordenx.idoc
+			puts "precio: "  + ordenx.precio.to_s
+			puts  almacenId
+			moverStockBodega(ordenx.sku, almacenId, ordenx.idoc, ordenx.precio)
 
 			numero = group.numero
 			avisar_despacho(idfact, numero)
@@ -143,9 +153,12 @@ class ApiController < ApplicationController
 
 ######### FIN DE inicializar factura
 		puts ord.cliente
+		puts "se buscarà"
+		grupox = Group.where(idgrupo: ord.cliente).take
 
-		grupo= Group.where(idgrupo: ord.cliente).take
-		grupoSend= grupo.numero
+		grupoSend= grupox.numero.to_i
+
+		puts "se entrarà al send"
 		validateFact = sendFact(idfact, grupoSend)
 
 			if !validateFact #Puede ser que la factura no se aceptada,entonces no vale seguir /viviendo/
@@ -186,7 +199,6 @@ class ApiController < ApplicationController
 		grupoSend= grupo.numero
 
 		urlGrupo = "integra"+grupoSend.to_s
-
 
 		JSON.parse(HTTP.headers(:"Content-Type" => "application/json").get("http://"+urlGrupo+".ing.puc.cl/api/pagos/recibir?idtrx="+trx[:_id]+"&idfactura="+idfact).to_s, :symbolize_names => true)
 

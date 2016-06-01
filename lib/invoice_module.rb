@@ -8,10 +8,11 @@ module InvoiceModule
 
   def sendFact(idfact, grupo)
 #hay que tener un get grupo segùn OC
-
+    puts "se entrooxxx"
     urlGrupo = "integra"+grupo.to_s
+    puts "se tiene url" + urlGrupo
     #urlGrupo = "localhost:3000"
-    envio= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").get("http://"+urlGrupo+".ing.puc.cl/api/facturas/recibir/"+idfact).to_s, :symbolize_names => true)
+   envio= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").get("http://"+urlGrupo+".ing.puc.cl/api/facturas/recibir/"+idfact).to_s, :symbolize_names => true)
     puts " aaa ahora vamos a a hacer"
     puts " ."
     puts " ."
@@ -19,7 +20,7 @@ module InvoiceModule
     puts " ."
     puts " ."
     # no me acpeta la factura?
-    if !(envio[:valido])  ##OJO!! PUEDE QUE SE NECESITE HACER envio[0][:valido] (agregar [0])
+   if !(envio[:valido])  ##OJO!! PUEDE QUE SE NECESITE HACER envio[0][:valido] (agregar [0])
       #Cancelo la factura
       JSON.parse(HTTP.headers(:"Content-Type" => "application/json").post("http://mare.ing.puc.cl/api/facturas/cancel", :json => {:id => idfact, :motivo => "Factura no valiada por el cliente"}).to_s)
       return false #anuncio cancelaciòn
