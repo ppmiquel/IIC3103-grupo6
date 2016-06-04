@@ -369,19 +369,18 @@ def vaciarBodegaRecepcion()
   if(productosRecepcion.size() > 0)
     productosRecepcion.each do |productos|
       productId = productos['_id']
+
       stockProducto = getStock(productId,idRecepcion)
       stockProducto.each do |stock|
+
         movido = false
         almacenes = getAlmacenes()
         almacenes.each do |almacen|
-          if(almacen['_id']=idPrincipal && almacen['totalSpace'] > almacen['usedSpace'] && movido = false)
-            moverStock(stock['_id'],idPrincipal)
-            movido = true
-          elsif(almacen['_id']=idPrincipal2 && almacen['totalSpace'] > almacen['usedSpace'] && movido = false)
-            moverStock(stock['_id'],idPrincipal2)
-            movido = true
-          elsif(almacen['_id']=idPulmon && almacen['totalSpace'] > almacen['usedSpace'] && movido = false)
-            moverStock(stock['_id'],idPulmon)
+           if(almacen['_id']==idPrincipal && almacen['totalSpace'] > almacen['usedSpace'] && movido == false)
+             moverss = moverStock(stock['_id'],idPrincipal)
+             movido = true
+          elsif(almacen['_id']==idPrincipal2 && almacen['totalSpace'] > almacen['usedSpace'] && movido == false)
+            moverss = moverStock(stock['_id'],idPrincipal2)
             movido = true
           end
         end

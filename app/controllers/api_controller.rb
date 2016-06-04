@@ -20,8 +20,7 @@ class ApiController < ApplicationController
 
 
 # def test
-#
-# 	producto  = moverStock('575222d0b6d39e03001fa3e2', '571262aaa980ba030058a2bd')
+# 	producto  = moverStock('575222cdb6d39e03001f9ca6', '571262aaa980ba030058a2f6')
 # 	render :json =>producto
 # end
 
@@ -31,7 +30,7 @@ class ApiController < ApplicationController
 # response = { :validado => true}
 # render :json =>response
 # end
-#
+
 #
 # def test
 # 	response = getAlmacenes()
