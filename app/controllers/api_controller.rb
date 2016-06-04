@@ -11,7 +11,115 @@ class ApiController < ApplicationController
 	include InvoiceModule
 
 ###################
-	
+
+
+# def test
+# 	producto = getStock('13', '571262aaa980ba030058a2bc')
+# 	render :json =>producto
+# end
+
+
+# def test
+#
+# 	producto  = moverStock('575222d0b6d39e03001fa3e2', '571262aaa980ba030058a2bd')
+# 	render :json =>producto
+# end
+
+
+# def test
+# vaciarBodegaRecepcion()
+# response = { :validado => true}
+# render :json =>response
+# end
+#
+#
+# def test
+# 	response = getAlmacenes()
+# 	render :json =>response
+# end
+#
+# def test
+# 	response = Orden.where(sku: '13')
+# 	render :json =>response
+# end
+#
+# def test
+# 	productoId = '571262aaa980ba030058a2c1'
+# 	direccion = "direccion"
+# 	precio = 3858
+# 	idoc= '5722604f7037060300d251ce'
+# 	hash = createHash('DELETE' + productoId + direccion + precio.to_s + idoc)
+# 	response = JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).delete("http://integracion-2016-dev.herokuapp.com/bodega/stock", :json => {:productoId => productoId , :direccion => direccion , :precio => precio , :oc => idoc}), :symbolize_names => true)
+# 	render :json =>response
+# end
+#
+# def test
+# 	orden= Orden
+# 	idoc= '5722604f7037060300d251ce'
+# 	sku= '13'
+# 	cantidad = 19
+# 	precio = 3858
+#     almacenes = getAlmacenes()
+#     totalDespachados = 0
+#     idDespacho = obtenerIdAlmacenDespacho()
+#     almacenes.each do |almacen|
+#       if almacen['despacho']
+#         productos = getStock(sku, almacen["_id"])
+#         productos.each do |producto|
+#           if(totalDespachados < cantidad)
+# 						puts ('entro')
+#             ordendespachado = despacharStock(producto["_id"],"direccion",precio, idoc)
+#             totalDespachados += 1
+#           end
+#         end
+# 			end
+#     end
+#
+# 	response =totalDespachados
+# 	render :json =>response
+# end
+#
+# def test
+# 	sku = '13'
+# 	cantidad= 440
+# 		almacenes = getAlmacenes()
+# 	  movidos = 0
+# 	  idDespacho = obtenerIdAlmacenDespacho()
+# 	  almacenes.each do |almacen|
+# 	    if almacen['despacho'] == false
+# 	      productos = getStock(sku, almacen['_id'])
+# 	      productos.each do |producto|
+# 	        if(movidos < cantidad.to_i)
+# 	          moverStock(producto['_id'],idDespacho)
+# 						movidos = movidos +1
+# 	        end
+# 	      end
+# 	    end
+# 	  end
+# 	puts(trxId.class)
+# 	render :json =>trxId
+# end
+#
+# def test
+# 	lote = 1
+#   cantidad = lote*560
+# 	puts(cantidad)
+#   precioArroz = 782*cantidad
+#   sku = '25'
+#   trxId = pagarProduccion(precioArroz)
+# 	puts(trxId)
+#   response = producirStock(sku, trxId, cantidad)
+# 	render :json =>response
+# end
+#
+# def test
+# moverInsumo('13',20)
+# response = { :stock => "se movio"}
+# render :json =>response
+# end
+
+
+
 	def pedir (cantidad, sku, dias, ngrupo)
 		canal="b2b"
 		##proveedor= Group.vendeor(sku)
@@ -20,14 +128,14 @@ class ApiController < ApplicationController
 		#proveedor= Group.where(numero: 6).take.idgrupo
 		cliente= Group.where(numero: 6).take.idgrupo
 		############# q pasa con el precio??
-		precio= 10 
+		precio= 10
 		#que pasa con el precio?
 		notas ="sjjd"
 		fecha = Time.now.to_i * 1000 + dias*24*60*60*1000
 		oc = crearOC(canal, cantidad, sku, cliente, proveedor, precio, notas, fecha)
-		
+
 		ord =Orden.create(idoc: oc[:_id], canal:oc[:canal], cliente: oc[:cliente], sku: oc[:sku], cantidad: oc[:cantidad], precio:oc[:precioUnitario], fecha_entrega: (oc[:fechaEntrega]).to_i )
-		
+
 		numerox = Group.where(idgrupo: proveedor).take.numero
 		acepted = solicitar(oc[:_id], numerox)
 		return acepted
@@ -60,6 +168,7 @@ class ApiController < ApplicationController
 
 #### recibir trx
 	def pago_recibir
+
 		idtrx = params[:idtrx]
 		idfact = params[:idfactura]
 		trx = obtenerTransaccion(idtrx)
@@ -90,7 +199,7 @@ class ApiController < ApplicationController
 			almacenId= group.warehouse
 
 			puts "sku: "  + ordenx.sku
-			
+
 			puts "idoc: "  + ordenx.idoc
 			puts "precio: "  + ordenx.precio.to_s
 			puts  almacenId
@@ -111,10 +220,6 @@ class ApiController < ApplicationController
 		urlGrupo = "integra"+numero.to_s
 		JSON.parse(HTTP.headers(:"Content-Type" => "application/json").get("http://"+urlGrupo+".ing.puc.cl/api/despachos/recibir/"+idfact).to_s, :symbolize_names => true)
 	end
-
-
-
-
 
 
 ########## recibir oc
@@ -146,7 +251,7 @@ class ApiController < ApplicationController
 		estado = factura[:estado]
 
 		Factura.create(idfact: idfact, cliente: cliente, proveedor: proveedor, valor_bruto: valor_bruto, iva: iva, estado: estado, idoc: idoc)
-		
+
 		puts "a a antes an antes"
 
 		ord = Orden.getOrden(idoc)
@@ -176,7 +281,7 @@ class ApiController < ApplicationController
 		enviar_trx(trx, idfact)
 
 		response = { :validado => true, :idfactura => idfact}
-		render :json =>response 
+		render :json =>response
 	end
 
 	def pagar(factu)
@@ -193,25 +298,17 @@ class ApiController < ApplicationController
 
 
 	def enviar_trx (trx,idfact)
-
 		cuentax = trx[:destino]
 		grupo= Group.where(cuenta: cuentax).take
 		grupoSend= grupo.numero
-
 		urlGrupo = "integra"+grupoSend.to_s
-
 		JSON.parse(HTTP.headers(:"Content-Type" => "application/json").get("http://"+urlGrupo+".ing.puc.cl/api/pagos/recibir?idtrx="+trx[:_id]+"&idfactura="+idfact).to_s, :symbolize_names => true)
-
-
-
 	end
-
 
 	def recibir_despacho
 		response = { :validado => true}
-		render :json =>response 
+		render :json =>response
 	end
 
- 
 
 end
