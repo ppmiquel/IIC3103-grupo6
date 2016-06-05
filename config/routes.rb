@@ -24,6 +24,8 @@ Rails.application.routes.draw do
 
   get 'api/verBodegas' => 'api#verBodegas'
 
+  get 'api/test' => 'api#test'
+
   get 'api/vaciarRecepcion' => 'api#vaciarBodegaRecepcionOnline'
 
   get 'api/vaciarPulmon' => 'api#vaciarPulmonOnline'
