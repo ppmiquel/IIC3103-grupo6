@@ -18,7 +18,15 @@ Rails.application.routes.draw do
 
   get 'api/facturas/recibir/:idfact' => 'api#fact_recibir'
 
-  get 'api/test' => 'api#test'
+  get 'api/producirArroz' => 'api#producirArrozOnline'
+
+  get 'api/producirAzucar' => 'api#producirAzucarOnline'
+
+  get 'api/verBodegas' => 'api#verBodegas'
+
+  get 'api/vaciarRecepcion' => 'api#vaciarBodegaRecepcionOnline'
+
+  get 'api/vaciarPulmon' => 'api#vaciarPulmonOnline'
 
   get 'api/consultar/:sku' => 'api#consultar'
 

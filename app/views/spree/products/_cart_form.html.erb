@@ -26,6 +26,24 @@
       <%= hidden_field_tag "variant_id", @product.master.id %>
     <% end %>
 
+    <div id="product-price">
+      <h6 class="product-section-title">Stock</h6>
+      <div>
+        <span class="lead price selling" itemprop="price">
+          <%= display_price(@product) %>
+        </span>
+        <span itemprop="priceCurrency" content="<%= @product.currency %>"></span>
+      </div>
+
+
+      <% if @product.master.can_supply? %>
+        <link itemprop="availability" href="https://schema.org/InStock" />
+      <% elsif @product.variants.empty? %>
+        <br />
+        <span class="out-of-stock"><%= Spree.t(:out_of_stock) %></span>
+      <% end %>
+    </div>
+
     <% if @product.price_in(current_currency) and !@product.price.nil? %>
       <div data-hook="product_price" class="col-md-5">
         <div id="product-price">
@@ -36,6 +54,7 @@
             </span>
             <span itemprop="priceCurrency" content="<%= @product.currency %>"></span>
           </div>
+
 
           <% if @product.master.can_supply? %>
             <link itemprop="availability" href="https://schema.org/InStock" />
@@ -55,6 +74,7 @@
               <% end %>
             </span>
           </div>
+
         </div>
       </div>
     <% else %>
