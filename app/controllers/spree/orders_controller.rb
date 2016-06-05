@@ -58,8 +58,10 @@ module Spree
         flash[:error] = error
         redirect_back_or_default(spree.root_path)
       else
-        respond_with(order) do |format|
-          format.html { redirect_to cart_path }
+        # urlOk='http://integra7.ing.puc.cl/tienda/confirmar/'<<boleta._id
+        # urlFail='http://integra7.ing.puc.cl/tienda/error/'
+        # url = "http://integracion-2016-prod.herokuapp.com/web/pagoenlinea?callbackUrl="+urlOk+"&cancelUrl="+urlFail+"+&boletaId="+boleta._id
+        # redirect_to url
         end
       end
     end

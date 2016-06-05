@@ -41,6 +41,10 @@ def vaciarPulmonOnline
 	render :json =>response
 end
 
+def leerFtp
+
+end
+
 
 	def pedir (cantidad, sku, dias, ngrupo)
 		canal="b2b"

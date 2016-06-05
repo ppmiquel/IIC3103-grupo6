@@ -1,3 +1,4 @@
+
 <%= form_for :order, :url => populate_orders_path do |f| %>
   <div class="row" id="inside-product-cart-form" data-hook="inside_product_cart_form" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
     <% if @product.variants_and_option_values(current_currency).any? %>
@@ -30,7 +31,7 @@
       <h6 class="product-section-title">Stock</h6>
       <div>
         <span class="lead price selling" itemprop="price">
-          <%= display_price(@product) %>
+          <%= Bodega.getStock(@product.sku) %>
         </span>
         <span itemprop="priceCurrency" content="<%= @product.currency %>"></span>
       </div>
@@ -69,8 +70,8 @@
           <div class="input-group">
             <%= number_field_tag :quantity, 1, :class => 'title form-control', :min => 1 %>
             <span class="input-group-btn">
-              <%= button_tag :class => 'btn btn-success', :id => 'add-to-cart-button', :type => :submit do %>
-                <%= Spree.t(:add_to_cart) %>
+              <%= button_tag :class => 'btn btn-success', :type => :submit do %>
+                Comprar
               <% end %>
             </span>
           </div>
