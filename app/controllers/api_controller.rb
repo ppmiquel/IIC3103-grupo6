@@ -12,111 +12,34 @@ class ApiController < ApplicationController
 
 ###################
 
+def producirArrozOnline
+arroz =producirArroz(1000)
+render :json =>arroz
+end
 
-# def test
-# 	producto = getStock('13', '571262aaa980ba030058a2bc')
-# 	render :json =>producto
-# end
-
-
-# def test
-# 	producto  = moverStock('575222cdb6d39e03001f9ca6', '571262aaa980ba030058a2f6')
-# 	render :json =>producto
-# end
+def producirAzucarOnline
+azucar =producirAzucar(1000)
+render :json =>azucar
+end
 
 
-# def test
-# vaciarBodegaRecepcion()
-# response = { :validado => true}
-# render :json =>response
-# end
+def vaciarBodegaRecepcionOnline
+vaciarBodegaRecepcion()
+response = { :validado => true}
+render :json =>response
+end
 
 #
-# def test
-# 	response = getAlmacenes()
-# 	render :json =>response
-# end
-#
-# def test
-# 	response = Orden.where(sku: '13')
-# 	render :json =>response
-# end
-#
-# def test
-# 	productoId = '571262aaa980ba030058a2c1'
-# 	direccion = "direccion"
-# 	precio = 3858
-# 	idoc= '5722604f7037060300d251ce'
-# 	hash = createHash('DELETE' + productoId + direccion + precio.to_s + idoc)
-# 	response = JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).delete("http://integracion-2016-dev.herokuapp.com/bodega/stock", :json => {:productoId => productoId , :direccion => direccion , :precio => precio , :oc => idoc}), :symbolize_names => true)
-# 	render :json =>response
-# end
-#
-# def test
-# 	orden= Orden
-# 	idoc= '5722604f7037060300d251ce'
-# 	sku= '13'
-# 	cantidad = 19
-# 	precio = 3858
-#     almacenes = getAlmacenes()
-#     totalDespachados = 0
-#     idDespacho = obtenerIdAlmacenDespacho()
-#     almacenes.each do |almacen|
-#       if almacen['despacho']
-#         productos = getStock(sku, almacen["_id"])
-#         productos.each do |producto|
-#           if(totalDespachados < cantidad)
-# 						puts ('entro')
-#             ordendespachado = despacharStock(producto["_id"],"direccion",precio, idoc)
-#             totalDespachados += 1
-#           end
-#         end
-# 			end
-#     end
-#
-# 	response =totalDespachados
-# 	render :json =>response
-# end
-#
-# def test
-# 	sku = '13'
-# 	cantidad= 440
-# 		almacenes = getAlmacenes()
-# 	  movidos = 0
-# 	  idDespacho = obtenerIdAlmacenDespacho()
-# 	  almacenes.each do |almacen|
-# 	    if almacen['despacho'] == false
-# 	      productos = getStock(sku, almacen['_id'])
-# 	      productos.each do |producto|
-# 	        if(movidos < cantidad.to_i)
-# 	          moverStock(producto['_id'],idDespacho)
-# 						movidos = movidos +1
-# 	        end
-# 	      end
-# 	    end
-# 	  end
-# 	puts(trxId.class)
-# 	render :json =>trxId
-# end
-#
-# def test
-# 	lote = 1
-#   cantidad = lote*560
-# 	puts(cantidad)
-#   precioArroz = 782*cantidad
-#   sku = '25'
-#   trxId = pagarProduccion(precioArroz)
-# 	puts(trxId)
-#   response = producirStock(sku, trxId, cantidad)
-# 	render :json =>response
-# end
-#
-# def test
-# moverInsumo('13',20)
-# response = { :stock => "se movio"}
-# render :json =>response
-# end
+def verBodegas
+	response = getAlmacenes()
+	render :json =>response
+end
 
+def vaciarPulmonOnline
+	vaciarBodegaPulmon()
+	response = { :validado => true}
+	render :json =>response
+end
 
 
 	def pedir (cantidad, sku, dias, ngrupo)
