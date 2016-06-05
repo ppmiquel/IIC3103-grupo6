@@ -58,10 +58,14 @@ module Spree
         flash[:error] = error
         redirect_back_or_default(spree.root_path)
       else
-        respond_with(order) do |format|
-          format.html { redirect_to cart_path }
+        @id_boleta = Banco.crearBoleta(quantity)
+
+        urlOk='http://localhost:3000/tienda/success/'<<@id_boleta
+        urlFail='http://localhost:3000/tienda/error'
+        url = "http://integracion-2016-dev.herokuapp.com/web/pagoenlinea?callbackUrl="+urlOk+"&cancelUrl="+urlFail+"&boletaId="+@id_boleta
+        redirect_to url
         end
-      end
+
     end
 
     def empty

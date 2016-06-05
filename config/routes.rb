@@ -16,6 +16,8 @@ Rails.application.routes.draw do
 
   get 'doc' => 'welcome#doc', path: 'api/documentacion'
 
+  get 'success' =>'welcome#success', path: 'tienda/success'
+
   get 'api/facturas/recibir/:idfact' => 'api#fact_recibir'
 
   get 'api/producirArroz' => 'api#producirArrozOnline'
@@ -23,6 +25,8 @@ Rails.application.routes.draw do
   get 'api/producirAzucar' => 'api#producirAzucarOnline'
 
   get 'api/verBodegas' => 'api#verBodegas'
+
+  get 'api/test' => 'api#test'
 
   get 'api/vaciarRecepcion' => 'api#vaciarBodegaRecepcionOnline'
 

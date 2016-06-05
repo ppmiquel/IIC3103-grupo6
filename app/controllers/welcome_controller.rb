@@ -7,11 +7,15 @@ require "json"
 
 class WelcomeController < ApplicationController
 	def index
-		
+
 	end
 
 	def doc
-		
+
 	end
-	
+
+	def success
+
+	end
+
 end
