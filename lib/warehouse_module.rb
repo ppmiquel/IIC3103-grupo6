@@ -344,10 +344,10 @@ def vaciarBodegaPulmon()
         movido = false
         almacenes = getAlmacenes()
         almacenes.each do |almacen|
-          if(almacen['_id']=idPrincipal && almacen['totalSpace'] > almacen['usedSpace'] && movido = false)
+          if(almacen['_id']==idPrincipal && almacen['totalSpace'] > almacen['usedSpace'] && movido ==false)
             moverss = moverStock(stock['_id'],idPrincipal)
             movido = true
-          elsif(almacen['_id']=idPrincipal2 && almacen['totalSpace'] > almacen['usedSpace'] && movido = false)
+          elsif(almacen['_id']==idPrincipal2 && almacen['totalSpace'] > almacen['usedSpace'] && movido ==false)
             moverss = moverStock(stock['_id'],idPrincipal2)
             movido = true
           end
