@@ -42,6 +42,8 @@ module Spree
       variant  = Spree::Variant.find(params[:variant_id])
       quantity = params[:quantity].to_i
       options  = params[:options] || {}
+      price = params[:price].to_i
+      sku = params[:sku]
 
       # 2,147,483,647 is crazy. See issue #2695.
       if quantity.between?(1, 2_147_483_647)
@@ -58,13 +60,12 @@ module Spree
         flash[:error] = error
         redirect_back_or_default(spree.root_path)
       else
-        @id_boleta = Banco.crearBoleta(quantity)
+        @id_boleta = Banco.crearBoleta(quantity*price)
+        Bodega.despacharPedido(@id_boleta, sku, quantity, price)
 
-        
+        urlOk='http://integra6.ing.puc.cl/tienda/success/'<<@id_boleta
 
-        urlOk='http://localhost:3000/tienda/success/'<<@id_boleta
-        urlFail='http://localhost:3000/tienda/error'
-        url = "http://integracion-2016-prod.herokuapp.com/web/pagoenlinea?callbackUrl="+urlOk+"&cancelUrl="+urlFail+"&boletaId="+@id_boleta
+        url = "http://integracion-2016-prod.herokuapp.com/web/pagoenlinea?callbackUrl="+urlOk+"&cancelUrl=http://integra6.ing.puc.cl/tienda/error&boletaId="+@id_boleta
         redirect_to url
         end
 

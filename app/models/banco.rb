@@ -1,6 +1,6 @@
 
-class Banco < ActiveRecord::Base
 
+class Banco < ActiveRecord::Base
 
 def self.crearBoleta(total)
   idproveedor='572aac69bdb6d403005fb047'
@@ -18,7 +18,7 @@ def self.crearBoleta(total)
   updated_at = boleta[:updated_at]
   oc = boleta[:oc]
 
-  boleta = Boleta.create(created_at: created_at, updated_at: updated_at, cliente: cliente, proveedor: proveedor, bruto: valor_bruto, iva: iva, total: total, oc:oc,id_boleta:idbol,estado:estado)
+  Boletum.create(created_at: created_at, updated_at: updated_at, cliente: cliente, proveedor: proveedor, bruto: valor_bruto, iva: iva, total: total, oc:oc,id_boleta:idbol,estado:estado)
 
   return boleta[:_id]
 end

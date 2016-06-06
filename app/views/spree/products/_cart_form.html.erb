@@ -31,7 +31,7 @@
       <h6 class="product-section-title">Stock</h6>
       <div>
         <span class="lead price selling" itemprop="price">
-          <%= Bodega.getStock(@product.sku) %>
+          <%= Bodega.getTheStock(@product.sku) %>
         </span>
         <span itemprop="priceCurrency" content="<%= @product.currency %>"></span>
       </div>
@@ -70,6 +70,8 @@
           <%= text_field_tag :direccion, '', class: 'title form-control' %>
 
           <br/>
+          <%= hidden_field_tag :price, @product.price, :class=> 'title form-control', :min => 1 %>
+          <%= hidden_field_tag :sku, @product.sku %>
           <div class="input-group">
             <%= number_field_tag :quantity, 1, :class => 'title form-control', :min => 1 %>
             <span class="input-group-btn">

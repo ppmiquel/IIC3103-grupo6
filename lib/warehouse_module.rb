@@ -99,9 +99,10 @@ def getProductStock(sku)
     almacenes = getAlmacenes()
     totalDespachados = 0
     idDespacho = obtenerIdAlmacenDespacho()
+    moverInsumo(sku,cantidad)
     almacenes.each do |almacen|
       if almacen['despacho'] == true
-        productos = getStock(sku,alamcenId['_id'])
+        productos = getStock(sku, almacen['_id'])
         productos.each do |producto|
           if(totalDespachados < cantidad.to_i)
             ordendespachado = despacharStock(productoId,"a",precio,idoc)

@@ -12,10 +12,6 @@ class ApiController < ApplicationController
 
 ###################
 
-# def test
-#
-# end
-
 def producirArrozOnline
 arroz =producirArroz(2)
 render :json =>arroz
