@@ -1,8 +1,71 @@
 
 class Bodega < ActiveRecord::Base
 
-  def self.getStock(id)
+  def self.despacharPedido(idoc, sku, cantidad, precio)
+    almacenes = getAlmacenes()
+    totalDespachados = 0
+    idDespacho = obtenerIdAlmacenDespacho()
+    moverInsumo(sku,cantidad)
+    almacenes.each do |almacen|
+      if almacen['despacho'] == true
+        productos = getStock(sku, almacen['_id'])
+        productos.each do |producto|
+          if(totalDespachados < cantidad.to_i)
+            ordendespachado = despacharStock(producto['_id'],"a",precio,idoc)
+            totalDespachados += 1
+          end
+        end
+      end
+    end
+  end
+
+  def self.moverInsumo(sku,cantidad)
+  	almacenes = getAlmacenes()
+    movidos = 0
+    #cambiado:)
+    idDespacho = obtenerIdAlmacenDespacho()
+    almacenes.each do |almacen|
+      if almacen['despacho'] == false
+        productos = getStock(sku, almacen['_id'])
+        productos.each do |producto|
+          if(movidos < cantidad.to_i)
+            moverStock(producto['_id'],idDespacho)
+  					movidos = movidos +1
+          end
+        end
+      end
+    end
+  end
+
+  def self.obtenerIdAlmacenDespacho()
+    almacenes = getAlmacenes()
+    id = ""
+    almacenes.each do |almacen|
+      if almacen['despacho'] == true
+        id = almacen['_id']
+      end
+    end
+    return id
+  end
+
+  def self.moverStock(productoId, almacenId)
+    hash = createHash('POST' + productoId + almacenId)
+    return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).post("http://integracion-2016-prod.herokuapp.com/bodega/moveStock", :json => {:productoId => productoId, :almacenId => almacenId}))
+ end
+
+
+  def self.despacharStock(productoId, direccion, precio, idoc)
+    hash = createHash('DELETE' + productoId + direccion + precio.to_s + idoc)
+    return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).delete("http://integracion-2016-prod.herokuapp.com/bodega/stock", :json => {:productoId => productoId , :direccion => direccion , :precio => precio , :oc => idoc}), :symbolize_names => true)
+  end
+
+  def self.getTheStock(id)
   	stock = getProductStock(id)
+  end
+
+  def self.getStock(sku, almacenId)
+    hash = createHash('GET' + almacenId + sku)
+    return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).get("http://integracion-2016-prod.herokuapp.com/bodega/stock?almacenId=" + almacenId + "&sku=" + sku + "&limit=100").to_s)
   end
 
   def self.getProductStock(sku)

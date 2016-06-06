@@ -12,9 +12,27 @@ class ApiController < ApplicationController
 
 ###################
 
-# def test
-#
-# end
+def test
+		idoc= '5754df02f9281f03007b39e'
+		sku= '25'
+		cantidad= 1
+		precio= 1240
+		almacenes = getAlmacenes()
+    totalDespachados = 0
+    idDespacho = obtenerIdAlmacenDespacho()
+    moverInsumo(sku,cantidad)
+    almacenes.each do |almacen|
+      if almacen['despacho'] == true
+        productos = getStock(sku, almacen['_id'])
+        productos.each do |producto|
+          if(totalDespachados < cantidad.to_i)
+            ordendespachado = despacharStock(productoId,"a",precio,idoc)
+            totalDespachados += 1
+          end
+        end
+      end
+		end
+end
 
 def producirArrozOnline
 arroz =producirArroz(2)
