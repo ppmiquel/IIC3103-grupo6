@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  created_at: 2016-06-05 23:15:31
+  updated_at: 2016-06-05 23:15:31
+  cliente: MyString
+  proveedor: MyString
+  bruto: 1
+  iva: 1
+  total: 1
+  oc: MyString
+  id: MyString
+  estado: MyString
+
+two:
+  created_at: 2016-06-05 23:15:31
+  updated_at: 2016-06-05 23:15:31
+  cliente: MyString
+  proveedor: MyString
+  bruto: 1
+  iva: 1
+  total: 1
+  oc: MyString
+  id: MyString
+  estado: MyString

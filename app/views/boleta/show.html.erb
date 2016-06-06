@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Created at:</strong>
+  <%= @boletum.created_at %>
+</p>
+
+<p>
+  <strong>Updated at:</strong>
+  <%= @boletum.updated_at %>
+</p>
+
+<p>
+  <strong>Cliente:</strong>
+  <%= @boletum.cliente %>
+</p>
+
+<p>
+  <strong>Proveedor:</strong>
+  <%= @boletum.proveedor %>
+</p>
+
+<p>
+  <strong>Bruto:</strong>
+  <%= @boletum.bruto %>
+</p>
+
+<p>
+  <strong>Iva:</strong>
+  <%= @boletum.iva %>
+</p>
+
+<p>
+  <strong>Total:</strong>
+  <%= @boletum.total %>
+</p>
+
+<p>
+  <strong>Oc:</strong>
+  <%= @boletum.oc %>
+</p>
+
+<p>
+  <strong>Id:</strong>
+  <%= @boletum.id %>
+</p>
+
+<p>
+  <strong>Estado:</strong>
+  <%= @boletum.estado %>
+</p>
+
+<%= link_to 'Edit', edit_boletum_path(@boletum) %> |
+<%= link_to 'Back', boleta_path %>

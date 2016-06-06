@@ -11,9 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160604222172) do
+ActiveRecord::Schema.define(version: 20160606031530) do
 
-
+  create_table "boleta", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "cliente"
+    t.string   "proveedor"
+    t.integer  "bruto"
+    t.integer  "iva"
+    t.integer  "total"
+    t.string   "oc"
+    t.string   "id_boleta"
+    t.string   "estado"
+  end
 
   create_table "facturas", force: :cascade do |t|
     t.string   "idfact"

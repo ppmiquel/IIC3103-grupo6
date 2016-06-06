@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Boleta</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Created at</th>
+      <th>Updated at</th>
+      <th>Cliente</th>
+      <th>Proveedor</th>
+      <th>Bruto</th>
+      <th>Iva</th>
+      <th>Total</th>
+      <th>Oc</th>
+      <th>Id</th>
+      <th>Estado</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @boleta.each do |boletum| %>
+      <tr>
+        <td><%= boletum.created_at %></td>
+        <td><%= boletum.updated_at %></td>
+        <td><%= boletum.cliente %></td>
+        <td><%= boletum.proveedor %></td>
+        <td><%= boletum.bruto %></td>
+        <td><%= boletum.iva %></td>
+        <td><%= boletum.total %></td>
+        <td><%= boletum.oc %></td>
+        <td><%= boletum.id %></td>
+        <td><%= boletum.estado %></td>
+        <td><%= link_to 'Show', boletum %></td>
+        <td><%= link_to 'Edit', edit_boletum_path(boletum) %></td>
+        <td><%= link_to 'Destroy', boletum, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Boletum', new_boletum_path %>
