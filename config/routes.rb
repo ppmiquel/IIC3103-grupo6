@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 
   get 'doc' => 'welcome#doc', path: 'api/documentacion'
 
-  get 'success' =>'welcome#success', path: 'tienda/success'
+  get 'success' =>'welcome#success', path: 'tienda/success/:id'
 
   get 'api/facturas/recibir/:idfact' => 'api#fact_recibir'
 

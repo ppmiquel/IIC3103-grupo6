@@ -17,12 +17,12 @@ class ApiController < ApplicationController
 # end
 
 def producirArrozOnline
-arroz =producirArroz(1000)
+arroz =producirArroz(2)
 render :json =>arroz
 end
 
 def producirAzucarOnline
-azucar =producirAzucar(1000)
+azucar =producirAzucar(2)
 render :json =>azucar
 end
 

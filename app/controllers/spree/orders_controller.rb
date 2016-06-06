@@ -62,7 +62,7 @@ module Spree
 
         urlOk='http://localhost:3000/tienda/success/'<<@id_boleta
         urlFail='http://localhost:3000/tienda/error'
-        url = "http://integracion-2016-dev.herokuapp.com/web/pagoenlinea?callbackUrl="+urlOk+"&cancelUrl="+urlFail+"&boletaId="+@id_boleta
+        url = "http://integracion-2016-prod.herokuapp.com/web/pagoenlinea?callbackUrl="+urlOk+"&cancelUrl="+urlFail+"&boletaId="+@id_boleta
         redirect_to url
         end
 

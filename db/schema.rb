@@ -13,6 +13,8 @@
 
 ActiveRecord::Schema.define(version: 20160604222172) do
 
+
+
   create_table "facturas", force: :cascade do |t|
     t.string   "idfact"
     t.string   "cliente"

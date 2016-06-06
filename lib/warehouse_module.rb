@@ -35,13 +35,13 @@ def getProductStock(sku)
 #OK#OK
   def getAlmacenes
     hash = createHash('GET')
-    return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).get("http://integracion-2016-dev.herokuapp.com/bodega/almacenes").to_s)
+    return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).get("http://integracion-2016-prod.herokuapp.com/bodega/almacenes").to_s)
   end
 
   ##cambiar clave!
   #OK#OK
   def createHash(data)
-    key = 'cd0A9ZK#u#vxES9'
+    key = 'zHHatno@hjie%xU'
     hmac = OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha1'),key,data)
     hash = Base64.encode64(hmac).chomp
     return hash
@@ -51,39 +51,39 @@ def getProductStock(sku)
 #OK#OK
   def getProductsWithStock(almacenId)
     hash = createHash('GET' + almacenId)
-    return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).get("http://integracion-2016-dev.herokuapp.com/bodega/skusWithStock?almacenId=" + almacenId).to_s)
+    return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).get("http://integracion-2016-prod.herokuapp.com/bodega/skusWithStock?almacenId=" + almacenId).to_s)
   end
 
 #OK#OK
   def getStock(sku, almacenId)
     hash = createHash('GET' + almacenId + sku)
-    return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).get("http://integracion-2016-dev.herokuapp.com/bodega/stock?almacenId=" + almacenId + "&sku=" + sku + "&limit=100").to_s)
+    return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).get("http://integracion-2016-prod.herokuapp.com/bodega/stock?almacenId=" + almacenId + "&sku=" + sku + "&limit=100").to_s)
   end
 
 #OK#OK
   def moverStock(productoId, almacenId)
     hash = createHash('POST' + productoId + almacenId)
-    return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).post("http://integracion-2016-dev.herokuapp.com/bodega/moveStock", :json => {:productoId => productoId, :almacenId => almacenId}))
+    return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).post("http://integracion-2016-prod.herokuapp.com/bodega/moveStock", :json => {:productoId => productoId, :almacenId => almacenId}))
  end
 
 #OK#OK
   def producirStock(sku, trxId, cantidad)
     hash = createHash('PUT' + sku + cantidad.to_s + trxId )
-    return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).put("http://integracion-2016-dev.herokuapp.com/bodega/fabrica/fabricar", :json => {:sku => sku ,:trxId => trxId, :cantidad => cantidad}).to_s, :symbolize_names => true)
+    return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).put("http://integracion-2016-prod.herokuapp.com/bodega/fabrica/fabricar", :json => {:sku => sku ,:trxId => trxId, :cantidad => cantidad}).to_s, :symbolize_names => true)
   end
 
 ######PARA B2B
 #OK#
   def moverStockBodega(sku, almacenId, idoc, precio)
     hash = createHash('POST' + sku + almacenId + idoc + precio)
-    return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).post("http://integracion-2016-dev.herokuapp.com/bodega/moveStockBodega", :json => {:productoId=> productoId,:almacenId=> almacenId, :oc=>idoc, :precio=> precio}))
+    return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).post("http://integracion-2016-prod.herokuapp.com/bodega/moveStockBodega", :json => {:productoId=> productoId,:almacenId=> almacenId, :oc=>idoc, :precio=> precio}))
   end
 
 
 #OK#OK
   def getCuentaFabrica()
     hash = createHash('GET')
-    return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).get("http://integracion-2016-dev.herokuapp.com/bodega/fabrica/getCuenta").to_s)
+    return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).get("http://integracion-2016-prod.herokuapp.com/bodega/fabrica/getCuenta").to_s)
   end
 
 
@@ -91,7 +91,7 @@ def getProductStock(sku)
 ####SOLO PARA EL CASO DEL CANAL INTERNACIONAL!!!!!!
   def despacharStock(productoId, direccion, precio, idoc)
     hash = createHash('DELETE' + productoId + direccion + precio.to_s + idoc)
-    return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).delete("http://integracion-2016-dev.herokuapp.com/bodega/stock", :json => {:productoId => productoId , :direccion => direccion , :precio => precio , :oc => idoc}), :symbolize_names => true)
+    return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).delete("http://integracion-2016-prod.herokuapp.com/bodega/stock", :json => {:productoId => productoId , :direccion => direccion , :precio => precio , :oc => idoc}), :symbolize_names => true)
   end
 
 
@@ -154,7 +154,7 @@ def producirAzucar(lote)
 end
 
 def getMiCuenta
-  return '571262c3a980ba030058ab62'
+  return '572aac69bdb6d403005fb053'
 end
 
 
@@ -163,7 +163,7 @@ def pagarProduccion(precio)
   cuenta = getCuentaFabrica()
   destino = cuenta['cuentaId']
   # Metodo transferir Banco
-  trx = transferir(precio,'571262c3a980ba030058ab62',destino)
+  trx = transferir(precio,'572aac69bdb6d403005fb053',destino)
 	trxId = trx[:_id]
   return trxId
 end
@@ -173,7 +173,8 @@ end
 def moverInsumo(sku,cantidad)
 	almacenes = getAlmacenes()
   movidos = 0
-  idDespacho = '571262aaa980ba030058a2bc'
+  #cambiado:)
+  idDespacho = obtenerIdAlmacenDespacho()
   almacenes.each do |almacen|
     if almacen['despacho'] == false
       productos = getStock(sku, almacen['_id'])
@@ -330,16 +331,16 @@ end
 
 def vaciarBodegaPulmon()
 
-  #id de Desarrollo#
-  idPulmon = '571262aaa980ba030058a2f6'
-  idPrincipal = '571262aaa980ba030058a2f5'
-  idPrincipal2 = '571262aaa980ba030058a2bd'
+  #id de Produccion#
+  idPulmon = '572aad41bdb6d403005fb3b8'
+  idPrincipal = '572aad41bdb6d403005fb2da'
+  idPrincipal2 = '572aad41bdb6d403005fb3b7'
 
   productosPulmon = getProductsWithStock(idPulmon)
   if(productosPulmon.size() > 0)
     productosPulmon.each do |productos|
       productId = productos['_id']
-      stockProducto = getStock(productId,idPulmon)
+stockProducto = getStock(productId,idPulmon)
       stockProducto.each do |stock|
         movido = false
         almacenes = getAlmacenes()
@@ -359,11 +360,12 @@ end
 
 def vaciarBodegaRecepcion()
 
-  #id de Desarrollo#
-  idPulmon = '571262aaa980ba030058a2f6'
-  idRecepcion = '571262aaa980ba030058a2bb'
-  idPrincipal = '571262aaa980ba030058a2f5'
-  idPrincipal2 = '571262aaa980ba030058a2bd'
+  #id de Produccion#
+
+  idPulmon = '572aad41bdb6d403005fb3b8'
+  idRecepcion = '572aad41bdb6d403005fb2d8'
+  idPrincipal = '572aad41bdb6d403005fb2da'
+  idPrincipal2 = '572aad41bdb6d403005fb3b7'
 
   productosRecepcion = getProductsWithStock(idRecepcion)
   if(productosRecepcion.size() > 0)
