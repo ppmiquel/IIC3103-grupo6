@@ -32,7 +32,7 @@ gem "http"
 gem "json"
 gem "unicorn"
 
-gem 'bootstrap-sass', '~> 3.3.0'
+gem 'bootstrap-sass', '~> 3.3'
 gem 'autoprefixer-rails'
 
 
