@@ -61,7 +61,7 @@ module Spree
         redirect_back_or_default(spree.root_path)
       else
         @id_boleta = Banco.crearBoleta(quantity*price)
-        # Bodega.despacharPedido(@id_boleta, sku, quantity, price)
+        Bodega.despacharPedido(@id_boleta, sku, quantity, price)
 
         urlOk='http://integra6.ing.puc.cl/tienda/success/'<<@id_boleta
 
