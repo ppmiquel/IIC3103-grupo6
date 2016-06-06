@@ -60,6 +60,8 @@ module Spree
       else
         @id_boleta = Banco.crearBoleta(quantity)
 
+        
+
         urlOk='http://localhost:3000/tienda/success/'<<@id_boleta
         urlFail='http://localhost:3000/tienda/error'
         url = "http://integracion-2016-prod.herokuapp.com/web/pagoenlinea?callbackUrl="+urlOk+"&cancelUrl="+urlFail+"&boletaId="+@id_boleta
