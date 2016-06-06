@@ -70,6 +70,7 @@
           <%= text_field_tag :direccion, '', class: 'title form-control' %>
 
           <br/>
+          <%= number_field_tag :price, @product.price, :class=> 'title form-control', :min => 1 %>
           <div class="input-group">
             <%= number_field_tag :quantity, 1, :class => 'title form-control', :min => 1 %>
             <span class="input-group-btn">

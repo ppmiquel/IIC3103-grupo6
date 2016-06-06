@@ -42,6 +42,9 @@ module Spree
       variant  = Spree::Variant.find(params[:variant_id])
       quantity = params[:quantity].to_i
       options  = params[:options] || {}
+      price = params[:price].to_i
+      puts("price")
+      puts(price)
 
       # 2,147,483,647 is crazy. See issue #2695.
       if quantity.between?(1, 2_147_483_647)
@@ -58,7 +61,7 @@ module Spree
         flash[:error] = error
         redirect_back_or_default(spree.root_path)
       else
-        @id_boleta = Banco.crearBoleta(quantity)
+        @id_boleta = Banco.crearBoleta(quantity*price)
 
         urlOk='http://localhost:3000/tienda/success/'<<@id_boleta
         urlFail='http://localhost:3000/tienda/error'
