@@ -63,9 +63,9 @@ module Spree
         @id_boleta = Banco.crearBoleta(quantity*price)
         # Bodega.despacharPedido(@id_boleta, sku, quantity, price)
 
-        urlOk='http://integra6.ing.puc.cl/integra6.ing.puc.cl/boleta/'<<@id_boleta
+        urlOk='http://integra6.ing.puc.cl/tienda/success/'<<@id_boleta
 
-        url = "http://integracion-2016-prod.herokuapp.com/web/pagoenlinea?callbackUrl="+urlOk+"&cancelUrl=http://integra6.ing.puc.cl/integra6.ing.puc.cl/tienda/error&boletaId="+@id_boleta
+        url = "http://integracion-2016-prod.herokuapp.com/web/pagoenlinea?callbackUrl="+urlOk+"&cancelUrl=http://integra6.ing.puc.cl/tienda/error&boletaId="+@id_boleta
         redirect_to url
         end
 

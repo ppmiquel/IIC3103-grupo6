@@ -64,11 +64,11 @@ class BoletaController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_boletum
-      @boletum = Boletum.find(params[:id])
+      @boletum = Boletum.find(params[:id_boleta])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def boletum_params
-      params.require(:boletum).permit(:created_at, :updated_at, :cliente, :proveedor, :bruto, :iva, :total, :oc, :id, :estado)
+      params.require(:boletum).permit(:created_at, :updated_at, :cliente, :proveedor, :bruto, :iva, :total, :oc, :id_boleta, :estado)
     end
 end
