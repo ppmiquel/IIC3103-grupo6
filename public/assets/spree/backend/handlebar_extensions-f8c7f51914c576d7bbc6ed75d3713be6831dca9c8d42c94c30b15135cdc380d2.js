@@ -1,1 +1,0 @@
-Handlebars.registerHelper("t",function(r){return Spree.translations[r]?Spree.translations[r]:void console.error("No translation found for "+r+". Does it exist within spree/admin/shared/_translations.html.erb?")});

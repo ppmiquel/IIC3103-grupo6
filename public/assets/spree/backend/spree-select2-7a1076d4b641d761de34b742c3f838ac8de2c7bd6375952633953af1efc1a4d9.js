@@ -1,1 +1,0 @@
-jQuery(function(e){e("select.select2").select2({allowClear:!0,dropdownAutoWidth:!0})});
