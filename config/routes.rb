@@ -43,6 +43,8 @@ Rails.application.routes.draw do
 
   get 'api/test' => 'api#test'
 
+  get 'api/leerFtp' => 'api#leerFtp'
+
   get 'api/oc/recibir/:idoc' => 'api#recibir'
 
   get 'api/pagos/recibir' => 'api#pago_recibir'

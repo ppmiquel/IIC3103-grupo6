@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160606031530) do
+ActiveRecord::Schema.define(version: 20160623181239) do
 
   create_table "boleta", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -82,6 +82,7 @@ ActiveRecord::Schema.define(version: 20160606031530) do
     t.string   "idfact"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.string   "estado"
   end
 
   create_table "spree_addresses", force: :cascade do |t|

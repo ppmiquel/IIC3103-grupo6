@@ -8,21 +8,14 @@ module InvoiceModule
 
   def sendFact(idfact, grupo)
 #hay que tener un get grupo segùn OC
-    puts "se entrooxxx"
     urlGrupo = "integra"+grupo.to_s
-    puts "se tiene url" + urlGrupo
     #urlGrupo = "localhost:3000"
    envio= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").get("http://"+urlGrupo+".ing.puc.cl/api/facturas/recibir/"+idfact).to_s, :symbolize_names => true)
-    puts " aaa ahora vamos a a hacer"
-    puts " ."
-    puts " ."
     puts idfact
-    puts " ."
-    puts " ."
     # no me acpeta la factura?
    if !(envio[:valido])  ##OJO!! PUEDE QUE SE NECESITE HACER envio[0][:valido] (agregar [0])
       #Cancelo la factura
-      JSON.parse(HTTP.headers(:"Content-Type" => "application/json").post("http://moto.ing.puc.cl/api/facturas/cancel", :json => {:id => idfact, :motivo => "Factura no valiada por el cliente"}).to_s)
+      JSON.parse(HTTP.headers(:"Content-Type" => "application/json").post("http://"+ $url +"/api/facturas/cancel", :json => {:id => idfact, :motivo => "Factura no valiada por el cliente"}).to_s)
       return false #anuncio cancelaciòn
     end
 
@@ -33,13 +26,13 @@ module InvoiceModule
 #consumo api para generar un factura
   def putFactura(oc)
 
-    facturax= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").put("http://moto.ing.puc.cl/facturas/", :json => {:oc => oc}).to_s, :symbolize_names => true)
+    facturax= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").put("http://"+ $url +"/facturas/", :json => {:oc => oc}).to_s, :symbolize_names => true)
     return facturax
   end
 
   ####PAGAR FACTURA
   def checkFact(idtrx)
-    JSON.parse(HTTP.headers(:"Content-Type" => "application/json").post("http://moto.ing.puc.cl/facturas/pay", :json => {:id => idtrx} ).to_s, :symbolize_names => true)
+    JSON.parse(HTTP.headers(:"Content-Type" => "application/json").post("http://"+ $url +"/facturas/pay", :json => {:id => idtrx} ).to_s, :symbolize_names => true)
 
   end
 
@@ -47,7 +40,7 @@ module InvoiceModule
 
   def obtenerFactura(idfact)
 
-    factura = JSON.parse(HTTP.headers(:"Content-Type" => "application/json").get("http://moto.ing.puc.cl/facturas/"+idfact, :params => {:id => idfact}).to_s, :symbolize_names => true)
+    factura = JSON.parse(HTTP.headers(:"Content-Type" => "application/json").get("http://"+ $url +"/facturas/"+idfact, :params => {:id => idfact}).to_s, :symbolize_names => true)
     return factura
 
   end
@@ -57,7 +50,7 @@ module InvoiceModule
   ### RECHAZAR FACTURA
   def rechazarFact(idfact,motivo)
 
-    facturaRechazada = JSON.parse(HTTP.headers(:"Content-Type" => "application/json").post("http://moto.ing.puc.cl/facturas/reject", :json => {:id => idfact, :motivo => motivo} ).to_s, :symbolize_names => true)
+    facturaRechazada = JSON.parse(HTTP.headers(:"Content-Type" => "application/json").post("http://"+ $url +"/facturas/reject", :json => {:id => idfact, :motivo => motivo} ).to_s, :symbolize_names => true)
 
     return facturaRechazada
 
@@ -66,7 +59,7 @@ module InvoiceModule
 ### ANULAR FACTURA
   def anularFactura(idfact,motivo)
 
-    facturaAnulada = JSON.parse(HTTP.headers(:"Content-Type" => "application/json").post("http://moto.ing.puc.cl/facturas/cancel", :json => {:id => idfact, :motivo => motivo} ).to_s, :symbolize_names => true)
+    facturaAnulada = JSON.parse(HTTP.headers(:"Content-Type" => "application/json").post("http://"+ $url +"/facturas/cancel", :json => {:id => idfact, :motivo => motivo} ).to_s, :symbolize_names => true)
 
     return facturaAnulada
 
@@ -75,7 +68,7 @@ module InvoiceModule
 ### CREAR BOLETA
   def crearBoleta(idproveedor,cliente,total)
 
-    boleta= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").put("http://moto.ing.puc.cl/facturas/boleta", :json => {:proveedor => idproveedor,:cliente=>cliente,:total=> total}).to_s, :symbolize_names => true)
+    boleta= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").put("http://"+ $url +"/facturas/boleta", :json => {:proveedor => idproveedor,:cliente=>cliente,:total=> total}).to_s, :symbolize_names => true)
     return boleta
 
   end

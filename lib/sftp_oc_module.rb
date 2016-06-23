@@ -1,6 +1,8 @@
+module SftpModule
+
 
 def leer_sftp
-  session = Net::SSH.start('mare.ing.puc.cl', 'integra6', password: 'BSnt6txv', port: 22)
+  session = Net::SSH.start( $url, 'integra6', password: $ftp_password, port: 22)
   sftp = Net::SFTP::Session.new(session)
   sftp.connect!
   sftp.dir.foreach('/pedidos') do |archivo|
@@ -12,4 +14,5 @@ def leer_sftp
       sftp.rename("/pedidos/"<<archivo.name, "/pedidos/leidos/"<<archivo.name)
     end
   end
+end
 end
