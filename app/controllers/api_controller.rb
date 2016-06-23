@@ -10,6 +10,7 @@ class ApiController < ApplicationController
 	include OcModule
 	include InvoiceModule
 
+
 ###################
 
 def producirArrozOnline

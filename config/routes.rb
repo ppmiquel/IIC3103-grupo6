@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+
   resources :boleta
   # This line mounts Spree's routes at the root of your application.
   # This means, any requests to URLs such as /products, will go to Spree::ProductsController.
@@ -9,6 +10,7 @@ Rails.application.routes.draw do
   mount Spree::Core::Engine, at: '/tienda/'
 
 
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -16,6 +18,10 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   get 'doc' => 'welcome#doc', path: 'api/documentacion'
+  get 'orders' => 'ordens#index', path: 'orders'
+  get 'index' => 'welcome#index', path: 'index.html.erb'
+  get 'static_table' => 'welcome#static_table', path: 'static_table.html.erb'
+  get 'datatable' => 'welcome#datatable', path: 'datatable.html.erb'
 
   get 'success' =>'welcome#success', path: 'tienda/success/:id'
 
@@ -34,6 +40,8 @@ Rails.application.routes.draw do
   get 'api/vaciarPulmon' => 'api#vaciarPulmonOnline'
 
   get 'api/consultar/:sku' => 'api#consultar'
+
+  get 'api/test' => 'api#test'
 
   get 'api/oc/recibir/:idoc' => 'api#recibir'
 

@@ -53,3 +53,4 @@ productos_list.each do |name, description, available_on, meta_keywords, price, i
 
 product.save
 end
+

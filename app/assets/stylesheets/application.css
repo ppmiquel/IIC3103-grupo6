@@ -10,8 +10,46 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_tree .
  *= require_self
+ *= require bootstrap
+ *= require twitter/bootstrap
+ *= require animate
+ *= require animate.min
+ *= require bootstrap
+ *= require bootstrap.min
+ *= require bootstrap-slider
+ *= require colorbox
+ *= require dataTables.bootstrap
+ *= require datepicker
+ *= require datetimepicker
+ *= require dropzone
+ *= require extralayers
+ *= require font-awesome
+ *= require font-awesome.min
+ *= require fullcalendar
+ *= require fullcalendar.print
+ *= require ionicons
+ *= require ionicons.min
+ *= require jquery.dataTables
+ *= require jquery.dataTables.min
+ *= require jquery.gritter
+ *= require jquery.minicolors
+ *= require jquery.steps
+ *= require jquery.tagsinput
+ *= require morris
+ *= require navstylechange
+ *= require owl.carousel
+ *= require owl.carousel.min
+ *= require owl.theme.default.min
+ *= require pace
+ *= require select2
+ *= require settings
+ *= require settings-ie8
+ *= require simplify
+ *= require simplify.min
+ *= require style
  */
 
+
 @import "bootstrap";
+

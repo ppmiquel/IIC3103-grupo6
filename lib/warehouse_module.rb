@@ -2,6 +2,8 @@ require 'bank_module'
 
 module WarehouseModule
 
+
+
 include BankModule
 
 #OK#OK
@@ -32,6 +34,7 @@ def getProductStock(sku)
   end
 
 
+
 #OK#OK
   def getAlmacenes
     hash = createHash('GET')
@@ -51,6 +54,7 @@ def getProductStock(sku)
 #OK#OK
   def getProductsWithStock(almacenId)
     hash = createHash('GET' + almacenId)
+
     return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).get("http://integracion-2016-prod.herokuapp.com/bodega/skusWithStock?almacenId=" + almacenId).to_s)
   end
 
@@ -58,6 +62,7 @@ def getProductStock(sku)
   def getStock(sku, almacenId)
     hash = createHash('GET' + almacenId + sku)
     return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).get("http://integracion-2016-prod.herokuapp.com/bodega/stock?almacenId=" + almacenId + "&sku=" + sku + "&limit=100").to_s)
+
   end
 
 #OK#OK
@@ -65,6 +70,7 @@ def getProductStock(sku)
     hash = createHash('POST' + productoId + almacenId)
     return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).post("http://integracion-2016-prod.herokuapp.com/bodega/moveStock", :json => {:productoId => productoId, :almacenId => almacenId}))
  end
+
 
 #OK#OK
   def producirStock(sku, trxId, cantidad)
@@ -80,6 +86,7 @@ def getProductStock(sku)
   end
 
 
+
 #OK#OK
   def getCuentaFabrica()
     hash = createHash('GET')
@@ -92,7 +99,9 @@ def getProductStock(sku)
   def despacharStock(productoId, direccion, precio, idoc)
     hash = createHash('DELETE' + productoId + direccion + precio.to_s + idoc)
     return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).delete("http://integracion-2016-prod.herokuapp.com/bodega/stock", :json => {:productoId => productoId , :direccion => direccion , :precio => precio , :oc => idoc}), :symbolize_names => true)
+
   end
+
 
 
   def despacharPedido(idoc, sku, cantidad, precio)
@@ -130,6 +139,7 @@ def getProductStock(sku)
   end
 
 
+
 #Metodos de Produccion##
 
 #OK#OK
@@ -142,6 +152,7 @@ def producirArroz(lote)
   response = producirStock(sku,trxId,cantidad)
 
 end
+
 
 #OK#OK
 def producirAzucar(lote)
@@ -159,6 +170,7 @@ def getMiCuenta
 end
 
 
+
 #OK
 def pagarProduccion(precio)
   cuenta = getCuentaFabrica()
@@ -168,6 +180,7 @@ def pagarProduccion(precio)
 	trxId = trx[:_id]
   return trxId
 end
+
 
 
 #OKOK
@@ -367,6 +380,7 @@ def vaciarBodegaRecepcion()
   idRecepcion = '572aad41bdb6d403005fb2d8'
   idPrincipal = '572aad41bdb6d403005fb2da'
   idPrincipal2 = '572aad41bdb6d403005fb3b7'
+
 
   productosRecepcion = getProductsWithStock(idRecepcion)
   if(productosRecepcion.size() > 0)
