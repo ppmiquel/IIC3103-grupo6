@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Idoc:</strong>
+  <%= @orden.idoc %>
+</p>
+
+<p>
+  <strong>Canal:</strong>
+  <%= @orden.canal %>
+</p>
+
+<p>
+  <strong>Cliente:</strong>
+  <%= @orden.cliente %>
+</p>
+
+<p>
+  <strong>Sku:</strong>
+  <%= @orden.sku %>
+</p>
+
+<p>
+  <strong>Cantidad:</strong>
+  <%= @orden.cantidad %>
+</p>
+
+<p>
+  <strong>Precio:</strong>
+  <%= @orden.precio %>
+</p>
+
+<p>
+  <strong>Fecha entrega:</strong>
+  <%= @orden.fecha_entrega %>
+</p>
+
+<p>
+  <strong>Idtrx:</strong>
+  <%= @orden.idtrx %>
+</p>
+
+<p>
+  <strong>Idfact:</strong>
+  <%= @orden.idfact %>
+</p>
+
+<p>
+  <strong>Estado:</strong>
+  <%= @orden.estado %>
+</p>
+
+<%= link_to 'Edit', edit_orden_path(@orden) %> |
+<%= link_to 'Back', ordens_path %>

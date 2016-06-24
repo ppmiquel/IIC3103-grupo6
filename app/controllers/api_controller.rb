@@ -2,6 +2,7 @@ require 'warehouse_module'
 require 'bank_module'
 require 'oc_module'
 require 'invoice_module'
+require 'sftp_oc_module'
 
 class ApiController < ApplicationController
 
@@ -9,6 +10,48 @@ class ApiController < ApplicationController
 	include BankModule
 	include OcModule
 	include InvoiceModule
+	include SftpModule
+
+
+#####    PRODUCCION   #######
+
+
+# $url = 'moto.ing.puc.cl'
+# $idGrupo: '572aac69bdb6d403005fb047'
+# $idBanco: '572aac69bdb6d403005fb053'
+#
+# #Almacenes
+# $idPulmon = '572aad41bdb6d403005fb3b8'
+# $idPrincipal = '572aad41bdb6d403005fb2da'
+# $idPrincipal2 = '572aad41bdb6d403005fb3b7'
+# $idRecepcion = '572aad41bdb6d403005fb2d8'
+# revisar este es el de desarrollo $idDespacho = '571262aaa980ba030058a2bc'
+#
+# $heroku_url = 'http://integracion-2016-prod.herokuapp.com/'
+# $hash_key = 'zHHatno@hjie%xU'
+# $ftp_password='qQLEV4n6'
+
+
+
+#####    DESARROLLO   #######
+
+$url = 'mare.ing.puc.cl'
+$idGrupo= '571262b8a980ba030058ab54'
+$idBanco= '571262c3a980ba030058ab62'
+
+#Almacenes
+$idPulmon = '571262aaa980ba030058a2f6'
+$idPrincipal = '571262aaa980ba030058a2bd'
+$idPrincipal2 = '571262aaa980ba030058a2f5'
+$idRecepcion = '571262aaa980ba030058a2bb'
+$idDespacho = '571262aaa980ba030058a2bc'
+
+
+$heroku_url = 'http://integracion-2016-dev.herokuapp.com/'
+$hash_key = 'cd0A9ZK#u#vxES9'
+$ftp_password='BSnt6txv'
+
+
 
 ###################
 
@@ -42,7 +85,9 @@ def vaciarPulmonOnline
 end
 
 def leerFtp
-
+	leer_sftp()
+	response = { :validado => true}
+	render :json =>response
 end
 
 
@@ -184,12 +229,9 @@ end
 
 ######### FIN DE inicializar factura
 		puts ord.cliente
-		puts "se buscarà"
 		grupox = Group.where(idgrupo: ord.cliente).take
 
 		grupoSend= grupox.numero.to_i
-
-		puts "se entrarà al send"
 		validateFact = sendFact(idfact, grupoSend)
 
 			if !validateFact #Puede ser que la factura no se aceptada,entonces no vale seguir /viviendo/
@@ -216,8 +258,6 @@ end
 		origen = Group.where(idgrupo: factu[0][:cliente]).take.cuenta
 		destino = Group.where(idgrupo: factu[0][:proveedor]).take.cuenta
 		trx = transferir(monto, origen, destino)
-		puts "aaaaaaaaaaaaaa"
-		puts "aaaaaaaaaaaaa"
 		puts trx
 		return trx
 	end
