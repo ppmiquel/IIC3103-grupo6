@@ -46,13 +46,15 @@ gem  'net-sftp'
 gem  'net-ssh'
 gem  'nokogiri'
 
+gem 'amqp' '~> 1.5.0'
+gem 'bunny', '>= 2.3.1'
 
 #gem 'font-awesome-sass'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use Unicorn as the app server
-# gem 'unicorn'
+gem 'unicorn'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
