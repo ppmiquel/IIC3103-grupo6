@@ -44,6 +44,10 @@ GEM
     acts_as_list (0.7.2)
       activerecord (>= 3.0)
     addressable (2.4.0)
+    amq-protocol (2.0.1)
+    amqp (1.5.2)
+      amq-protocol (~> 2.0.1)
+      eventmachine
     arel (6.0.3)
     autoprefixer-rails (6.3.6)
       execjs
@@ -56,6 +60,8 @@ GEM
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
     builder (3.2.2)
+    bunny (2.4.0)
+      amq-protocol (>= 2.0.1)
     byebug (8.2.5)
     camertron-eprun (1.1.0)
     cancancan (1.10.1)
@@ -98,6 +104,7 @@ GEM
     domain_name (0.5.20160310)
       unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
+    eventmachine (1.2.0.1)
     execjs (2.6.0)
     ffaker (2.2.0)
     font-awesome-rails (4.6.3.0)
@@ -352,8 +359,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  amqp (~> 1.5.0)
   autoprefixer-rails
   bootstrap-sass (~> 3.3)
+  bunny (>= 2.3.1)
   byebug
   coffee-rails (~> 4.1.0)
   commonjs
