@@ -17,6 +17,10 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'welcome#index'
 
+  get 'twi/:mensaje' => 'welcome#twitt'
+
+  get 'face/:mensaje' => 'welcome#face'
+
   get 'doc' => 'welcome#doc', path: 'api/documentacion'
   get 'orders' => 'ordens#index', path: 'orders'
   get 'index' => 'welcome#index', path: 'index.html.erb'
