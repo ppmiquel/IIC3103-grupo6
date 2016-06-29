@@ -33,6 +33,7 @@ def buscarOferta
 			Oferta.create(sku: sku, precio:precio, inicio: inicio, fin: fin, codigo: codigo)
 		end
 		cantidad = q.message_count
+		puts ("cantidad: " + cantidad.to_s)
 	end
 	ch.close
 	conn.stop
