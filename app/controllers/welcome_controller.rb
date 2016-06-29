@@ -40,7 +40,7 @@ class WelcomeController < ApplicationController
 
 	def face
 		
-		msg = publicar params[:mensaje] , "nada"
+		msg = publica params[:mensaje] , "nada"
 
 	   response = { :estado => "aceptado", :tweet => msg}
 		render :json => response

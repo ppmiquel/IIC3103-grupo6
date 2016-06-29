@@ -2,7 +2,7 @@ module PromsModule
 	$contador=1
 
 
-	def publicar (mensaje , url)
+	def publica (mensaje , url)
 		twitte $contador.to_s + ". " +mensaje , url
 		faceboki $contador.to_s + ". " +mensaje , url
 		$contador +=1
@@ -46,7 +46,7 @@ module PromsModule
 		puts "hola"
 
 
-		@page.put_connections('me', "photos", :caption => promo , :url => "http://integra6.ing.puc.cl/spree/products/1/product/arroz.jpg")
+		@page.put_connections('me', "photos", :caption => promo , :url => url)
 
 		
 		promo

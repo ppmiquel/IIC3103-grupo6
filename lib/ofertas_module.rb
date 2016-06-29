@@ -3,7 +3,10 @@ module OfertasModule
 require 'bunny'
 require 'json'
 
+require 'proms_module'
+
 def buscarOferta
+	include PromsModule
 
 	conn = Bunny.new("amqp://vbxaemul:bbBSE5xmmKhc6rinnl1QjpxT_k-42nzt@fox.rmq.cloudamqp.com/vbxaemul")
 	conn.start
@@ -31,6 +34,26 @@ def buscarOferta
 			puts (" fin: " + fin.to_s)
 			puts (" codigo: " + codigo)
 			Oferta.create(sku: sku, precio:precio, inicio: inicio, fin: fin, codigo: codigo)
+			if publicar 
+				nombre = ""
+				imagen = ""
+				case sku
+				when 13
+				  nombre= "arroz "
+				  imagen= "goo.gl/jL7s3r"
+				when 6
+				  nombre="cereal de arroz"
+				  imagen = "goo.gl/6hgBBX"
+				when String
+				  nombre="azucar"
+				  imagen = "goo.gl/DgvaQf"
+				else
+				  nombre="pan integral "
+				  imagen = "http://goo.gl/QcU6HH"
+				end
+				mensaje= " "+nombre+ "a solo " + precio + "hasta: " + fin + "\nCódigo: " +codigo
+				publica mensaje , imagen
+
 		end
 		cantidad = q.message_count
 		puts ("cantidad: " + cantidad.to_s)
