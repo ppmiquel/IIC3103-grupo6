@@ -34,13 +34,15 @@ gem 'commonjs'
 # http client
 gem "http"
 
+
+
 #facebook
 gem 'omniauth-facebook' # Facebook authentication
 gem "koala", "~> 1.10.0rc" # Facebook API
 
 
 #twitter
-gem 'twitter', '~> 5.11.0'
+gem 'twitter', '~> 5.16.0'
 gem 'dotenv', '~> 0.11.1'
 
 #json
