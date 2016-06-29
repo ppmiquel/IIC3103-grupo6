@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'welcome#index'
+  root 'welcome#index2'
 
   get 'twi/:mensaje' => 'welcome#twitt'
 
@@ -23,7 +23,12 @@ Rails.application.routes.draw do
 
   get 'doc' => 'welcome#doc', path: 'api/documentacion'
   get 'orders' => 'ordens#index', path: 'orders'
-  get 'index' => 'welcome#index', path: 'index.html.erb'
+  get 'index' => 'welcome#index', path: 'panel'
+
+  get 'index2' => 'welcome#index2', path: 'welcome/index2'
+
+
+
   get 'static_table' => 'welcome#static_table', path: 'static_table.html.erb'
   get 'datatable' => 'welcome#datatable', path: 'datatable.html.erb'
 
