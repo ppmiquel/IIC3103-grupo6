@@ -34,25 +34,35 @@ gem 'commonjs'
 # http client
 gem "http"
 
+
+
+#facebook
+gem 'omniauth-facebook' # Facebook authentication
+gem "koala", "~> 1.10.0rc" # Facebook API
+
+
+#twitter
+gem 'twitter', '~> 5.16.0'
+gem 'dotenv', '~> 0.11.1'
+
 #json
 gem "json"
 gem "unicorn"
 
 gem 'bootstrap-sass', '~> 3.3'
 gem 'autoprefixer-rails'
-
+gem 'json'
 
 gem  'net-sftp'
 gem  'net-ssh'
 gem  'nokogiri'
 
+gem 'amqp', '~> 1.5.0'
+gem 'bunny','>= 2.3.1'
 
 #gem 'font-awesome-sass'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
-
-# Use Unicorn as the app server
-# gem 'unicorn'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
