@@ -225,7 +225,7 @@ end
 
 		Factura.create(idfact: idfact, cliente: cliente, proveedor: proveedor, valor_bruto: valor_bruto, iva: iva, estado: estado, idoc: idoc)
 
-		puts "a a antes an antes"
+		
 
 		ord = Orden.getOrden(idoc)
 
@@ -265,13 +265,15 @@ end
 	end
 
 
-	def enviar_trx (trx,idfact)
+	def enviar_trx (trx , idfact)
 		cuentax = trx[:destino]
 		grupo= Group.where(cuenta: cuentax).take
 		grupoSend= grupo.numero
 		urlGrupo = "integra"+grupoSend.to_s
 		JSON.parse(HTTP.headers(:"Content-Type" => "application/json").get("http://"+urlGrupo+".ing.puc.cl/api/pagos/recibir?idtrx="+trx[:_id]+"&idfactura="+idfact).to_s, :symbolize_names => true)
 	end
+
+
 
 	def recibir_despacho
 		response = { :validado => true}

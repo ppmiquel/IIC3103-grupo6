@@ -53,6 +53,7 @@ def buscarOferta
 				end
 				mensaje= " "+nombre+ "a solo " + precio + "hasta: " + fin + "\nCódigo: " +codigo
 				publica mensaje , imagen
+			end
 
 		end
 		cantidad = q.message_count
