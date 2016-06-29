@@ -3,6 +3,8 @@ require 'bank_module'
 require 'oc_module'
 require 'invoice_module'
 require 'sftp_oc_module'
+require 'bunny'
+require 'json'	
 
 class ApiController < ApplicationController
 
@@ -11,7 +13,7 @@ class ApiController < ApplicationController
 	include OcModule
 	include InvoiceModule
 	include SftpModule
-
+	# include OfetasModule
 
 #####    PRODUCCION   #######
 
