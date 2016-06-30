@@ -125,6 +125,11 @@ $ampq = 'amqp://ehtypuyg:FTCipJb52hxpiHxkaGIzJ6kVH_yJ1Qwc@jaguar.rmq.cloudamqp.c
 
 # end
 
+def hash
+hash = createHash('GET')
+render :json =>hash
+end
+
 def cambiar
 	$url = 'moto.ing.puc.cl'
 	$idGrupo = '572aac69bdb6d403005fb047'

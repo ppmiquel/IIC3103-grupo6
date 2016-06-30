@@ -45,6 +45,7 @@ Rails.application.routes.draw do
   get 'api/verBodegas' => 'api#verBodegas'
 
   get 'api' => 'api#cambiar'
+  get 'api/hash' => 'api#hash'
 
   get 'api/test' => 'api#test'
 

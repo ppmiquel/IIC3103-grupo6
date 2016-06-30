@@ -174,7 +174,7 @@ end
 #OK
 def pagarProduccion(precio)
   cuenta = getCuentaFabrica()
-  destino = cuenta['cuentaId']
+  destino = "572aac69bdb6d403005fb040"
   # Metodo transferir Banco
   trx = transferir(precio, $idBanco ,destino)
 	trxId = trx[:_id]
