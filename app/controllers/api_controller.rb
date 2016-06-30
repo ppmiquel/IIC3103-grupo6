@@ -3,6 +3,8 @@ require 'bank_module'
 require 'oc_module'
 require 'invoice_module'
 require 'sftp_oc_module'
+require 'proms_module'
+require 'ofertas_module'
 require 'bunny'
 require 'json'	
 
@@ -13,27 +15,26 @@ class ApiController < ApplicationController
 	include OcModule
 	include InvoiceModule
 	include SftpModule
-	# include OfetasModule
+	include PromsModule
+	include OfertasModule
 
 #####    PRODUCCION   #######
 
-
 $url = 'moto.ing.puc.cl'
-$idGrupo = '572aac69bdb6d403005fb047'
-$idBanco = '572aac69bdb6d403005fb053'
+$idGrupo: '572aac69bdb6d403005fb047'
+$idBanco: '572aac69bdb6d403005fb053'
 
 #Almacenes
 $idPulmon = '572aad41bdb6d403005fb3b8'
 $idPrincipal = '572aad41bdb6d403005fb2da'
 $idPrincipal2 = '572aad41bdb6d403005fb3b7'
 $idRecepcion = '572aad41bdb6d403005fb2d8'
-$idDespacho = '572aad41bdb6d403005fb2d9'
+revisar este es el de desarrollo $idDespacho = '571262aaa980ba030058a2bc'
 
 $heroku_url = 'http://integracion-2016-prod.herokuapp.com/'
 $hash_key = 'zHHatno@hjie%xU'
 $ftp_password='qQLEV4n6'
-
-
+$ampq = 'amqp://ehtypuyg:FTCipJb52hxpiHxkaGIzJ6kVH_yJ1Qwc@jaguar.rmq.cloudamqp.com/ehtypuyg'
 
 #####    DESARROLLO   #######
 
@@ -49,13 +50,88 @@ $ftp_password='qQLEV4n6'
 # $idDespacho = '571262aaa980ba030058a2bc'
 
 
+<<<<<<< HEAD
+$heroku_url = 'http://integracion-2016-dev.herokuapp.com/'
+$hash_key = 'cd0A9ZK#u#vxES9'
+$ftp_password='BSnt6txv'
+$ampq = 'amqp://vbxaemul:bbBSE5xmmKhc6rinnl1QjpxT_k-42nzt@fox.rmq.cloudamqp.com/vbxaemul'
+=======
 # $heroku_url = 'http://integracion-2016-dev.herokuapp.com/'
 # $hash_key = 'cd0A9ZK#u#vxES9'
 # $ftp_password='BSnt6txv'
 
+>>>>>>> master
 
 
 ###################
+
+def test
+
+
+# 	conn = Bunny.new($ampq)
+# 	conn.start
+
+# 	ch = conn.create_channel
+# 	q = ch.queue('ofertas', :auto_delete => true, :exclusive => false, :durable => false)
+
+# 	cantidad = q.message_count
+# 	# while cantidad > 0
+# 		promo = q.pop
+# 		promocionJson = promo[2].to_s
+# 		promocion = JSON.parse(promocionJson)
+		
+# 		sku = promocion['sku']
+# 		puts("El sku de la oferta es " + sku)
+# 		if(sku == '13' || sku == '17' || sku == '25' || sku == '53' )
+# 			precio = promocion['precio']
+# 			inicio = promocion['inicio']
+# 			fin = promocion['fin']
+# 			codigo = promocion['codigo']
+# 			publicar = promocion['publicar']
+# 			puts ("sku: " + sku)
+# 			puts (" precio: " + precio.to_s) 
+# 			puts (" inicio: " + inicio.to_s)
+# 			puts (" fin: " + fin.to_s)
+# 			puts (" codigo: " + codigo)
+# 			Oferta.create(sku: sku, precio:precio, inicio: inicio, fin: fin, codigo: codigo)
+# 			if publicar 
+				# puts("Voy a publicar")
+# 				nombre = ""
+# 				imagen = ""
+# 				case sku
+# 				when "13"
+# 				  nombre= "arroz "
+# 				  imagen= "goo.gl/jL7s3r"
+# 				when "17"
+# 				  nombre="cereal de arroz"
+# 				  imagen = "goo.gl/6hgBBX"
+# 				when "25"
+# 				  nombre="azucar"
+# 				  imagen = "goo.gl/DgvaQf"
+# 				else
+# 				  nombre="pan integral "
+# 				  imagen = "http://goo.gl/QcU6HH"
+# 				end
+# 				mensaje= " "+nombre+ "a solo " + precio.to_s + "hasta: " + fin.to_s + "\nCódigo: " +codigo
+				# puts("el mensaje es: " + mensaje)
+# 				publica mensaje , imagen
+				# puts("Publico?")
+# 			end
+
+
+# 		 end
+# 		# cantidad = q.message_count
+# 		# puts ("cantidad: " + cantidad.to_s)
+# 	# end
+# 	ch.close
+# 	conn.stop
+
+# 	response = { :validado => true}
+# 	render :json =>response
+
+# end
+
+
 
 def producirArrozOnline
 arroz =producirArroz(2)

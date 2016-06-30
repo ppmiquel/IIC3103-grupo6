@@ -8,7 +8,7 @@ require 'proms_module'
 def buscarOferta
 	include PromsModule
 
-	conn = Bunny.new("amqp://vbxaemul:bbBSE5xmmKhc6rinnl1QjpxT_k-42nzt@fox.rmq.cloudamqp.com/vbxaemul")
+	conn = Bunny.new($ampq)
 	conn.start
 
 	ch = conn.create_channel
@@ -18,7 +18,8 @@ def buscarOferta
 
 	while cantidad > 0
 		promo = q.pop
-		promocion = JSON.parse(promo[2].to_s)
+		promocionJson = promo[2].to_s
+		promocion = JSON.parse(promocionJson)
 		
 		sku = promocion['sku']
 		puts("El sku de la oferta es " + sku)
@@ -38,23 +39,22 @@ def buscarOferta
 				nombre = ""
 				imagen = ""
 				case sku
-				when 13
-				  nombre= "arroz "
+				when "13"
+				  nombre= "Arroz "
 				  imagen= "goo.gl/jL7s3r"
-				when 6
-				  nombre="cereal de arroz"
+				when "17"
+				  nombre="Cereal de Arroz"
 				  imagen = "goo.gl/6hgBBX"
-				when String
-				  nombre="azucar"
+				when "25"
+				  nombre="Azucar"
 				  imagen = "goo.gl/DgvaQf"
 				else
-				  nombre="pan integral "
+				  nombre="Pan Integral "
 				  imagen = "http://goo.gl/QcU6HH"
 				end
-				mensaje= " "+nombre+ "a solo " + precio + "hasta: " + fin + "\nCódigo: " +codigo
+				mensaje= " "+nombre+ "a solo " + precio.to_s + "hasta: " + fin.to_s + "\nCódigo: " +codigo
 				publica mensaje , imagen
 			end
-
 		end
 		cantidad = q.message_count
 		puts ("cantidad: " + cantidad.to_s)

@@ -1,18 +1,14 @@
 module PromsModule
 	$contador=1
 
-
 	def publica (mensaje , url)
 		twitte $contador.to_s + ". " +mensaje , url
 		faceboki $contador.to_s + ". " +mensaje , url
 		$contador +=1
 	end
 
-
 	def twitte (mensaje, url)
-
 		tweet=mensaje + " " + url
-	
 
 		  puts ENV['TWITTER_API_KEY']
 		#Obtenemos lo que el usuario digite
@@ -22,18 +18,11 @@ module PromsModule
           config.consumer_secret     = "wIVqmXvd4Q7cKOsINjvPEQuMylXJxXzyvAo5MK90TgPALFUXry"
           config.access_token        = "747830570693033986-W135KI7EOgqturqlk7AoF6TDS9SH8aV"
           config.access_token_secret = "YuU1cTnI7obvb2ugESPCWYGrCVqRq3DeHwgLCva2uFUDC"
-      end
-
+      	end
 
 	   $client.update(tweet)
-
 	   tweet
-
 	end
-
-
-
-
 
 	def faceboki (mensaje, url)
 		promo = mensaje
@@ -52,14 +41,8 @@ module PromsModule
 		promo
 	end
 
-
 	def promocionar (mensaje, url)
 		faceboki mensaje url
 		twitt mensaje
 	end
-
-
-
-
-
 end

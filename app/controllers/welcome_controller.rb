@@ -15,6 +15,11 @@ class WelcomeController < ApplicationController
 
 	end
 
+	def index2
+
+	end
+
+
 	def doc
 
 	end
