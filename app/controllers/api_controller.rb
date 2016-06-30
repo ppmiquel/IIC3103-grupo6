@@ -21,15 +21,15 @@ class ApiController < ApplicationController
 #####    PRODUCCION   #######
 
 $url = 'moto.ing.puc.cl'
-$idGrupo: '572aac69bdb6d403005fb047'
-$idBanco: '572aac69bdb6d403005fb053'
+$idGrupo = '572aac69bdb6d403005fb047'
+$idBanco = '572aac69bdb6d403005fb053'
 
 #Almacenes
 $idPulmon = '572aad41bdb6d403005fb3b8'
 $idPrincipal = '572aad41bdb6d403005fb2da'
 $idPrincipal2 = '572aad41bdb6d403005fb3b7'
 $idRecepcion = '572aad41bdb6d403005fb2d8'
-revisar este es el de desarrollo $idDespacho = '571262aaa980ba030058a2bc'
+$idDespacho = '572aad41bdb6d403005fb2d9'
 
 $heroku_url = 'http://integracion-2016-prod.herokuapp.com/'
 $hash_key = 'zHHatno@hjie%xU'
@@ -50,22 +50,15 @@ $ampq = 'amqp://ehtypuyg:FTCipJb52hxpiHxkaGIzJ6kVH_yJ1Qwc@jaguar.rmq.cloudamqp.c
 # $idDespacho = '571262aaa980ba030058a2bc'
 
 
-<<<<<<< HEAD
-$heroku_url = 'http://integracion-2016-dev.herokuapp.com/'
-$hash_key = 'cd0A9ZK#u#vxES9'
-$ftp_password='BSnt6txv'
-$ampq = 'amqp://vbxaemul:bbBSE5xmmKhc6rinnl1QjpxT_k-42nzt@fox.rmq.cloudamqp.com/vbxaemul'
-=======
+
 # $heroku_url = 'http://integracion-2016-dev.herokuapp.com/'
 # $hash_key = 'cd0A9ZK#u#vxES9'
 # $ftp_password='BSnt6txv'
-
->>>>>>> master
-
+# $ampq = 'amqp://vbxaemul:bbBSE5xmmKhc6rinnl1QjpxT_k-42nzt@fox.rmq.cloudamqp.com/vbxaemul'
 
 ###################
 
-def test
+# def test
 
 
 # 	conn = Bunny.new($ampq)
