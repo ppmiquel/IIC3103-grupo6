@@ -44,6 +44,8 @@ Rails.application.routes.draw do
 
   get 'api/verBodegas' => 'api#verBodegas'
 
+  get 'api' => 'api#cambiar'
+
   get 'api/test' => 'api#test'
 
   get 'api/vaciarRecepcion' => 'api#vaciarBodegaRecepcionOnline'

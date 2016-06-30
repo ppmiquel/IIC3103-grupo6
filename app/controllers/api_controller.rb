@@ -6,7 +6,7 @@ require 'sftp_oc_module'
 require 'proms_module'
 require 'ofertas_module'
 require 'bunny'
-require 'json'	
+require 'json'
 
 class ApiController < ApplicationController
 
@@ -73,7 +73,7 @@ $ampq = 'amqp://ehtypuyg:FTCipJb52hxpiHxkaGIzJ6kVH_yJ1Qwc@jaguar.rmq.cloudamqp.c
 # 		promo = q.pop
 # 		promocionJson = promo[2].to_s
 # 		promocion = JSON.parse(promocionJson)
-		
+
 # 		sku = promocion['sku']
 # 		puts("El sku de la oferta es " + sku)
 # 		if(sku == '13' || sku == '17' || sku == '25' || sku == '53' )
@@ -83,12 +83,12 @@ $ampq = 'amqp://ehtypuyg:FTCipJb52hxpiHxkaGIzJ6kVH_yJ1Qwc@jaguar.rmq.cloudamqp.c
 # 			codigo = promocion['codigo']
 # 			publicar = promocion['publicar']
 # 			puts ("sku: " + sku)
-# 			puts (" precio: " + precio.to_s) 
+# 			puts (" precio: " + precio.to_s)
 # 			puts (" inicio: " + inicio.to_s)
 # 			puts (" fin: " + fin.to_s)
 # 			puts (" codigo: " + codigo)
 # 			Oferta.create(sku: sku, precio:precio, inicio: inicio, fin: fin, codigo: codigo)
-# 			if publicar 
+# 			if publicar
 				# puts("Voy a publicar")
 # 				nombre = ""
 # 				imagen = ""
@@ -125,6 +125,25 @@ $ampq = 'amqp://ehtypuyg:FTCipJb52hxpiHxkaGIzJ6kVH_yJ1Qwc@jaguar.rmq.cloudamqp.c
 
 # end
 
+def cambiar
+	$url = 'moto.ing.puc.cl'
+	$idGrupo = '572aac69bdb6d403005fb047'
+	$idBanco = '572aac69bdb6d403005fb053'
+
+	#Almacenes
+	$idPulmon = '572aad41bdb6d403005fb3b8'
+	$idPrincipal = '572aad41bdb6d403005fb2da'
+	$idPrincipal2 = '572aad41bdb6d403005fb3b7'
+	$idRecepcion = '572aad41bdb6d403005fb2d8'
+	$idDespacho = '572aad41bdb6d403005fb2d9'
+
+	$heroku_url = 'http://integracion-2016-prod.herokuapp.com/'
+	$hash_key = 'zHHatno@hjie%xU'
+	$ftp_password='qQLEV4n6'
+	$ampq = 'amqp://ehtypuyg:FTCipJb52hxpiHxkaGIzJ6kVH_yJ1Qwc@jaguar.rmq.cloudamqp.com/ehtypuyg'
+	response = { :validado => true}
+	render :json =>response
+end
 
 
 def producirArrozOnline
@@ -295,7 +314,7 @@ end
 
 		Factura.create(idfact: idfact, cliente: cliente, proveedor: proveedor, valor_bruto: valor_bruto, iva: iva, estado: estado, idoc: idoc)
 
-		
+
 
 		ord = Orden.getOrden(idoc)
 
