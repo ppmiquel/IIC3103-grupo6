@@ -38,13 +38,13 @@ def buscarOferta
 				nombre = ""
 				imagen = ""
 				case sku
-				when 13
+				when "13"
 				  nombre= "arroz "
 				  imagen= "goo.gl/jL7s3r"
-				when 6
+				when "17"
 				  nombre="cereal de arroz"
 				  imagen = "goo.gl/6hgBBX"
-				when String
+				when "25"
 				  nombre="azucar"
 				  imagen = "goo.gl/DgvaQf"
 				else
@@ -54,6 +54,7 @@ def buscarOferta
 				mensaje= " "+nombre+ "a solo " + precio + "hasta: " + fin + "\nCódigo: " +codigo
 				publica mensaje , imagen
 			end
+
 
 		end
 		cantidad = q.message_count
