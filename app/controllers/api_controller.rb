@@ -150,6 +150,13 @@ def cambiar
 	render :json =>response
 end
 
+def vars
+	response =  {:url => $url, :idGrupo => $idGrupo, :idBanco => $idBanco, :heroku_url => $heroku_url}
+	render :json => response
+end
+
+
+
 
 def producirArrozOnline
 arroz =producirArroz(2)
@@ -270,7 +277,7 @@ end
 			puts "idoc: "  + ordenx.idoc
 			puts "precio: "  + ordenx.precio.to_s
 			puts  almacenId
-			moverStockBodega(ordenx.sku, almacenId, ordenx.idoc, ordenx.precio)
+			despacharB2B (ordenx.idoc, ordenx.sku, ordenx.cantidad, ordenx.precio, almacenId)
 
 			numero = group.numero
 			avisar_despacho(idfact, numero)

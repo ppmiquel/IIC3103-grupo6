@@ -9,19 +9,19 @@ if Group.first.nil?
 	if ### esperemos tener todos los datos
 
 	####nos compran
-		Group.create(idgrupo: "572aac69bdb6d403005fb042" , numero: 1, cuenta: "572aac69bdb6d403005fb04e" , importa: true ,sku1: 47)
+		Group.create(idgrupo: "572aac69bdb6d403005fb042" , numero: 1, cuenta: "572aac69bdb6d403005fb04e" , importa: true ,sku1: 47, warehouse: "572aad41bdb6d403005fb066")
 	#compra y vende e 5
-		Group.create(idgrupo: "572aac69bdb6d403005fb046", numero: 5, cuenta: "572aac69bdb6d403005fb052", importa: true,sku1: 52 )
+		Group.create(idgrupo: "572aac69bdb6d403005fb046", numero: 5, cuenta: "572aac69bdb6d403005fb052", importa: true,sku1: 52, warehouse: "572aad41bdb6d403005fb278" )
 	#compra y vende el 9
-		Group.create(idgrupo: "572aac69bdb6d403005fb04a" , numero: 9, cuenta: "572aac69bdb6d403005fb04a", importa: true,sku1: 20 )
-		Group.create(idgrupo: "572aac69bdb6d403005fb043", numero: 2, cuenta: "572aac69bdb6d403005fb04f", importa: true)
+		Group.create(idgrupo: "572aac69bdb6d403005fb04a" , numero: 9, cuenta: "572aac69bdb6d403005fb057", importa: true,sku1: 20, warehouse: "572aad41bdb6d403005fb4b8" )
+		Group.create(idgrupo: "572aac69bdb6d403005fb043", numero: 2, cuenta: "572aac69bdb6d403005fb04f", importa: true, warehouse: "572aad41bdb6d403005fb0ba")
 
 	##### nos venden
-		Group.create(idgrupo: "572aac69bdb6d403005fb04d" , numero: 12, cuenta: "572aac69bdb6d403005fb05a", importa: true,sku1: 7 )
+		Group.create(idgrupo: "572aac69bdb6d403005fb04d" , numero: 12, cuenta: "572aac69bdb6d403005fb05a", importa: true,sku1: 7, warehouse: "572aad42bdb6d403005fb69f" )
 	####compra y vende el 6
-		Group.create(idgrupo: "572aac69bdb6d403005fb047" , numero: 6, cuenta: "571262c3a980ba030058ab62", importa: true,sku1: 13, sku2: 25 )
-		Group.create(idgrupo: "572aac69bdb6d403005fb049", numero: 8, cuenta: "572aac69bdb6d403005fb056", importa: true,sku1: 26 )
-		Group.create(idgrupo: "572aac69bdb6d403005fb045", numero: 4, cuenta: "572aac69bdb6d403005fb051", importa: true,sku1: 38 )
+		Group.create(idgrupo: "572aac69bdb6d403005fb047" , numero: 6, cuenta: "572aac69bdb6d403005fb053", importa: true,sku1: 13, sku2: 25, warehouse: "572aad41bdb6d403005fb2d8")
+		Group.create(idgrupo: "572aac69bdb6d403005fb049", numero: 8, cuenta: "572aac69bdb6d403005fb056", importa: true,sku1: 26, warehouse: "572aad41bdb6d403005fb416" )
+		Group.create(idgrupo: "572aac69bdb6d403005fb045", numero: 4, cuenta: "572aac69bdb6d403005fb051", importa: true,sku1: 38, warehouse: "572aad41bdb6d403005fb208" )
 # template: Grupo.create(idgrupo: , numero:   , cuenta: , importa: true,sku1: ,sku2: ,sku3: ,sku4: ,sku5: ,sku6: )
 		end
 end

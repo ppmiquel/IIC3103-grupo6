@@ -21,6 +21,9 @@ Rails.application.routes.draw do
 
   get 'face/:mensaje' => 'welcome#face'
 
+
+  get 'vars' => 'api#vars'
+
   get 'doc' => 'welcome#doc', path: 'api/documentacion'
   get 'orders' => 'ordens#index', path: 'orders'
   get 'index' => 'welcome#index', path: 'panel'
