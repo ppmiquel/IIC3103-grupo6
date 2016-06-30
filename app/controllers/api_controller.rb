@@ -20,6 +20,7 @@ class ApiController < ApplicationController
 
 #####    PRODUCCION   #######
 
+
 $url = 'moto.ing.puc.cl'
 $idGrupo = '572aac69bdb6d403005fb047'
 $idBanco = '572aac69bdb6d403005fb053'
