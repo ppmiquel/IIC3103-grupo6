@@ -31,18 +31,17 @@
       <h6 class="product-section-title">Stock</h6>
       <div>
         <span class="lead price selling" itemprop="price">
-          <%= Bodega.getTheStock(@product.sku) %>
+          <%= Bodega.getProductStock(@product.sku) %>
         </span>
-        <span itemprop="priceCurrency" content="<%= @product.currency %>"></span>
       </div>
 
 
-      <% if @product.master.can_supply? %>
+      <!-- <% if @product.master.can_supply? %>
         <link itemprop="availability" href="https://schema.org/InStock" />
       <% elsif @product.variants.empty? %>
         <br />
         <span class="out-of-stock"><%= Spree.t(:out_of_stock) %></span>
-      <% end %>
+      <% end %> -->
     </div>
 
     <% if @product.price_in(current_currency) and !@product.price.nil? %>

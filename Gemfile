@@ -51,7 +51,6 @@ gem "unicorn"
 
 gem 'bootstrap-sass', '~> 3.3'
 gem 'autoprefixer-rails'
-gem 'json'
 
 gem  'net-sftp'
 gem  'net-ssh'

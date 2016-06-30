@@ -20,43 +20,47 @@ class ApiController < ApplicationController
 
 #####    PRODUCCION   #######
 
+$url = 'moto.ing.puc.cl'
+$idGrupo: '572aac69bdb6d403005fb047'
+$idBanco: '572aac69bdb6d403005fb053'
 
-# $url = 'moto.ing.puc.cl'
-# $idGrupo: '572aac69bdb6d403005fb047'
-# $idBanco: '572aac69bdb6d403005fb053'
-#
-# #Almacenes
-# $idPulmon = '572aad41bdb6d403005fb3b8'
-# $idPrincipal = '572aad41bdb6d403005fb2da'
-# $idPrincipal2 = '572aad41bdb6d403005fb3b7'
-# $idRecepcion = '572aad41bdb6d403005fb2d8'
-# revisar este es el de desarrollo $idDespacho = '571262aaa980ba030058a2bc'
-#
-# $heroku_url = 'http://integracion-2016-prod.herokuapp.com/'
-# $hash_key = 'zHHatno@hjie%xU'
-# $ftp_password='qQLEV4n6'
-# $ampq = 'amqp://ehtypuyg:FTCipJb52hxpiHxkaGIzJ6kVH_yJ1Qwc@jaguar.rmq.cloudamqp.com/ehtypuyg'
+#Almacenes
+$idPulmon = '572aad41bdb6d403005fb3b8'
+$idPrincipal = '572aad41bdb6d403005fb2da'
+$idPrincipal2 = '572aad41bdb6d403005fb3b7'
+$idRecepcion = '572aad41bdb6d403005fb2d8'
+revisar este es el de desarrollo $idDespacho = '571262aaa980ba030058a2bc'
 
-
+$heroku_url = 'http://integracion-2016-prod.herokuapp.com/'
+$hash_key = 'zHHatno@hjie%xU'
+$ftp_password='qQLEV4n6'
+$ampq = 'amqp://ehtypuyg:FTCipJb52hxpiHxkaGIzJ6kVH_yJ1Qwc@jaguar.rmq.cloudamqp.com/ehtypuyg'
 
 #####    DESARROLLO   #######
 
-$url = 'mare.ing.puc.cl'
-$idGrupo= '571262b8a980ba030058ab54'
-$idBanco= '571262c3a980ba030058ab62'
+# $url = 'mare.ing.puc.cl'
+# $idGrupo= '571262b8a980ba030058ab54'
+# $idBanco= '571262c3a980ba030058ab62'
 
-#Almacenes
-$idPulmon = '571262aaa980ba030058a2f6'
-$idPrincipal = '571262aaa980ba030058a2bd'
-$idPrincipal2 = '571262aaa980ba030058a2f5'
-$idRecepcion = '571262aaa980ba030058a2bb'
-$idDespacho = '571262aaa980ba030058a2bc'
+# #Almacenes
+# $idPulmon = '571262aaa980ba030058a2f6'
+# $idPrincipal = '571262aaa980ba030058a2bd'
+# $idPrincipal2 = '571262aaa980ba030058a2f5'
+# $idRecepcion = '571262aaa980ba030058a2bb'
+# $idDespacho = '571262aaa980ba030058a2bc'
 
 
+<<<<<<< HEAD
 $heroku_url = 'http://integracion-2016-dev.herokuapp.com/'
 $hash_key = 'cd0A9ZK#u#vxES9'
 $ftp_password='BSnt6txv'
 $ampq = 'amqp://vbxaemul:bbBSE5xmmKhc6rinnl1QjpxT_k-42nzt@fox.rmq.cloudamqp.com/vbxaemul'
+=======
+# $heroku_url = 'http://integracion-2016-dev.herokuapp.com/'
+# $hash_key = 'cd0A9ZK#u#vxES9'
+# $ftp_password='BSnt6txv'
+
+>>>>>>> master
 
 
 ###################
