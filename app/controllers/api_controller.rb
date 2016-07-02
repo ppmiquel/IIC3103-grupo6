@@ -25,6 +25,7 @@ $url = 'moto.ing.puc.cl'
 $idGrupo = '572aac69bdb6d403005fb047'
 $idBanco = '572aac69bdb6d403005fb053'
 
+
 #Almacenes
 $idPulmon = '572aad41bdb6d403005fb3b8'
 $idPrincipal = '572aad41bdb6d403005fb2da'
