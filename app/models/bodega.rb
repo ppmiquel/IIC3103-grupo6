@@ -1,9 +1,9 @@
 
 class Bodega < ActiveRecord::Base
 
-  $heroku_url = 'http://integracion-2016-dev.herokuapp.com/'
-  $hash_key = 'cd0A9ZK#u#vxES9'
-  
+  # $heroku_url = 'http://integracion-2016-dev.herokuapp.com/'
+  # $hash_key = 'cd0A9ZK#u#vxES9'
+
   def self.despacharPedido(idoc, sku, cantidad, precio, direccion)
     almacenes = getAlmacenes()
     totalDespachados = 0
@@ -82,7 +82,7 @@ class Bodega < ActiveRecord::Base
         end
       end
     end
-    return stock
+    return 0
     end
 
     def self.getAlmacenes

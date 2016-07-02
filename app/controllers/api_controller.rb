@@ -60,9 +60,23 @@ $ampq = 'amqp://vbxaemul:bbBSE5xmmKhc6rinnl1QjpxT_k-42nzt@fox.rmq.cloudamqp.com/
 
 ###################
 
+
+
 def hash
-hash = createHash('GET')
-render :json =>hash
+		code = "integrapromo74669"
+		price = 1600
+		if !Oferta.where(codigo: code).blank?
+			promotion_code = Oferta.where(codigo: code).take.codigo
+			if (promotion_code)
+				init_date = Oferta.where(codigo: code).take.inicio
+				finish_date = Oferta.where(codigo: code).take.fin
+				today = Time.now.to_i
+				# if((today>init_date)&&(today<finish_date))
+					price=Oferta.where(codigo: code).take.precio
+				# end
+			end
+		end
+render :json =>price
 end
 
 def cambiar

@@ -34,11 +34,9 @@
           <%= Bodega.getProductStock(@product.sku) %>
         </span>
       </div>
-
-
       <!-- <% if @product.master.can_supply? %>
         <link itemprop="availability" href="https://schema.org/InStock" />
-      <% elsif @product.variants.empty? %>
+      <% elsif Bodega.getProductStock(@product.sku)==0 %>
         <br />
         <span class="out-of-stock"><%= Spree.t(:out_of_stock) %></span>
       <% end %> -->
@@ -67,8 +65,10 @@
         <div class="add-to-cart">
           <%= label_tag "Direccion:" %>
           <%= text_field_tag :direccion, '', class: 'title form-control' %>
-
-          <br/>
+          <br>
+          <%= label_tag "Código promoción:" %>
+          <%= text_field_tag :code, '', class: 'title form-control' %>
+          <br>
           <%= hidden_field_tag :price, @product.price, :class=> 'title form-control', :min => 1 %>
           <%= hidden_field_tag :sku, @product.sku %>
           <div class="input-group">
