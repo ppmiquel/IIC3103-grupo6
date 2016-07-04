@@ -77,9 +77,9 @@ module Spree
         error = Spree.t(:please_enter_reasonable_quantity)
       end
 
-      if error
-        flash[:error] = error
-        redirect_back_or_default(spree.root_path)
+      if (quantity>Bodega.getProductStock(sku))
+        url = "http://localhost:3000/tienda/stock"
+        redirect_to url
       else
         @id_boleta = Banco.crearBoleta(quantity*price, direccion)
         Bodega.despacharPedido(@id_boleta, sku, quantity, price, direccion)

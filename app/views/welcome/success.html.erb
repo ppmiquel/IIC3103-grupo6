@@ -2,72 +2,36 @@
 <div class="main-container">
   <div class="padding-md">
 
+    <h1>
+      Compra realizada con éxito!</h1>
+    <br>
+    <div class='row'>
+      <div class='col-md-2'></div>
+      <div class='col-md-6' style="border:solid; text-align:center;">
 
-  <div class='row'>
-    <div class= 'col-md-2'></div>
-    <div class= 'col-md-6'>
-    <h1> Grupo 6 </h1>
-    <h3> ¡Estamos de vuelta!</h3>
-    <h4>- Más fuertes que nunca -</h4>
-    <br>
-    <br>
-    <%=  link_to 'Documentación de nuestra API', doc_path %>
-    <br>
-    <br>
-    <%=  link_to 'Tienda 6commerce', '/tienda/' %>
+        <h3 style="border-bottom:solid">
+          DATOS DE LA COMPRA</h3>
+        <h4>Dirección:
+          <%= @invoice.cliente %></h4>
+          <br>
 
-    <br>
-    <br>
-    <%=  link_to 'Login como admin', '/tienda/admin' %>
+        <h4>  Valor Bruto:
+          <%= @invoice.bruto %></h4>
+        <h4>  IVA:
+          <%= @invoice.iva %></h4>
+        <h2 style="border-top:solid; padding-top:10px">Total: $<%= @invoice.total %></h2>
+        <br>
 
-     </div>
-   </div>
+      </div>
+    </div>
+      <div class="row">
+
+        <br>
+        <%=  link_to '< Volver a tienda', '/tienda/' %>
 
 </div>
- </div>
-<div class="wrapper preload">
-  <%= render "shared/top" %>
-  <%= render "shared/sidebar" %>
-  <div class="main-container">
-    <div class="padding-md">
-      <ul class="breadcrumb">
-        <li><span class="primary-font"><i class="icon-home"></i></span><a href="../index.html">Inicio</a></li>
-        <li>Boletas</li>
-      </ul>
-
-      <table class="table table-striped" id="dataTable">
-        <thead>
-        <tr>
-          <th>Cliente</th>
-          <th>Proveedor</th>
-          <th>Bruto</th>
-          <th>IVA</th>
-          <th>total</th>
-          <th>OC</th>
-          <th>IdBoleta</th>
-          <th>Estado</th>
-          <th colspan="3"></th>
-        </tr>
-        </thead>
-
-        <tbody>
-        <% @invoice.each do |orden| %>
-            <tr>
-              <td><%= orden.cliente %></td>
-              <td><%= orden.proveedor %></td>
-              <td><%= orden.bruto %></td>
-              <td><%= orden.iva %></td>
-              <td><%= orden.total %></td>
-              <td><%= orden.oc %></td>
-              <td><%= orden.id_boleta %></td>
-              <td><%= orden.estado %></td>
-            </tr>
-        <% end %>
-        </tbody>
-      </table>
     </div>
 
-
-<%=  link_to 'Volver a tienda 6commerce', '/tienda/' %>
-      </div>
+  </div>
+</div>
 <% end %>
