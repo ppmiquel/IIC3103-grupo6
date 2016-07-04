@@ -39,6 +39,7 @@ Rails.application.routes.draw do
 
   get 'error' =>'welcome#error', path: 'tienda/error'
   get 'error' =>'welcome#stock', path: 'tienda/stock'
+  get 'error' =>'welcome#noAddress', path: 'tienda/noAddress'
 
   get 'api/facturas/recibir/:idfact' => 'api#fact_recibir'
 

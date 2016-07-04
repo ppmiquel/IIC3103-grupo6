@@ -78,7 +78,8 @@ module Spree
       end
 
       if direccion.empty?
-        error = Spree.t(:please_enter_reasonable_quantity)
+        url = "http://localhost:3000/tienda/noAddress"
+        redirect_to url
       else
         if (quantity>Bodega.getProductStock(sku))
           url = "http://localhost:3000/tienda/stock"
