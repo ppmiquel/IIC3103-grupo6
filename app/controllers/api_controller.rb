@@ -22,61 +22,71 @@ class ApiController < ApplicationController
 #####    PRODUCCION   #######
 
 
-# $url = 'moto.ing.puc.cl'
-# $idGrupo = '572aac69bdb6d403005fb047'
-# $idBanco = '572aac69bdb6d403005fb053'
+$url = 'moto.ing.puc.cl'
+$idGrupo = '572aac69bdb6d403005fb047'
+$idBanco = '572aac69bdb6d403005fb053'
 
-# #Almacenes
-# $idPulmon = '572aad41bdb6d403005fb3b8'
-# $idPrincipal = '572aad41bdb6d403005fb2da'
-# $idPrincipal2 = '572aad41bdb6d403005fb3b7'
-# $idRecepcion = '572aad41bdb6d403005fb2d8'
-# $idDespacho = '572aad41bdb6d403005fb2d9'
+#Almacenes
+$idPulmon = '572aad41bdb6d403005fb3b8'
+$idPrincipal = '572aad41bdb6d403005fb2da'
+$idPrincipal2 = '572aad41bdb6d403005fb3b7'
+$idRecepcion = '572aad41bdb6d403005fb2d8'
+$idDespacho = '572aad41bdb6d403005fb2d9'
 
-# $heroku_url = 'http://integracion-2016-prod.herokuapp.com/'
-# $hash_key = 'zHHatno@hjie%xU'
-# $ftp_password='qQLEV4n6'
-# $ampq = 'amqp://ehtypuyg:FTCipJb52hxpiHxkaGIzJ6kVH_yJ1Qwc@jaguar.rmq.cloudamqp.com/ehtypuyg'
+$heroku_url = 'http://integracion-2016-prod.herokuapp.com/'
+$hash_key = 'zHHatno@hjie%xU'
+$ftp_password='qQLEV4n6'
+$ampq = 'amqp://ehtypuyg:FTCipJb52hxpiHxkaGIzJ6kVH_yJ1Qwc@jaguar.rmq.cloudamqp.com/ehtypuyg'
 
 #####    DESARROLLO   #######
 
-$url = 'mare.ing.puc.cl'
-$idGrupo= '571262b8a980ba030058ab54'
-$idBanco= '571262c3a980ba030058ab62'
-
-#Almacenes
-$idPulmon = '571262aaa980ba030058a2f6'
-$idPrincipal = '571262aaa980ba030058a2bd'
-$idPrincipal2 = '571262aaa980ba030058a2f5'
-$idRecepcion = '571262aaa980ba030058a2bb'
-$idDespacho = '571262aaa980ba030058a2bc'
-
-
-
-$heroku_url = 'http://integracion-2016-dev.herokuapp.com/'
-$hash_key = 'cd0A9ZK#u#vxES9'
-$ftp_password='BSnt6txv'
-$ampq = 'amqp://vbxaemul:bbBSE5xmmKhc6rinnl1QjpxT_k-42nzt@fox.rmq.cloudamqp.com/vbxaemul'
+# $url = 'mare.ing.puc.cl'
+# $idGrupo= '571262b8a980ba030058ab54'
+# $idBanco= '571262c3a980ba030058ab62'
+#
+# #Almacenes
+# $idPulmon = '571262aaa980ba030058a2f6'
+# $idPrincipal = '571262aaa980ba030058a2bd'
+# $idPrincipal2 = '571262aaa980ba030058a2f5'
+# $idRecepcion = '571262aaa980ba030058a2bb'
+# $idDespacho = '571262aaa980ba030058a2bc'
+#
+#
+#
+# $heroku_url = 'http://integracion-2016-dev.herokuapp.com/'
+# $hash_key = 'cd0A9ZK#u#vxES9'
+# $ftp_password='BSnt6txv'
+# $ampq = 'amqp://vbxaemul:bbBSE5xmmKhc6rinnl1QjpxT_k-42nzt@fox.rmq.cloudamqp.com/vbxaemul'
 
 ###################
 
 
 
 def hash
-		code = "integrapromo74669"
-		price = 1600
-		if !Oferta.where(codigo: code).blank?
-			promotion_code = Oferta.where(codigo: code).take.codigo
-			if (promotion_code)
-				init_date = Oferta.where(codigo: code).take.inicio
-				finish_date = Oferta.where(codigo: code).take.fin
-				today = Time.now.to_i
-				# if((today>init_date)&&(today<finish_date))
-					price=Oferta.where(codigo: code).take.precio
-				# end
-			end
-		end
-render :json =>price
+	# total= 100
+	# idproveedor= $idGrupo
+	# cliente='lala'
+	# boleta= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").put("http://"+$url+"/facturas/boleta", :json => {:proveedor => idproveedor,:cliente=>cliente,:total=> total}).to_s, :symbolize_names => true)
+	# idbol=boleta[:_id]
+	# cliente =boleta[:cliente]
+	#
+	# proveedor = boleta[:proveedor]
+	# valor_bruto = boleta[:bruto]
+	# iva = boleta[:iva]
+	# total = boleta[:total]
+	# estado = boleta[:estado]
+	# created_at = boleta[:created_at]
+	# updated_at = boleta[:updated_at]
+	# oc = boleta[:oc]
+	#
+	# Boletum.create(created_at: created_at, updated_at: updated_at, cliente: cliente, proveedor: proveedor, bruto: valor_bruto, iva: iva, total: total, oc:oc,id_boleta:idbol,estado:estado)
+	#
+	# render :json => boleta[:_id]
+	ftps = Orden.all
+
+	# ftps = obtenerOC('575e325a9597ae0300849bb6')
+	render :json => ftps
+
 end
 
 def cambiar
@@ -169,6 +179,18 @@ def leerFtp
 	render :json =>response
 end
 
+def procesarFtp()
+	ftps = Orden.where(estado: 'leida')
+	ftps.each do |ftp|
+		if (ftp.cantidad<100)
+			despacharPedido(ftp.idoc, ftp.sku, ftp.cantidad, ftp.precio)
+					ftp.estado = 'despachado'
+					ftp.save
+		end
+	end
+	render :json =>ftps
+end
+
 
 	def pedir (cantidad, sku, dias, ngrupo)
 		canal="b2b"
@@ -189,7 +211,6 @@ end
 		numerox = Group.where(idgrupo: proveedor).take.numero
 		acepted = solicitar(oc[:_id], numerox)
 		return acepted
-
 
 	end
 

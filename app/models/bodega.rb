@@ -82,7 +82,7 @@ class Bodega < ActiveRecord::Base
         end
       end
     end
-    return 0
+    return stock
     end
 
     def self.getAlmacenes

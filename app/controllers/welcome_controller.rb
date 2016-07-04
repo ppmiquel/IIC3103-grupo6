@@ -24,7 +24,8 @@ class WelcomeController < ApplicationController
 	end
 
 	def success
-
+		id = params[:id]
+		@invoice = Boletum.where(id_boleta: id)[0]
 	end
 
 
