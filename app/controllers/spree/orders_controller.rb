@@ -78,17 +78,17 @@ module Spree
       end
 
       if direccion.empty?
-        url = "http://localhost:3000/tienda/noAddress"
+        url = "http://integra6.ing.puc.cl/tienda/noAddress"
         redirect_to url
       else
         if (quantity>Bodega.getProductStock(sku))
-          url = "http://localhost:3000/tienda/stock"
+          url = "http://integra6.ing.puc.cl/tienda/stock"
           redirect_to url
         else
           @id_boleta = Banco.crearBoleta(quantity*price, direccion)
           Bodega.despacharPedido(@id_boleta, sku, quantity, price, direccion)
-          urlOk='http://localhost:3000/tienda/success/'<<@id_boleta
-          url = $heroku_url+ "web/pagoenlinea?callbackUrl="+urlOk+"&cancelUrl=http://localhost:3000/tienda/error&boletaId="+@id_boleta
+          urlOk='http://integra6.ing.puc.cl/tienda/success/'<<@id_boleta
+          url = $heroku_url+ "web/pagoenlinea?callbackUrl="+urlOk+"&cancelUrl=http://integra6.ing.puc.cl/tienda/error&boletaId="+@id_boleta
           redirect_to url
         end
       end
