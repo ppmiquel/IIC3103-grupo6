@@ -63,20 +63,30 @@ $ampq = 'amqp://vbxaemul:bbBSE5xmmKhc6rinnl1QjpxT_k-42nzt@fox.rmq.cloudamqp.com/
 
 
 def hash
-		code = "integrapromo74669"
-		price = 1600
-		if !Oferta.where(codigo: code).blank?
-			promotion_code = Oferta.where(codigo: code).take.codigo
-			if (promotion_code)
-				init_date = Oferta.where(codigo: code).take.inicio
-				finish_date = Oferta.where(codigo: code).take.fin
-				today = Time.now.to_i
-				# if((today>init_date)&&(today<finish_date))
-					price=Oferta.where(codigo: code).take.precio
-				# end
-			end
-		end
-render :json =>price
+	# total= 100
+	# idproveedor= $idGrupo
+	# cliente='lala'
+	# boleta= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").put("http://"+$url+"/facturas/boleta", :json => {:proveedor => idproveedor,:cliente=>cliente,:total=> total}).to_s, :symbolize_names => true)
+	# idbol=boleta[:_id]
+	# cliente =boleta[:cliente]
+	#
+	# proveedor = boleta[:proveedor]
+	# valor_bruto = boleta[:bruto]
+	# iva = boleta[:iva]
+	# total = boleta[:total]
+	# estado = boleta[:estado]
+	# created_at = boleta[:created_at]
+	# updated_at = boleta[:updated_at]
+	# oc = boleta[:oc]
+	#
+	# Boletum.create(created_at: created_at, updated_at: updated_at, cliente: cliente, proveedor: proveedor, bruto: valor_bruto, iva: iva, total: total, oc:oc,id_boleta:idbol,estado:estado)
+	#
+	# render :json => boleta[:_id]
+	ftps = Orden.all
+
+	# ftps = obtenerOC('575e325a9597ae0300849bb6')
+	render :json => ftps
+
 end
 
 def cambiar
@@ -142,6 +152,18 @@ def leerFtp
 	render :json =>response
 end
 
+def procesarFtp()
+	ftps = Orden.where(estado: 'leida')
+	ftps.each do |ftp|
+		if (ftp.cantidad<100)
+			despacharPedido(ftp.idoc, ftp.sku, ftp.cantidad, ftp.precio)
+					ftp.estado = 'despachado'
+					ftp.save
+		end
+	end
+	render :json =>ftps
+end
+
 
 	def pedir (cantidad, sku, dias, ngrupo)
 		canal="b2b"
@@ -162,7 +184,6 @@ end
 		numerox = Group.where(idgrupo: proveedor).take.numero
 		acepted = solicitar(oc[:_id], numerox)
 		return acepted
-
 
 	end
 

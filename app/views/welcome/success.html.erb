@@ -1,8 +1,37 @@
 <% content_for :content do %>
-    <div class="padding">
-<h1> Pago Exitoso </h1>
-<h3> Datos de la boleta</h3>
+<div class="main-container">
+  <div class="padding-md">
 
-<%=  link_to 'Volver a tienda 6commerce', '/tienda/' %>
+    <h1>
+      Compra realizada con éxito!</h1>
+    <br>
+    <div class='row'>
+      <div class='col-md-2'></div>
+      <div class='col-md-6' style="border:solid; text-align:center;">
+
+        <h3 style="border-bottom:solid">
+          DATOS DE LA COMPRA</h3>
+        <h4>Dirección:
+          <%= @invoice.cliente %></h4>
+          <br>
+
+        <h4>  Valor Bruto:
+          <%= @invoice.bruto %></h4>
+        <h4>  IVA:
+          <%= @invoice.iva %></h4>
+        <h2 style="border-top:solid; padding-top:10px">Total: $<%= @invoice.total %></h2>
+        <br>
+
       </div>
+    </div>
+      <div class="row">
+
+        <br>
+        <%=  link_to '< Volver a tienda', '/tienda/' %>
+
+</div>
+    </div>
+
+  </div>
+</div>
 <% end %>

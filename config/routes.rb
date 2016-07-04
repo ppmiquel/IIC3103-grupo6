@@ -38,6 +38,8 @@ Rails.application.routes.draw do
   get 'success' =>'welcome#success', path: 'tienda/success/:id'
 
   get 'error' =>'welcome#error', path: 'tienda/error'
+  get 'error' =>'welcome#stock', path: 'tienda/stock'
+  get 'error' =>'welcome#noAddress', path: 'tienda/noAddress'
 
   get 'api/facturas/recibir/:idfact' => 'api#fact_recibir'
 
@@ -51,6 +53,8 @@ Rails.application.routes.draw do
   get 'api/hash' => 'api#hash'
 
   get 'api/test' => 'api#test'
+
+  get 'api/procesarFtp' => 'api#procesarFtp'
 
   get 'api/vaciarRecepcion' => 'api#vaciarBodegaRecepcionOnline'
 
