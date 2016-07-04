@@ -26,7 +26,6 @@ $url = 'moto.ing.puc.cl'
 $idGrupo = '572aac69bdb6d403005fb047'
 $idBanco = '572aac69bdb6d403005fb053'
 
-
 #Almacenes
 $idPulmon = '572aad41bdb6d403005fb3b8'
 $idPrincipal = '572aad41bdb6d403005fb2da'
@@ -83,10 +82,72 @@ def hash
 	# Boletum.create(created_at: created_at, updated_at: updated_at, cliente: cliente, proveedor: proveedor, bruto: valor_bruto, iva: iva, total: total, oc:oc,id_boleta:idbol,estado:estado)
 	#
 	# render :json => boleta[:_id]
-	ftps = Orden.all
+	# ftps = Orden.all
+	#
+	# # ftps = obtenerOC('575e325a9597ae0300849bb6')
+	# render :json => ftps
 
-	# ftps = obtenerOC('575e325a9597ae0300849bb6')
-	render :json => ftps
+	conn = Bunny.new($ampq)
+	conn.start
+
+	ch = conn.create_channel
+	q = ch.queue('ofertas', :auto_delete => true, :exclusive => false, :durable => false)
+
+	cantidad = q.message_count
+	puts("Quedan: " + cantidad.to_s)
+	while cantidad > 0
+		promo = q.pop
+		promocionJson = promo[2].to_s
+		promocion = JSON.parse(promocionJson)
+
+		sku = promocion['sku']
+		puts("El sku de la oferta es " + sku)
+
+		if(sku == '13' || sku == '17' || sku == '25' || sku == '53' )
+			precio = promocion['precio']
+			inicio = promocion['inicio']
+			fin = promocion['fin']
+			codigo = promocion['codigo']
+			publicar = promocion['publicar']
+			puts ("sku: " + sku)
+			puts (" precio: " + precio.to_s)
+			puts (" inicio: " + inicio.to_s)
+			puts (" fin: " + fin.to_s)
+			puts (" codigo: " + codigo)
+			Oferta.create(sku: sku, precio:precio, inicio: inicio, fin: fin, codigo: codigo)
+			if publicar
+				nombre = ""
+				imagen = ""
+				case sku
+				when "13"
+					nombre= "Arroz "
+					imagen= "http://integra6.ing.puc.cl/spree/products/1/product/arroz.jpg"
+				when "17"
+					nombre="Cereal de Arroz"
+					imagen = "http://integra6.ing.puc.cl/spree/products/3/product/cereal.jpg"
+				when "25"
+					nombre="Azucar "
+					imagen = "http://integra6.ing.puc.cl/spree/products/2/product/azucar.jpg"
+				else
+					nombre="Pan Integral "
+					imagen = "http://integra6.ing.puc.cl/spree/products/4/product/pan.jpg"
+				end
+				start = Time.strptime(inicio.to_s, '%Q').strftime("%Y-%m-%d %H:%M:%S")
+				ending = Time.strptime(fin.to_s, '%Q').strftime("%Y-%m-%d %H:%M:%S")
+				mensaje= " "+nombre+ "a solo $" + precio.to_s + " desde: " + start.to_s + " hasta: " + ending.to_s + "\nCódigo: " +codigo
+				publica mensaje , imagen
+			end
+
+
+		 end
+		cantidad = q.message_count
+		puts ("cantidad: " + cantidad.to_s)
+	end
+	ch.close
+	conn.stop
+
+	response = { :validado => true}
+	render :json =>response
 
 end
 
