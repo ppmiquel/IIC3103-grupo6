@@ -27,16 +27,7 @@ class DashboardController < ApplicationController
 
 
 	def self.get_stock_arroz(date,offset)
-		puts 'entre'
-		if date.to_s == "0"
-			date = current_date+offset
-		else
-			date = date+offset
-		end
-		trxs_dia = .all.where("created_at >= :start_date AND created_at <= :end_date",
-																 {start_date: date, end_date: date+1});
-		result =trxs_dia.where(cuenta_d: 'Grupo 6').sum("monto")-trxs_dia.where(cuenta_o:'Grupo 6').sum("monto")
-		result
+	
 	end
 
 	def self.get_saldo(date,offset)
