@@ -81,7 +81,7 @@ module Spree
         flash[:error] = error
         redirect_back_or_default(spree.root_path)
       else
-        @id_boleta = Banco.crearBoleta(quantity*price)
+        @id_boleta = Banco.crearBoleta(quantity*price, direccion)
         Bodega.despacharPedido(@id_boleta, sku, quantity, price, direccion)
 
         urlOk='http://localhost:3000/tienda/success/'<<@id_boleta

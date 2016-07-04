@@ -25,13 +25,15 @@ class WelcomeController < ApplicationController
 	end
 
 	def success
+		@invoice = Boletum.all
+
 
 	end
 
 
 
 
-	def twitt 
+	def twitt
 
 		tweet = twitte params[:mensaje]  , "nada"
 
@@ -44,7 +46,7 @@ class WelcomeController < ApplicationController
 
 
 	def face
-		
+
 		msg = publica params[:mensaje] , "nada"
 
 	   response = { :estado => "aceptado", :tweet => msg}

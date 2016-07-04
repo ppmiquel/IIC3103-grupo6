@@ -34,7 +34,6 @@ def getProductStock(sku)
   end
 
 
-
 #OK#OK
   def getAlmacenes
     hash = createHash('GET')
@@ -90,7 +89,9 @@ def getProductStock(sku)
 #OK#OK
   def getCuentaFabrica()
     hash = createHash('GET')
-    return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).get($heroku_url + "bodega/fabrica/getCuenta").to_s)
+
+    cuenta = JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).get($heroku_url + "bodega/fabrica/getCuenta").to_s)
+    return cuenta['cuentaId']
   end
 
 
@@ -99,7 +100,6 @@ def getProductStock(sku)
   def despacharStock(productoId, direccion, precio, idoc)
     hash = createHash('DELETE' + productoId + direccion + precio.to_s + idoc)
     return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).delete($heroku_url + "bodega/stock", :json => {:productoId => productoId , :direccion => direccion , :precio => precio , :oc => idoc}), :symbolize_names => true)
-
   end
 
 
@@ -107,15 +107,18 @@ def getProductStock(sku)
   def despacharPedido(idoc, sku, cantidad, precio)
     almacenes = getAlmacenes()
     totalDespachados = 0
-    idDespacho = obtenerIdAlmacenDespacho()
+    idDespacho = $idDespacho
     moverInsumo(sku,cantidad)
     almacenes.each do |almacen|
       if almacen['despacho'] == true
         productos = getStock(sku, almacen['_id'])
         productos.each do |producto|
           if(totalDespachados < cantidad.to_i)
-            ordendespachado = despacharStock(productoId,"a",precio,idoc)
+            ordendespachado = despacharStock(producto['_id'],"internacional",precio,idoc)
             totalDespachados += 1
+            for i in 1..500000
+              puts "despachados"+ totalDespachados.to_s
+            end
           end
         end
       end
@@ -149,6 +152,9 @@ def producirArroz(lote)
   precioArroz = 1286*cantidad
   sku = '13'
   trxId = pagarProduccion(precioArroz)
+  puts ("sku:" + sku)
+  puts ("trx:" + trxId)
+  # puts (cantidad)
   response = producirStock(sku,trxId,cantidad)
 
 end
@@ -174,9 +180,8 @@ end
 #OK
 def pagarProduccion(precio)
   cuenta = getCuentaFabrica()
-  destino = "572aac69bdb6d403005fb040"
   # Metodo transferir Banco
-  trx = transferir(precio, $idBanco ,destino)
+  trx = transferir(precio, $idBanco, cuenta)
 	trxId = trx[:_id]
   return trxId
 end
@@ -188,7 +193,7 @@ def moverInsumo(sku,cantidad)
 	almacenes = getAlmacenes()
   movidos = 0
   #cambiado:)
-  idDespacho = obtenerIdAlmacenDespacho()
+  idDespacho = $idDespacho
   almacenes.each do |almacen|
     if almacen['despacho'] == false
       productos = getStock(sku, almacen['_id'])
@@ -196,6 +201,9 @@ def moverInsumo(sku,cantidad)
         if(movidos < cantidad.to_i)
           moverStock(producto['_id'],idDespacho)
 					movidos = movidos +1
+          for i in 1..500000
+            puts "movidos a despacho:" + movidos.to_s
+          end
         end
       end
     end
@@ -360,10 +368,16 @@ stockProducto = getStock(productId,$idPulmon)
             moverss = moverStock(stock['_id'], $idPrincipal)
             movido = true
             i +=1
+            for j in 1..100000
+              puts "movidos a despacho:" + i.to_s
+            end
           elsif(almacen['_id']==$idPrincipal2 && almacen['totalSpace'] > almacen['usedSpace'] && movido ==false)
             moverss = moverStock(stock['_id'], $idPrincipal2)
             movido = true
             i +=1
+            for j in 1..100000
+              puts "movidos a despacho:" + i.to_s
+            end
           end
         end
       end

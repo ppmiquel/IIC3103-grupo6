@@ -5,6 +5,7 @@ class OrdensController < ApplicationController
   # GET /ordens.json
   def index
     @ordens = Orden.all
+    
   end
 
   # GET /ordens/1
