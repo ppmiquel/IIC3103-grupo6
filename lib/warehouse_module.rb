@@ -360,14 +360,14 @@ stockProducto = getStock(productId,$idPulmon)
             moverss = moverStock(stock['_id'], $idPrincipal)
             movido = true
             i +=1
-            for j in 1..100000
+            for j in 1..1000000
               puts "movidos a despacho:" + i.to_s
             end
           elsif(almacen['_id']==$idPrincipal2 && almacen['totalSpace'] > almacen['usedSpace'] && movido ==false)
             moverss = moverStock(stock['_id'], $idPrincipal2)
             movido = true
             i +=1
-            for j in 1..100000
+            for j in 1..1000000
               puts "movidos a despacho:" + i.to_s
             end
           end
