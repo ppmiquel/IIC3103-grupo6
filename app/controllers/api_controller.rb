@@ -147,8 +147,9 @@ def vaciarPulmonOnline
 	render :json =>response
 end
 	def self.getBodegas
-
-		hash = createHash('GET')
+		key = $hash_key
+		hmac = OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha1'),key,'GET')
+		hash = Base64.encode64(hmac).chomp
 		return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).get( $heroku_url + "bodega/almacenes").to_s)
 
 	end
