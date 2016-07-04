@@ -7,6 +7,7 @@ require 'proms_module'
 require 'ofertas_module'
 require 'bunny'
 require 'json'
+require 'date'
 
 class ApiController < ApplicationController
 
@@ -43,16 +44,16 @@ $ampq = 'amqp://ehtypuyg:FTCipJb52hxpiHxkaGIzJ6kVH_yJ1Qwc@jaguar.rmq.cloudamqp.c
 # $url = 'mare.ing.puc.cl'
 # $idGrupo= '571262b8a980ba030058ab54'
 # $idBanco= '571262c3a980ba030058ab62'
-
+#
 # #Almacenes
 # $idPulmon = '571262aaa980ba030058a2f6'
 # $idPrincipal = '571262aaa980ba030058a2bd'
 # $idPrincipal2 = '571262aaa980ba030058a2f5'
 # $idRecepcion = '571262aaa980ba030058a2bb'
 # $idDespacho = '571262aaa980ba030058a2bc'
-
-
-
+#
+#
+#
 # $heroku_url = 'http://integracion-2016-dev.herokuapp.com/'
 # $hash_key = 'cd0A9ZK#u#vxES9'
 # $ftp_password='BSnt6txv'
@@ -60,75 +61,33 @@ $ampq = 'amqp://ehtypuyg:FTCipJb52hxpiHxkaGIzJ6kVH_yJ1Qwc@jaguar.rmq.cloudamqp.c
 
 ###################
 
-# def test
 
-
-# 	conn = Bunny.new($ampq)
-# 	conn.start
-
-# 	ch = conn.create_channel
-# 	q = ch.queue('ofertas', :auto_delete => true, :exclusive => false, :durable => false)
-
-# 	cantidad = q.message_count
-# 	# while cantidad > 0
-# 		promo = q.pop
-# 		promocionJson = promo[2].to_s
-# 		promocion = JSON.parse(promocionJson)
-
-# 		sku = promocion['sku']
-# 		puts("El sku de la oferta es " + sku)
-# 		if(sku == '13' || sku == '17' || sku == '25' || sku == '53' )
-# 			precio = promocion['precio']
-# 			inicio = promocion['inicio']
-# 			fin = promocion['fin']
-# 			codigo = promocion['codigo']
-# 			publicar = promocion['publicar']
-# 			puts ("sku: " + sku)
-# 			puts (" precio: " + precio.to_s)
-# 			puts (" inicio: " + inicio.to_s)
-# 			puts (" fin: " + fin.to_s)
-# 			puts (" codigo: " + codigo)
-# 			Oferta.create(sku: sku, precio:precio, inicio: inicio, fin: fin, codigo: codigo)
-# 			if publicar
-				# puts("Voy a publicar")
-# 				nombre = ""
-# 				imagen = ""
-# 				case sku
-# 				when "13"
-# 				  nombre= "arroz "
-# 				  imagen= "goo.gl/jL7s3r"
-# 				when "17"
-# 				  nombre="cereal de arroz"
-# 				  imagen = "goo.gl/6hgBBX"
-# 				when "25"
-# 				  nombre="azucar"
-# 				  imagen = "goo.gl/DgvaQf"
-# 				else
-# 				  nombre="pan integral "
-# 				  imagen = "http://goo.gl/QcU6HH"
-# 				end
-# 				mensaje= " "+nombre+ "a solo " + precio.to_s + "hasta: " + fin.to_s + "\nCódigo: " +codigo
-				# puts("el mensaje es: " + mensaje)
-# 				publica mensaje , imagen
-				# puts("Publico?")
-# 			end
-
-
-# 		 end
-# 		# cantidad = q.message_count
-# 		# puts ("cantidad: " + cantidad.to_s)
-# 	# end
-# 	ch.close
-# 	conn.stop
-
-# 	response = { :validado => true}
-# 	render :json =>response
-
-# end
 
 def hash
-hash = createHash('GET')
-render :json =>hash
+	# total= 100
+	# idproveedor= $idGrupo
+	# cliente='lala'
+	# boleta= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").put("http://"+$url+"/facturas/boleta", :json => {:proveedor => idproveedor,:cliente=>cliente,:total=> total}).to_s, :symbolize_names => true)
+	# idbol=boleta[:_id]
+	# cliente =boleta[:cliente]
+	#
+	# proveedor = boleta[:proveedor]
+	# valor_bruto = boleta[:bruto]
+	# iva = boleta[:iva]
+	# total = boleta[:total]
+	# estado = boleta[:estado]
+	# created_at = boleta[:created_at]
+	# updated_at = boleta[:updated_at]
+	# oc = boleta[:oc]
+	#
+	# Boletum.create(created_at: created_at, updated_at: updated_at, cliente: cliente, proveedor: proveedor, bruto: valor_bruto, iva: iva, total: total, oc:oc,id_boleta:idbol,estado:estado)
+	#
+	# render :json => boleta[:_id]
+	ftps = Orden.all
+
+	# ftps = obtenerOC('575e325a9597ae0300849bb6')
+	render :json => ftps
+
 end
 
 def cambiar
@@ -150,6 +109,13 @@ def cambiar
 	response = { :validado => true}
 	render :json =>response
 end
+
+def vars
+	response =  {:url => $url, :idGrupo => $idGrupo, :idBanco => $idBanco, :heroku_url => $heroku_url}
+	render :json => response
+end
+
+
 
 
 def producirArrozOnline
@@ -187,6 +153,18 @@ def leerFtp
 	render :json =>response
 end
 
+def procesarFtp()
+	ftps = Orden.where(estado: 'leida')
+	ftps.each do |ftp|
+		if (ftp.cantidad<100)
+			despacharPedido(ftp.idoc, ftp.sku, ftp.cantidad, ftp.precio)
+					ftp.estado = 'despachado'
+					ftp.save
+		end
+	end
+	render :json =>ftps
+end
+
 
 	def pedir (cantidad, sku, dias, ngrupo)
 		canal="b2b"
@@ -207,7 +185,6 @@ end
 		numerox = Group.where(idgrupo: proveedor).take.numero
 		acepted = solicitar(oc[:_id], numerox)
 		return acepted
-
 
 	end
 
@@ -270,8 +247,8 @@ end
 
 			puts "idoc: "  + ordenx.idoc
 			puts "precio: "  + ordenx.precio.to_s
-			puts  almacenId
-			moverStockBodega(ordenx.sku, almacenId, ordenx.idoc, ordenx.precio)
+			puts  (almacenId)
+			despacharB2B(ordenx.idoc, ordenx.sku, ordenx.cantidad, ordenx.precio, almacenId)
 
 			numero = group.numero
 			avisar_despacho(idfact, numero)

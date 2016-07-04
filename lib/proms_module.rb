@@ -8,8 +8,8 @@ module PromsModule
 	end
 
 	def twitte (mensaje, url)
-		tweet=mensaje + " " + url
-
+		tweet = mensaje
+		media = open(url)
 		  puts ENV['TWITTER_API_KEY']
 		#Obtenemos lo que el usuario digite
 
@@ -20,8 +20,8 @@ module PromsModule
           config.access_token_secret = "YuU1cTnI7obvb2ugESPCWYGrCVqRq3DeHwgLCva2uFUDC"
       	end
 
-	   $client.update(tweet)
-	   tweet
+	   $client.update_with_media(tweet , media )
+	   
 	end
 
 	def faceboki (mensaje, url)
