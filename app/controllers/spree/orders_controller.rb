@@ -77,19 +77,20 @@ module Spree
         error = Spree.t(:please_enter_reasonable_quantity)
       end
 
-      if (quantity>Bodega.getProductStock(sku))
-        url = "http://localhost:3000/tienda/stock"
-        redirect_to url
+      if direccion.empty?
+        error = Spree.t(:please_enter_reasonable_quantity)
       else
-        @id_boleta = Banco.crearBoleta(quantity*price, direccion)
-        Bodega.despacharPedido(@id_boleta, sku, quantity, price, direccion)
-
-        urlOk='http://localhost:3000/tienda/success/'<<@id_boleta
-
-        url = $heroku_url+ "web/pagoenlinea?callbackUrl="+urlOk+"&cancelUrl=http://localhost:3000/tienda/error&boletaId="+@id_boleta
-        redirect_to url
+        if (quantity>Bodega.getProductStock(sku))
+          url = "http://localhost:3000/tienda/stock"
+          redirect_to url
+        else
+          @id_boleta = Banco.crearBoleta(quantity*price, direccion)
+          Bodega.despacharPedido(@id_boleta, sku, quantity, price, direccion)
+          urlOk='http://localhost:3000/tienda/success/'<<@id_boleta
+          url = $heroku_url+ "web/pagoenlinea?callbackUrl="+urlOk+"&cancelUrl=http://localhost:3000/tienda/error&boletaId="+@id_boleta
+          redirect_to url
         end
-
+      end
     end
 
     def empty
