@@ -8,7 +8,6 @@ require 'proms_module'
 
 
 class WelcomeController < ApplicationController
-
 	include PromsModule
 
 	def index
@@ -31,7 +30,7 @@ class WelcomeController < ApplicationController
 
 
 
-	def twitt 
+	def twitt
 
 		tweet = twitte params[:mensaje]  , "nada"
 
@@ -44,7 +43,7 @@ class WelcomeController < ApplicationController
 
 
 	def face
-		
+
 		msg = publica params[:mensaje] , "nada"
 
 	   response = { :estado => "aceptado", :tweet => msg}

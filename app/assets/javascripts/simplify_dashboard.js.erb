@@ -1,0 +1,209 @@
+var totalVisitChart;
+$(function	()	{
+
+  	//Flot Chart (Total Sales)
+	var d1 = [];
+	for (var i = 0; i <= 10; i += 1) {
+		//d1.push([i, parseInt(Math.random() * 30)]);
+		d1 = [[0,700],[1,1200],[2,1100],[3,900],[4,500],[5,700],[6,500],[7,600],[8,1200],[9,1700],[10,1200]];
+	}
+
+	function plotWithOptions() {
+		$.plot("#placeholder", [d1], {
+			series: {
+				lines: {
+					show: true,
+					fill: true,
+					fillColor: '#eee',
+					steps: false,
+					
+				},
+				points: { 
+					show: true, 
+					fill: false 
+				}
+			},
+
+			grid: {
+				color: '#fff',
+				hoverable: true,
+    			autoHighlight: true,
+			},
+			colors: [ '#bbb'],
+		});
+	}
+
+	$("<div id='tooltip'></div>").css({
+		position: "absolute",
+		display: "none",
+		border: "1px solid #222",
+		padding: "4px",
+		color: "#fff",
+		"border-radius": "4px",
+		"background-color": "rgb(0,0,0)",
+		opacity: 0.90
+	}).appendTo("body");
+
+	$("#placeholder").bind("plothover", function (event, pos, item) {
+
+		var str = "(" + pos.x.toFixed(2) + ", " + pos.y.toFixed(2) + ")";
+		$("#hoverdata").text(str);
+	
+		if (item) {
+			var x = item.datapoint[0],
+				y = item.datapoint[1];
+			
+				$("#tooltip").html("Total Sales : " + y)
+				.css({top: item.pageY+5, left: item.pageX+5})
+				.fadeIn(200);
+		} else {
+			$("#tooltip").hide();
+		}
+	});
+
+	plotWithOptions();
+	//Morris Chart (Total Visits)
+	totalVisitChart = Morris.Bar({
+	  element: 'totalSalesChart',
+	  data: [
+	    { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date - 6).strftime('%w').to_i]%>", a:"<%= DashboardController.get_saldo(DashboardController.current_date,-6)%>" , b: "<%= DashboardController.get_saldo(DashboardController.current_date,-13)%>" },
+	    { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date - 5).strftime('%w').to_i]%>", a: "<%= DashboardController.get_saldo(DashboardController.current_date,-5)%>",  b: "<%= DashboardController.get_saldo(DashboardController.current_date,-12)%>" },
+	    { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date - 4).strftime('%w').to_i]%>", a: "<%= DashboardController.get_saldo(DashboardController.current_date,-4)%>",  b: "<%= DashboardController.get_saldo(DashboardController.current_date,-11)%>" },
+	    { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date - 3).strftime('%w').to_i] %>", a: "<%= DashboardController.get_saldo(DashboardController.current_date,-3)%>",  b: "<%= DashboardController.get_saldo(DashboardController.current_date,-10)%>" },
+	    { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date - 2).strftime('%w').to_i] %>", a: "<%= DashboardController.get_saldo(DashboardController.current_date,-2)%>",  b: "<%= DashboardController.get_saldo(DashboardController.current_date,-9)%>" },
+	    { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date - 1).strftime('%w').to_i] %>", a: "<%= DashboardController.get_saldo(DashboardController.current_date,-1)%>",  b: "<%= DashboardController.get_saldo(DashboardController.current_date,-8)%>" },
+	    { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date).strftime('%w').to_i] %>", a: "<%= DashboardController.get_saldo(DashboardController.current_date,0)%>", b: "<%= DashboardController.get_saldo(DashboardController.current_date,-7)%>" }
+	  ],
+	  xkey: 'y',
+	  ykeys: ['a', 'b'],
+	  labels: ['Total esta semana','semana anterior'],
+	  barColors: ['#23b7e5', '#2BAA7B'],
+	  grid: true,
+	  gridTextColor: '#777'
+	});
+
+
+    totalVisitChart = Morris.Bar({
+        element: 'totalStock',
+        data: [
+            { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date - 6).strftime('%w').to_i]%>", a:"<%= DashboardController.get_stock_arroz(DashboardController.current_date,-6)%>" , b: "<%= DashboardController.get_stock_arroz(DashboardController.current_date,-13)%>" },
+            { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date - 5).strftime('%w').to_i]%>", a: "<%= DashboardController.get_stock_arroz(DashboardController.current_date,-5)%>",  b: "<%= DashboardController.get_stock_arroz(DashboardController.current_date,-12)%>" },
+            { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date - 4).strftime('%w').to_i]%>", a: "<%= DashboardController.get_stock_arroz(DashboardController.current_date,-4)%>",  b: "<%= DashboardController.get_stock_arroz(DashboardController.current_date,-11)%>" },
+            { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date - 3).strftime('%w').to_i] %>", a: "<%= DashboardController.get_stock_arroz(DashboardController.current_date,-3)%>",  b: "<%= DashboardController.get_stock_arroz(DashboardController.current_date,-10)%>" },
+            { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date - 2).strftime('%w').to_i] %>", a: "<%= DashboardController.get_stock_arroz(DashboardController.current_date,-2)%>",  b: "<%= DashboardController.get_stock_arroz(DashboardController.current_date,-9)%>" },
+            { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date - 1).strftime('%w').to_i] %>", a: "<%= DashboardController.get_stock_arroz(DashboardController.current_date,-1)%>",  b: "<%= DashboardController.get_stock_arroz(DashboardController.current_date,-8)%>" },
+            { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date).strftime('%w').to_i] %>", a: "<%= DashboardController.get_stock_arroz(DashboardController.current_date,0)%>", b: "<%= DashboardController.get_stock_arroz(DashboardController.current_date,-7)%>" }
+        ],
+        xkey: 'y',
+        ykeys: ['a', 'b'],
+        labels: ['Total esta semana','semana anterior'],
+        barColors: ['#23b7e5', '#2BAA7B'],
+        grid: true,
+        gridTextColor: '#777'
+    });
+	
+
+	//Datepicker
+	$('#calendar').DatePicker({
+		flat: true,
+		date: "<%= DashboardController.current_date %>",
+		current: "<%= DashboardController.current_date %>",
+		calendars: 1,
+		starts: 1
+	});
+    var recepcion = <%= (ApiController.getBodegas[0]['usedSpace'].to_f/ApiController.getBodegas[0]['totalSpace']*100).ceil%>;
+    var bodegap2 = <%= (ApiController.getBodegas[4]['usedSpace'].to_f/ApiController.getBodegas[4]['totalSpace']*100).ceil %>;
+    var despacho = <%= (ApiController.getBodegas[1]['usedSpace'].to_f/ApiController.getBodegas[1]['totalSpace']*100).ceil%>;
+    var pulmon = <%= (ApiController.getBodegas[3]['usedSpace'].to_f/ApiController.getBodegas[3]['totalSpace']*100).ceil %>;
+    var bodegap1 = <%= (ApiController.getBodegas[2]['usedSpace'].to_f/ApiController.getBodegas[2]['totalSpace']*100).ceil %>;
+    var free_recepcion =100 - recepcion;
+    var free_bodegap2 = 100 - bodegap2;
+    var free_despacho = 100 - despacho;
+    var free_pulmon = 100 - pulmon;
+    var free_bodegap1 = 100 - bodegap1;
+    var bodega = <%= ((ApiController.getBodegas[0]['usedSpace'] +ApiController.getBodegas[1]['usedSpace']+ApiController.
+    getBodegas[2]['usedSpace']+ApiController.getBodegas[3]['usedSpace']+ApiController.getBodegas[4]['usedSpace']).to_f/
+    (ApiController.getBodegas[0]['totalSpace']*100+ApiController.getBodegas[1]['totalSpace']*100+ApiController.
+    getBodegas[2]['totalSpace']*100+ApiController.getBodegas[3]['totalSpace']*100+ApiController.
+    getBodegas[3]['totalSpace']*100)).ceil %>;
+    var free_bodega = 100-bodega;
+    var wareHouse = Morris.Donut
+   /* ({
+        element: 'wareHouse',
+        data: [ { label: 'Recepción', value: recepcion}, { label: 'Bodega Principal 2', value:bodegap2}, { label: 'Despacho', value: despacho }, { label: 'Pulmón', value: pulmon}, { label: 'Bodega Principal 1', value: bodegap1 }] ,
+        colors: ['#23b7e5', '#2BAA7B','#e36159','#7266ba'],
+        formatter: function (y, data) { return y +'%' }
+    });*/({
+        element: 'wareHouse',
+        data: [ { label: 'Usado', value: bodega}, { label: 'Libre', value:free_bodega }] ,
+        colors: ['#e36159','#2BAA7B'],
+        formatter: function (y, data) { return y +'%' }
+    });
+    var despachoWare = Morris.Donut({
+        element: 'despacho',
+        data: [ { label: 'Usado', value: despacho}, { label: 'Libre', value:free_despacho }] ,
+        colors: ['#e36159','#2BAA7B'],
+        formatter: function (y, data) { return y +'%' }
+    });
+
+    var pulmonWare = Morris.Donut({
+        element: 'pulmon',
+        data: [ { label: 'Usado', value: pulmon}, { label: 'Libre', value:free_pulmon }] ,
+        colors: ['#e36159','#2BAA7B'],
+        formatter: function (y, data) { return y +'%' }
+    });
+    var pulmonWare = Morris.Donut({
+        element: 'recepcion',
+        data: [ { label: 'Usado', value: recepcion}, { label: 'Libre', value:free_recepcion }] ,
+        colors: ['#e36159','#2BAA7B'],
+        formatter: function (y, data) { return y +'%' }
+    });
+
+
+	//Skycon
+	var icons = new Skycons({"color": "white"});
+    icons.set("skycon1", "sleet");
+    icons.set("skycon2", "partly-cloudy-day");
+    icons.set("skycon3", "wind");
+    icons.set("skycon4", "clear-day");
+    icons.play();
+
+	//Scrollable Chat Widget
+	$('#chatScroll').slimScroll({
+		height:'230px'
+	});
+
+	//Chat notification
+	setTimeout(function() {
+		$('.chat-notification').find('.badge').addClass('active');
+		$('.chat-alert').addClass('active');
+	}, 3000);
+
+	setTimeout(function() {
+		$('.chat-alert').removeClass('active');
+	}, 8000);
+	
+	$(window).resize(function(e)	{
+		// Redraw All Chart
+		setTimeout(function() {
+			totalVisitChart.redraw();
+			plotWithOptions();
+		},500);
+	});
+
+	$('#sidebarToggleLG').click(function()	{
+		// Redraw All Chart
+		setTimeout(function() {
+			totalVisitChart.redraw();
+			plotWithOptions();
+		},500);
+	});
+
+	$('#sidebarToggleSM').click(function()	{
+		// Redraw All Chart
+		setTimeout(function() {
+			totalVisitChart.redraw();
+			plotWithOptions();
+		},500);
+	});
+});

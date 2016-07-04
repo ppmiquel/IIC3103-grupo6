@@ -1,0 +1,36 @@
+<div class="padding-md">
+  <ul class="breadcrumb">
+    <li><span class="primary-font"><i class="icon-home"></i></span><a> Inicio</a></li>
+    <li>Facturas</li>
+  </ul>
+  <table class="table table-striped" id="dataTable">
+    <thead>
+    <tr>
+      <th>Id Factura</th>
+      <th>Cliente</th>
+      <th>Proveedor</th>
+      <th>Valor Bruto</th>
+      <th>Iva</th>
+      <th>Estado</th>
+      <th>Id OC</th>
+      <th>Id Transacción</th>
+      <th colspan="3"></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @facturas.each do |invoice| %>
+        <tr>
+          <td><%= invoice.idfact %></td>
+          <td><%= invoice.cliente %></td>
+          <td><%= invoice.proveedor %></td>
+          <td><%= invoice.valor_bruto %></td>
+          <td><%= invoice.iva %></td>
+          <td><%= invoice.estado %></td>
+          <td><%= invoice.idoc %></td>
+          <td><%= invoice.idtrx %></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div><!-- ./padding-md -->

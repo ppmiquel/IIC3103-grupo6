@@ -1,6 +1,13 @@
 Rails.application.routes.draw do
 
 
+  get 'facturas/index'
+
+  resources :facturas
+  resources :facturas
+  resources :facturas
+  resources :facturas
+  resources :invoices
   resources :boleta
   # This line mounts Spree's routes at the root of your application.
   # This means, any requests to URLs such as /products, will go to Spree::ProductsController.
@@ -26,10 +33,12 @@ Rails.application.routes.draw do
 
   get 'doc' => 'welcome#doc', path: 'api/documentacion'
   get 'orders' => 'ordens#index', path: 'orders'
-  get 'index' => 'welcome#index', path: 'panel'
-
+  get 'facturas' => 'facturas#index', path: 'facturas'
+  get 'transactions' => 'transactions#index', path: 'transactions'
+  get 'panel' => 'dashboard#panel', path: 'panel'
+  get 'dashboard' => 'dashboard#index', path: 'dashboard'
   get 'index2' => 'welcome#index2', path: 'welcome/index2'
-
+  post 'chagen_date' => 'dashboard#reload',path:'reloadCharts'
 
 
   get 'static_table' => 'welcome#static_table', path: 'static_table.html.erb'

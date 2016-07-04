@@ -26,6 +26,33 @@ if Group.first.nil?
 		end
 end
 
+Factura.delete_all
+
+factura_list = [
+		["Grupo 1", "Grupo 2", 3, 19, "Completado", "1", "1"]];
+factura_list.each do |cliente, proveedor, valor_bruto, iva, estado, idoc, idtrx|
+	factura = Factura.create(cliente: cliente, proveedor: proveedor, valor_bruto: valor_bruto, iva: iva, estado: estado, idoc: idoc, idtrx: idtrx)
+end
+Transaction.delete_all
+
+transaction_list = [
+		[567000, "Grupo 1", "Grupo 6","2016-07-04"],
+		[400000, "Grupo 6", "Grupo 1","2016-07-03"],
+		[788878, "Grupo 1", "Grupo 6","2016-06-20"],
+		[788878, "Grupo 1", "Grupo 6","2016-06-21"],
+		[788878, "Grupo 1", "Grupo 6","2016-06-22"],
+		[788878, "Grupo 1", "Grupo 6","2016-06-23"],
+		[788878, "Grupo 1", "Grupo 6","2016-06-24"],
+		[800000, "Grupo 1", "Grupo 6","2016-07-01"],
+		[900000, "Grupo 2", "Grupo 6","2016-07-02"],
+		[500000, "Grupo 3", "Grupo 6","2016-06-30"],
+		[300000, "Grupo 2", "Grupo 6","2016-06-29"],
+		[200000, "Grupo 1", "Grupo 6","2016-06-28"],
+		[900000, "Grupo 6", "Grupo 1","2016-06-27"]
+];
+transaction_list.each do |monto, cuenta_o, cuenta_d,created_at|
+	factura = Transaction.create(monto: monto, cuenta_o: cuenta_o, cuenta_d: cuenta_d,created_at:created_at)
+end
 
 Spree::Auth::Engine.load_seed if defined?(Spree::Auth)
 
