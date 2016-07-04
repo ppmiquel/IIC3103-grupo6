@@ -78,34 +78,26 @@ $(function	()	{
     });
 
 
-
-
     $('#transactions').click(function () {
+        $.ajax({
+            type: "GET",
+            url: "/transactions"
+        });
         if ($('li').hasClass('active')) {
             $('li').removeClass('active');
-
             if ($('li').hasClass('open')) {
                 $('li').removeClass('open').children('.submenu').slideUp(200);
 
             }
         }
-        if ($('header').hasClass('sidebar-mini')) {
-
-            $('#transactions').parent("li").addClass('active');
-        }
-        else {
-            $('#transactions').parent("li").addClass('active');
-            $('.top-nav').toggleClass('sidebar-mini');
-            $('aside').toggleClass('sidebar-mini');
-            $('footer').toggleClass('sidebar-mini');
-            $('.main-container').toggleClass('sidebar-mini');
-
-            $('.main-menu').find('.openable').removeClass('open');
-            $('.main-menu').find('.submenu').removeAttr('style');
-        }
+        $('#transactions').parent("li").addClass('active');
     });
 
     $('#invoices').click(function () {
+        $.ajax({
+            type: "GET",
+            url: "/facturas"
+        });
         if ($('li').hasClass('active')) {
             $('li').removeClass('active');
             if ($('li').hasClass('open')) {
@@ -114,19 +106,16 @@ $(function	()	{
             }
         }
         $('#invoices').parent("li").addClass('active');
-        if ($('header').hasClass('sidebar-mini')) {
-            $('.top-nav').toggleClass('sidebar-mini');
-            $('aside').toggleClass('sidebar-mini');
-            $('footer').toggleClass('sidebar-mini');
-            $('.main-container').toggleClass('sidebar-mini');
 
-            $('.main-menu').find('.openable').removeClass('open');
-            $('.main-menu').find('.submenu').removeAttr('style');
-        }
     });
 
 
     $('#orders').click(function () {
+
+        $.ajax({
+            type: "GET",
+            url: "/orders"
+        });
         if ($('li').hasClass('active')) {
             $('li').removeClass('active');
             if ($('li').hasClass('open')) {
@@ -136,16 +125,23 @@ $(function	()	{
         }
         $('#orders').parent("li").addClass('active');
 
-        if ($('header').hasClass('sidebar-mini')) {
-            $('.top-nav').toggleClass('sidebar-mini');
-            $('aside').toggleClass('sidebar-mini');
-            $('footer').toggleClass('sidebar-mini');
-            $('.main-container').toggleClass('sidebar-mini');
-
-            $('.main-menu').find('.openable').removeClass('open');
-            $('.main-menu').find('.submenu').removeAttr('style');
-        }
     });
+
+    $('#inicio').click(function () {
+        $.ajax({
+            type: "GET",
+            url: "/panel"
+        });
+        if ($('li').hasClass('active')) {
+            $('li').removeClass('active');
+            if ($('li').hasClass('open')) {
+                $('li').removeClass('open').children('.submenu').slideUp(200);
+
+            }
+        }
+        $('#inicio').parent("li").addClass('active');
+    });
+
 
     $('#link').click(function () {
 

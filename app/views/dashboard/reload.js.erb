@@ -1,0 +1,20 @@
+$('#totalSalesChart').empty();
+
+totalVisitChart = Morris.Bar({
+    element: 'totalSalesChart',
+    data: [
+        { y: "<%= (I18n.t 'date.abbr_day_names')[(@date- 6).strftime('%w').to_i]%>", a: "<%= DashboardController.get_saldo(@date,-6)%>", b: "<%= DashboardController.get_saldo(@date,-13)%>" },
+        { y: "<%= (I18n.t 'date.abbr_day_names')[(@date- 5).strftime('%w').to_i]%>", a: "<%= DashboardController.get_saldo(@date,-5)%>",  b: "<%= DashboardController.get_saldo(@date,-12)%>" },
+        { y: "<%= (I18n.t 'date.abbr_day_names')[(@date- 4).strftime('%w').to_i]%>", a: "<%= DashboardController.get_saldo(@date,-4)%>",  b: "<%= DashboardController.get_saldo(@date,-11)%>" },
+        { y: "<%= (I18n.t 'date.abbr_day_names')[(@date- 3).strftime('%w').to_i] %>", a: "<%= DashboardController.get_saldo(@date,-3)%>",  b: "<%= DashboardController.get_saldo(@date,-10)%>" },
+        { y: "<%= (I18n.t 'date.abbr_day_names')[(@date- 2).strftime('%w').to_i] %>", a: "<%= DashboardController.get_saldo(@date,-2)%>",  b: "<%= DashboardController.get_saldo(@date,-9)%>" },
+        { y: "<%= (I18n.t 'date.abbr_day_names')[(@date- 1).strftime('%w').to_i] %>", a:  "<%= DashboardController.get_saldo(@date,-1)%>",  b: "<%= DashboardController.get_saldo(@date,-8)%>" },
+        { y: "<%= (I18n.t 'date.abbr_day_names')[(@date).strftime('%w').to_i] %>", a: "<%= DashboardController.get_saldo(@date,0)%>", b: "<%= DashboardController.get_saldo(@date,-7)%>" }
+    ],
+    xkey: 'y',
+    ykeys: ['a', 'b'],
+    labels: ['Total esta semana','semana anterior'],
+    barColors: ['#23b7e5', '#2BAA7B'],
+    grid: true,
+    gridTextColor: '#777'
+});

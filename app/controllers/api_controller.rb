@@ -141,12 +141,39 @@ def verBodegas
 	render :json =>response
 end
 
+
 def vaciarPulmonOnline
 	vaciarBodegaPulmon()
 	response = { :validado => true}
 	render :json =>response
 end
+	def self.getBodegas
 
+		hash = createHash('GET')
+		return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).get( $heroku_url + "bodega/almacenes").to_s)
+
+	end
+	def createHash(data)
+		key = $hash_key
+		hmac = OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha1'),key,data)
+		hash = Base64.encode64(hmac).chomp
+		return hash
+	end
+def getStocks(id)
+		stock = 0
+		hash = createHash('GET')
+		almacenes =  JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).get( $heroku_url + "bodega/almacenes").to_s)
+		almacenes.each do |almacen|
+			products = getProductsWithStock(almacen['_id'])
+			products.each do |product|
+				if(product["_id"] == sku)
+					stock = stock + product["total"]
+				end
+			end
+		end
+		product_stock = stock
+	response = { :stock => product_stock, :sku => id}
+end
 def leerFtp
 	leer_sftp()
 	response = { :validado => true}
@@ -210,6 +237,7 @@ end
 		#pedir(10, id, 2, 6)
 		render :json => response
 	end
+
 
 #### recibir trx
 	def pago_recibir
