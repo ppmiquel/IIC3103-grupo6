@@ -568,7 +568,6 @@
       return new Date(parseInt(date, 10), 0, 1).getTime();
     }
   };
-
   Morris.Hover = (function() {
 
     Hover.defaults = {

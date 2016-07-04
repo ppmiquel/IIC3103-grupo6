@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
-
+gem 'chartkick'
+gem 'rails-i18n'
 gem 'spree', '~> 3.1.0.rc1'
 gem 'spree_auth_devise', '~> 3.1.0.rc1'
 gem 'spree_gateway', '~> 3.1.0.rc1'
@@ -54,7 +55,7 @@ gem 'autoprefixer-rails'
 
 gem  'net-sftp'
 gem  'net-ssh'
-gem  'nokogiri'
+gem  'nokogiri','1.6.0'
 
 gem 'amqp', '~> 1.5.0'
 gem 'bunny','>= 2.3.1'

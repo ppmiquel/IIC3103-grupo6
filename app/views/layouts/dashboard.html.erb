@@ -1,9 +1,27 @@
-
+<!DOCTYPE html>
+<html>
+<head>
+  <title>IIC3103Grupo6</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+</head>
+<body class="overflow-hidden">
 <div class="wrapper preload">
   <%= render "shared/top" %>
   <%= render "shared/sidebar" %>
-  <%= yield :content %>
+
+  <div class="wrapper preload">
+    <div class="main-container">
+      <%= yield :content %>
+    </div><!-- /main-container -->
+  </div><!-- /wrapper -->
 </div><!-- /wrapper -->
 <%= render "shared/footer" %>
 <a href="#" class="scroll-to-top hidden-print"><i class="fa fa-chevron-up fa-lg"></i></a>
-
+<%= javascript_include_tag "application" %>
+<%= yield :contenttags %>
+</body>
+</html>

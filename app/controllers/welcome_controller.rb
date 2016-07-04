@@ -8,7 +8,6 @@ require 'proms_module'
 
 
 class WelcomeController < ApplicationController
-
 	include PromsModule
 
 	def index

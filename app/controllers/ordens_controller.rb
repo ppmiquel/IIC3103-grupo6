@@ -1,11 +1,16 @@
 class OrdensController < ApplicationController
   before_action :set_orden, only: [:show, :edit, :update, :destroy]
 
+  layout "dashboard"
+
+
   # GET /ordens
   # GET /ordens.json
   def index
     @ordens = Orden.all
-    
+    respond_to do |format|
+      format.js
+    end
   end
 
   # GET /ordens/1
