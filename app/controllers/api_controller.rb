@@ -147,19 +147,18 @@ def vaciarPulmonOnline
 	render :json =>response
 end
 	def self.getBodegas
-		key = $hash_key
-		hmac = OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha1'),key,'GET')
-		hash = Base64.encode64(hmac).chomp
+
+		hash = createHash('GET')
 		return JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).get( $heroku_url + "bodega/almacenes").to_s)
 
 	end
-	def createHash(data)
+	def self.createHash(data)
 		key = $hash_key
 		hmac = OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha1'),key,data)
 		hash = Base64.encode64(hmac).chomp
 		return hash
 	end
-def getStocks(id)
+def self.getStocks(id)
 		stock = 0
 		hash = createHash('GET')
 		almacenes =  JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).get( $heroku_url + "bodega/almacenes").to_s)
@@ -237,7 +236,24 @@ end
 		#pedir(10, id, 2, 6)
 		render :json => response
 	end
+def self.getStock(sku)
+	stock = 0
+	hash = createHash('GET')
+	almacenes= JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).get( $heroku_url + "bodega/almacenes").to_s)
 
+	almacenes.each do |almacen|
+		hash = createHash('GET' + almacen['_id'])
+
+		products =  JSON.parse(HTTP.headers(:"Content-Type" => "application/json", :Authorization => "INTEGRACION grupo6:" + hash).get($heroku_url + "bodega/skusWithStock?almacenId=" + almacen['_id']).to_s)
+		products.each do |product|
+			if(product["_id"] == sku)
+				stock = stock + product["total"]
+			end
+		end
+	end
+	stock
+	#pedir(10, id, 2, 6)
+end
 
 #### recibir trx
 	def pago_recibir

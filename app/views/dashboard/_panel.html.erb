@@ -1,4 +1,4 @@
-<div class="padding-md">
+<div class="padding-md" id="panel">
   <div class="row">
     <div class="col-sm-6">
       <div class="page-title">
@@ -31,7 +31,7 @@
         </div>
 
         <div class="statistic-value">
-          <%= DashboardController.get_fact(DashboardController.current_date,0)%>
+          <%= DashboardController.get_fact_today(DashboardController.current_date,0)%>
         </div>
 
         <div class="m-top-md"></div>
@@ -63,7 +63,7 @@
     </div>
     <div class="col-lg-12">
     <div class="row">
-      <div class="col-lg-8">
+      <div class="col-lg-4">
         <div class="smart-widget widget-dark-blue">
           <div class="smart-widget-header">
             SALDO DIARIO
@@ -99,6 +99,59 @@
                 <div id="totalSalesChart" class="morris-chart" style="height:250px;"></div>
               </div>
             </div>
+          </div><!-- ./smart-widget-inner -->
+        </div><!-- ./smart-widget -->
+      </div><!-- ./col -->
+      <div class="col-lg-4">
+        <div class="smart-widget widget-dark-blue">
+          <div class="smart-widget-header">
+            TRANSACCIONES DÍA
+            <span class="smart-widget-option">
+										<span class="refresh-icon-animated">
+											<i class="fa fa-circle-o-notch fa-spin"></i>
+										</span>
+			                            <a class="widget-toggle-hidden-option">
+                                          <i class="fa fa-cog"></i>
+                                        </a>
+			                            <a class="widget-collapse-option" data-toggle="collapse">
+                                          <i class="fa fa-chevron-up"></i>
+                                        </a>
+			                        </span>
+          </div>
+          <div class="smart-widget-inner table-responsive">
+            <div class="smart-widget-hidden-section">
+              <ul class="widget-color-list clearfix">
+                <li style="background-color:#20232b;" data-color="widget-dark"></li>
+                <li style="background-color:#4c5f70;" data-color="widget-dark-blue"></li>
+                <li style="background-color:#23b7e5;" data-color="widget-blue"></li>
+                <li style="background-color:#2baab1;" data-color="widget-green"></li>
+                <li style="background-color:#edbc6c;" data-color="widget-yellow"></li>
+                <li style="background-color:#fbc852;" data-color="widget-orange"></li>
+                <li style="background-color:#e36159;" data-color="widget-red"></li>
+                <li style="background-color:#7266ba;" data-color="widget-purple"></li>
+                <li style="background-color:#f5f5f5;" data-color="widget-light-grey"></li>
+                <li style="background-color:#fff;" data-color="reset"></li>
+              </ul>
+            </div>
+              <table class="table table-striped no-margin" id="dataTable">
+                <thead>
+                <tr>
+                  <th>Monto</th>
+                  <th>Grupo Origen</th>
+                  <th>Grupo Destino</th>
+                </tr>
+                </thead>
+
+                <tbody id="trx-dia">
+                <% DashboardController.get_trxs(DashboardController.current_date,0).each do |transaction| %>
+                    <tr>
+                      <td><%= transaction.monto %></td>
+                      <td ><%= transaction.grupo_o %></td>
+                      <td ><%= transaction.grupo_d %></td>
+                    </tr>
+                <% end %>
+                </tbody>
+              </table>
           </div><!-- ./smart-widget-inner -->
         </div><!-- ./smart-widget -->
       </div><!-- ./col -->
@@ -144,12 +197,170 @@
     </div>
     <div class="row">
     <div class="col-lg-12">
-
-
       <div class="row">
+        <div class="col-lg-8">
+          <div class="smart-widget widget-dark-blue">
+            <div class="smart-widget-header">
+              FACTURACIÓN DIARIA
+									<span class="smart-widget-option">
+										<span class="refresh-icon-animated">
+											<i class="fa fa-circle-o-notch fa-spin"></i>
+										</span>
+			                            <a class="widget-toggle-hidden-option">
+                                          <i class="fa fa-cog"></i>
+                                        </a>
+			                            <a class="widget-collapse-option" data-toggle="collapse">
+                                          <i class="fa fa-chevron-up"></i>
+                                        </a>
+			                        </span>
+            </div>
+
+            <div class="smart-widget-inner">
+              <div class="smart-widget-hidden-section">
+                <ul class="widget-color-list clearfix">
+                  <li style="background-color:#20232b;" data-color="widget-dark"></li>
+                  <li style="background-color:#4c5f70;" data-color="widget-dark-blue"></li>
+                  <li style="background-color:#23b7e5;" data-color="widget-blue"></li>
+                  <li style="background-color:#2baab1;" data-color="widget-green"></li>
+                  <li style="background-color:#edbc6c;" data-color="widget-yellow"></li>
+                  <li style="background-color:#fbc852;" data-color="widget-orange"></li>
+                  <li style="background-color:#e36159;" data-color="widget-red"></li>
+                  <li style="background-color:#7266ba;" data-color="widget-purple"></li>
+                  <li style="background-color:#f5f5f5;" data-color="widget-light-grey"></li>
+                  <li style="background-color:#fff;" data-color="reset"></li>
+                </ul>
+              </div>
+              <div class="smart-widget-body no-padding">
+                <div class="padding-md">
+                  <div id="fact-diaria" class="morris-chart" style="height:250px;"></div>
+                </div>
+              </div>
+            </div><!-- ./smart-widget-inner -->
+          </div><!-- ./smart-widget -->
+        </div><!-- ./col -->
+        <div class="col-lg-4">
+          <div class="smart-widget widget-dark-blue">
+            <div class="smart-widget-header">
+              TOTAL VENTAS
+              	<span class="smart-widget-option">
+										<span class="refresh-icon-animated">
+											<i class="fa fa-circle-o-notch fa-spin"></i>
+										</span>
+			                            <a class="widget-toggle-hidden-option">
+                                          <i class="fa fa-cog"></i>
+                                        </a>
+			                            <a class="widget-collapse-option" data-toggle="collapse">
+                                          <i class="fa fa-chevron-up"></i>
+                                        </a>
+			                        </span>
+            </div>
+            <div class="smart-widget-inner">
+              <div class="smart-widget-hidden-section">
+                <ul class="widget-color-list clearfix">
+                  <li style="background-color:#20232b;" data-color="widget-dark"></li>
+                  <li style="background-color:#4c5f70;" data-color="widget-dark-blue"></li>
+                  <li style="background-color:#23b7e5;" data-color="widget-blue"></li>
+                  <li style="background-color:#2baab1;" data-color="widget-green"></li>
+                  <li style="background-color:#edbc6c;" data-color="widget-yellow"></li>
+                  <li style="background-color:#fbc852;" data-color="widget-orange"></li>
+                  <li style="background-color:#e36159;" data-color="widget-red"></li>
+                  <li style="background-color:#7266ba;" data-color="widget-purple"></li>
+                  <li style="background-color:#f5f5f5;" data-color="widget-light-grey"></li>
+                  <li style="background-color:#fff;" data-color="reset"></li>
+                </ul>
+              </div>
+              <div class="smart-widget-body no-padding">
+                <div class="padding-md">
+                  <div id="placeholder" style="height:250px;"></div>
+                </div>
+              </div>
+            </div><!-- ./smart-widget-inner -->
+          </div><!-- ./smart-widget -->
+        </div><!-- ./col -->
+      </div><!-- ./row -->
+
+    </div><!-- ./row -->
+      <div class="col-lg-6">
+        <div class="smart-widget widget-dark-blue">
+          <div class="smart-widget-header">
+            VENTAS DIARIAS PRECIO
+            	<span class="smart-widget-option">
+										<span class="refresh-icon-animated">
+											<i class="fa fa-circle-o-notch fa-spin"></i>
+										</span>
+			                            <a class="widget-toggle-hidden-option">
+                                          <i class="fa fa-cog"></i>
+                                        </a>
+			                            <a class="widget-collapse-option" data-toggle="collapse">
+                                          <i class="fa fa-chevron-up"></i>
+                                        </a>
+			                        </span>
+          </div>
+          <div class="smart-widget-inner">
+            <div class="smart-widget-hidden-section">
+              <ul class="widget-color-list clearfix">
+                <li style="background-color:#20232b;" data-color="widget-dark"></li>
+                <li style="background-color:#4c5f70;" data-color="widget-dark-blue"></li>
+                <li style="background-color:#23b7e5;" data-color="widget-blue"></li>
+                <li style="background-color:#2baab1;" data-color="widget-green"></li>
+                <li style="background-color:#edbc6c;" data-color="widget-yellow"></li>
+                <li style="background-color:#fbc852;" data-color="widget-orange"></li>
+                <li style="background-color:#e36159;" data-color="widget-red"></li>
+                <li style="background-color:#7266ba;" data-color="widget-purple"></li>
+                <li style="background-color:#f5f5f5;" data-color="widget-light-grey"></li>
+                <li style="background-color:#fff;" data-color="reset"></li>
+              </ul>
+            </div>
+            <div class="smart-widget-body no-padding">
+              <div class="padding-md">
+                <div id="total-ventas-precio" style="height:250px;"></div>
+              </div>
+            </div>
+          </div><!-- ./smart-widget-inner -->
+        </div><!-- ./smart-widget -->
+      </div><!-- ./col -->
+      <div class="col-lg-6">
+        <div class="smart-widget widget-dark-blue">
+          <div class="smart-widget-header">
+            VENTAS DIARIAS CANTIDAD
+            	<span class="smart-widget-option">
+										<span class="refresh-icon-animated">
+											<i class="fa fa-circle-o-notch fa-spin"></i>
+										</span>
+			                            <a class="widget-toggle-hidden-option">
+                                          <i class="fa fa-cog"></i>
+                                        </a>
+			                            <a class="widget-collapse-option" data-toggle="collapse">
+                                          <i class="fa fa-chevron-up"></i>
+                                        </a>
+			                        </span>
+          </div>
+          <div class="smart-widget-inner">
+            <div class="smart-widget-hidden-section">
+              <ul class="widget-color-list clearfix">
+                <li style="background-color:#20232b;" data-color="widget-dark"></li>
+                <li style="background-color:#4c5f70;" data-color="widget-dark-blue"></li>
+                <li style="background-color:#23b7e5;" data-color="widget-blue"></li>
+                <li style="background-color:#2baab1;" data-color="widget-green"></li>
+                <li style="background-color:#edbc6c;" data-color="widget-yellow"></li>
+                <li style="background-color:#fbc852;" data-color="widget-orange"></li>
+                <li style="background-color:#e36159;" data-color="widget-red"></li>
+                <li style="background-color:#7266ba;" data-color="widget-purple"></li>
+                <li style="background-color:#f5f5f5;" data-color="widget-light-grey"></li>
+                <li style="background-color:#fff;" data-color="reset"></li>
+              </ul>
+            </div>
+            <div class="smart-widget-body no-padding">
+              <div class="padding-md">
+                <div id="total-ventas-cantidad" style="height:250px;"></div>
+              </div>
+            </div>
+          </div><!-- ./smart-widget-inner -->
+        </div><!-- ./smart-widget -->
+      </div><!-- ./col -->
         <div class="col-lg-12">
           <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-4">
               <div class="smart-widget widget-dark-blue">
                 <div class="smart-widget-header">
                   BODEGA EN GENERAL
@@ -184,6 +395,45 @@
                   <div class="smart-widget-body no-padding">
                     <div class="padding-md">
                       <div id="wareHouse" style="height:250px;"></div>
+                    </div>
+                  </div>
+                </div><!-- ./smart-widget-inner -->
+              </div><!-- ./smart-widget -->
+            </div><!-- ./col -->
+            <div class="col-lg-4">
+              <div class="smart-widget widget-dark-blue">
+                <div class="smart-widget-header">
+                  BODEGA PRINCIPAL 1
+                  <span class="smart-widget-option">
+										<span class="refresh-icon-animated">
+											<i class="fa fa-circle-o-notch fa-spin"></i>
+										</span>
+			                            <a class="widget-toggle-hidden-option">
+                                          <i class="fa fa-cog"></i>
+                                        </a>
+			                            <a class="widget-collapse-option" data-toggle="collapse">
+                                          <i class="fa fa-chevron-up"></i>
+                                        </a>
+			                        </span>
+                </div>
+                <div class="smart-widget-inner">
+                  <div class="smart-widget-hidden-section">
+                    <ul class="widget-color-list clearfix">
+                      <li style="background-color:#20232b;" data-color="widget-dark"></li>
+                      <li style="background-color:#4c5f70;" data-color="widget-dark-blue"></li>
+                      <li style="background-color:#23b7e5;" data-color="widget-blue"></li>
+                      <li style="background-color:#2baab1;" data-color="widget-green"></li>
+                      <li style="background-color:#edbc6c;" data-color="widget-yellow"></li>
+                      <li style="background-color:#fbc852;" data-color="widget-orange"></li>
+                      <li style="background-color:#e36159;" data-color="widget-red"></li>
+                      <li style="background-color:#7266ba;" data-color="widget-purple"></li>
+                      <li style="background-color:#f5f5f5;" data-color="widget-light-grey"></li>
+                      <li style="background-color:#fff;" data-color="reset"></li>
+                    </ul>
+                  </div>
+                  <div class="smart-widget-body no-padding">
+                    <div class="padding-md">
+                      <div id="bodegap1" style="height:250px;"></div>
                     </div>
                   </div>
                 </div><!-- ./smart-widget-inner -->
@@ -267,7 +517,46 @@
                 </div><!-- ./smart-widget-inner -->
               </div><!-- ./smart-widget -->
             </div><!-- ./col -->
-            <div class="col-lg-8">
+            <div class="col-lg-4">
+              <div class="smart-widget widget-dark-blue">
+                <div class="smart-widget-header">
+                  BODEGA PRINCIPAL 2
+                  <span class="smart-widget-option">
+										<span class="refresh-icon-animated">
+											<i class="fa fa-circle-o-notch fa-spin"></i>
+										</span>
+			                            <a class="widget-toggle-hidden-option">
+                                          <i class="fa fa-cog"></i>
+                                        </a>
+			                            <a class="widget-collapse-option" data-toggle="collapse">
+                                          <i class="fa fa-chevron-up"></i>
+                                        </a>
+			                        </span>
+                </div>
+                <div class="smart-widget-inner">
+                  <div class="smart-widget-hidden-section">
+                    <ul class="widget-color-list clearfix">
+                      <li style="background-color:#20232b;" data-color="widget-dark"></li>
+                      <li style="background-color:#4c5f70;" data-color="widget-dark-blue"></li>
+                      <li style="background-color:#23b7e5;" data-color="widget-blue"></li>
+                      <li style="background-color:#2baab1;" data-color="widget-green"></li>
+                      <li style="background-color:#edbc6c;" data-color="widget-yellow"></li>
+                      <li style="background-color:#fbc852;" data-color="widget-orange"></li>
+                      <li style="background-color:#e36159;" data-color="widget-red"></li>
+                      <li style="background-color:#7266ba;" data-color="widget-purple"></li>
+                      <li style="background-color:#f5f5f5;" data-color="widget-light-grey"></li>
+                      <li style="background-color:#fff;" data-color="reset"></li>
+                    </ul>
+                  </div>
+                  <div class="smart-widget-body no-padding">
+                    <div class="padding-md">
+                      <div id="bodegap2" class="morris-chart" style="height:250px;"></div>
+                    </div>
+                  </div>
+                </div><!-- ./smart-widget-inner -->
+              </div><!-- ./smart-widget -->
+            </div><!-- ./col -->
+            <div class="col-lg-4">
               <div class="smart-widget widget-dark-blue">
                 <div class="smart-widget-header">
                   PULMÓN
@@ -308,82 +597,77 @@
             </div><!-- ./col -->
           </div><!-- ./row -->
         </div><!-- ./row -->
-    </div>
-      <div class="row">
-
-
-        <div class="col-lg-8">
-          <div class="smart-widget widget-dark-blue">
-            <div class="smart-widget-header">
-              STOCK DIARIO
-									<span class="smart-widget-option">
-										<span class="refresh-icon-animated">
-											<i class="fa fa-circle-o-notch fa-spin"></i>
-										</span>
-			                            <a class="widget-toggle-hidden-option">
-                                          <i class="fa fa-cog"></i>
-                                        </a>
-			                            <a class="widget-collapse-option" data-toggle="collapse">
-                                          <i class="fa fa-chevron-up"></i>
-                                        </a>
-			                        </span>
-            </div>
-
-            <div class="smart-widget-inner">
-              <div class="smart-widget-hidden-section">
-                <ul class="widget-color-list clearfix">
-                  <li style="background-color:#20232b;" data-color="widget-dark"></li>
-                  <li style="background-color:#4c5f70;" data-color="widget-dark-blue"></li>
-                  <li style="background-color:#23b7e5;" data-color="widget-blue"></li>
-                  <li style="background-color:#2baab1;" data-color="widget-green"></li>
-                  <li style="background-color:#edbc6c;" data-color="widget-yellow"></li>
-                  <li style="background-color:#fbc852;" data-color="widget-orange"></li>
-                  <li style="background-color:#e36159;" data-color="widget-red"></li>
-                  <li style="background-color:#7266ba;" data-color="widget-purple"></li>
-                  <li style="background-color:#f5f5f5;" data-color="widget-light-grey"></li>
-                  <li style="background-color:#fff;" data-color="reset"></li>
-                </ul>
-              </div>
-              <div class="smart-widget-body no-padding">
-                <div class="padding-md">
-                  <div id="totalStock" class="morris-chart" style="height:250px;"></div>
-                </div>
-              </div>
-            </div><!-- ./smart-widget-inner -->
-          </div><!-- ./smart-widget -->
-        </div><!-- ./col -->
-        <div class="col-lg-4">
-          <div class="smart-widget widget-dark-blue">
-            <div class="smart-widget-header">
-              TOTAL SALES
-            </div>
-            <div class="smart-widget-inner">
-              <div class="smart-widget-hidden-section">
-                <ul class="widget-color-list clearfix">
-                  <li style="background-color:#20232b;" data-color="widget-dark"></li>
-                  <li style="background-color:#4c5f70;" data-color="widget-dark-blue"></li>
-                  <li style="background-color:#23b7e5;" data-color="widget-blue"></li>
-                  <li style="background-color:#2baab1;" data-color="widget-green"></li>
-                  <li style="background-color:#edbc6c;" data-color="widget-yellow"></li>
-                  <li style="background-color:#fbc852;" data-color="widget-orange"></li>
-                  <li style="background-color:#e36159;" data-color="widget-red"></li>
-                  <li style="background-color:#7266ba;" data-color="widget-purple"></li>
-                  <li style="background-color:#f5f5f5;" data-color="widget-light-grey"></li>
-                  <li style="background-color:#fff;" data-color="reset"></li>
-                </ul>
-              </div>
-              <div class="smart-widget-body no-padding">
-                <div class="padding-md">
-                  <div id="placeholder" style="height:250px;"></div>
-                </div>
-              </div>
-            </div><!-- ./smart-widget-inner -->
-          </div><!-- ./smart-widget -->
-        </div><!-- ./col -->
-      </div><!-- ./row -->
     </div><!-- ./row -->
+
+      <div class="col-lg-3 col-sm-6">
+        <div class="statistic-box bg-info m-bottom-md">
+          <div class="statistic-title">
+            Arroz
+          </div>
+          <div class="statistic-value">
+            <%= ApiController.getStock('13') %> u
+          </div>
+          <div class="m-top-md"></div>
+          <div class="statistic-icon-background">
+            <i class="ion-checkmark"></i>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-sm-6">
+        <div class="statistic-box bg-info m-bottom-md">
+          <div class="statistic-title">
+            Azúcar
+          </div>
+
+          <div class="statistic-value">
+            <%= ApiController.getStock('25') %>
+                    </div>
+
+          <div class="m-top-md"></div>
+
+          <div class="statistic-icon-background">
+            <i class="ion-checkmark"></i>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-sm-6">
+        <div class="statistic-box bg-success m-bottom-md">
+          <div class="statistic-title">
+           Pan Integral
+          </div>
+
+          <div class="statistic-value">
+            <%= ApiController.getStock('53')%> u
+          </div>
+
+          <div class="m-top-md"></div>
+
+          <div class="statistic-icon-background">
+            <i class="ion-checkmark"></i>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-sm-6">
+        <div class="statistic-box bg-success m-bottom-md">
+          <div class="statistic-title">
+            Cereal de Arroz
+          </div>
+
+          <div class="statistic-value">
+            <%= ApiController.getStock('17') %> u
+          </div>
+
+          <div class="m-top-md"></div>
+
+          <div class="statistic-icon-background">
+            <i class="ion-checkmark"></i>
+          </div>
+        </div>
+      </div>
+
     </div><!-- ./row -->
 </div><!-- ./padding-md -->
 
   <a href="#" class="scroll-to-top hidden-print"><i class="fa fa-chevron-up fa-lg"></i></a>
+
 

@@ -1,1 +1,6 @@
-$('.main-container').html("<%= j render :partial =>  'ordens/index' %>")
+$('.main-container').find('#orders').remove();
+$('.main-container').find('#transactions').remove();
+$('.main-container').find('#facturasPanel').remove();
+
+$('#panel').hide();
+$('.main-container').hide().append("<%= j render :partial =>  'ordens/index' %>").fadeIn('slow');

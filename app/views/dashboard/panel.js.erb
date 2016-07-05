@@ -1,2 +1,8 @@
-$('.main-container').html("<%= j render :partial =>  'dashboard/panel' %>")
-$('body').append("<%= j  javascript_include_tag "simplify_dashboard" %>")
+$('.main-container').find('#orders').remove();
+$('.main-container').find('#transactions').remove();
+$('.main-container').find('#facturasPanel').remove();
+$('#panel').show().fadeIn('slow');
+
+//$('.main-container').hide().html("<%= j render :partial =>  'dashboard/panel' %>").fadeIn('slow');
+//$('body').append("<%= j javascript_include_tag "simplify" %>");
+//$('body').append("<%= j javascript_include_tag "simplify_dashboard" %>");
