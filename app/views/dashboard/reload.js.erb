@@ -18,3 +18,68 @@ totalVisitChart = Morris.Bar({
     grid: true,
     gridTextColor: '#777'
 });
+
+
+$('#fact-diaria').empty();
+factdiaria = Morris.Bar({
+    element: 'fact-diaria',
+    data: [
+        { y: "<%= (I18n.t 'date.abbr_day_names')[(@date - 6).strftime('%w').to_i]%>", a:"<%= DashboardController.get_fact(@date,-6)%>" , b: "<%= DashboardController.get_fact(@date,-13)%>" },
+        { y: "<%= (I18n.t 'date.abbr_day_names')[(@date - 5).strftime('%w').to_i]%>", a: "<%= DashboardController.get_fact(@date,-5)%>",  b: "<%= DashboardController.get_fact(@date,-12)%>" },
+        { y: "<%= (I18n.t 'date.abbr_day_names')[(@date- 4).strftime('%w').to_i]%>", a: "<%= DashboardController.get_fact(@date,-4)%>",  b: "<%= DashboardController.get_fact(@date,-11)%>" },
+        { y: "<%= (I18n.t 'date.abbr_day_names')[(@date - 3).strftime('%w').to_i] %>", a: "<%= DashboardController.get_fact(@date,-3)%>",  b: "<%= DashboardController.get_fact(@date,-10)%>" },
+        { y: "<%= (I18n.t 'date.abbr_day_names')[(@date - 2).strftime('%w').to_i] %>", a: "<%= DashboardController.get_fact(@date,-2)%>",  b: "<%= DashboardController.get_fact(@date,-9)%>" },
+        { y: "<%= (I18n.t 'date.abbr_day_names')[(@date - 1).strftime('%w').to_i] %>", a: "<%= DashboardController.get_fact(@date,-1)%>",  b: "<%= DashboardController.get_fact(@date,-8)%>" },
+        { y: "<%= (I18n.t 'date.abbr_day_names')[(@date).strftime('%w').to_i] %>", a: "<%= DashboardController.get_fact(@date,0)%>", b: "<%= DashboardController.get_fact(@date,-7)%>" }
+    ],
+    xkey: 'y',
+    ykeys: ['a', 'b'],
+    labels: ['Total esta semana','semana anterior'],
+    barColors: ['#23b7e5', '#2BAA7B'],
+    grid: true,
+    gridTextColor: '#777'
+});
+$('#total-ventas-precio').empty();
+totalVentas = Morris.Bar({
+    element: 'total-ventas-precio',
+    data: [
+        { y: "<%= (I18n.t 'date.abbr_day_names')[(@date - 6).strftime('%w').to_i]%>", a:"<%= DashboardController.get_ventas(@date,-6)%>" , b: "<%= DashboardController.get_ventas(@date,-13)%>" },
+        { y: "<%= (I18n.t 'date.abbr_day_names')[(@date - 5).strftime('%w').to_i]%>", a: "<%= DashboardController.get_ventas(@date,-5)%>",  b: "<%= DashboardController.get_ventas(@date,-12)%>" },
+        { y: "<%= (I18n.t 'date.abbr_day_names')[(@date - 4).strftime('%w').to_i]%>", a: "<%= DashboardController.get_ventas(@date,-4)%>",  b: "<%= DashboardController.get_ventas(@date,-11)%>" },
+        { y: "<%= (I18n.t 'date.abbr_day_names')[(@date - 3).strftime('%w').to_i] %>", a: "<%= DashboardController.get_ventas(@date,-3)%>",  b: "<%= DashboardController.get_ventas(@date,-10)%>" },
+        { y: "<%= (I18n.t 'date.abbr_day_names')[(@date - 2).strftime('%w').to_i] %>", a: "<%= DashboardController.get_ventas(@date,-2)%>",  b: "<%= DashboardController.get_ventas(@date,-9)%>" },
+        { y: "<%= (I18n.t 'date.abbr_day_names')[(@date - 1).strftime('%w').to_i] %>", a: "<%= DashboardController.get_ventas(@date,-1)%>",  b: "<%= DashboardController.get_ventas(@date,-8)%>" },
+        { y: "<%= (I18n.t 'date.abbr_day_names')[(@date).strftime('%w').to_i] %>", a: "<%= DashboardController.get_ventas(@date,0)%>", b: "<%= DashboardController.get_ventas(@date,-7)%>" }
+    ],
+    xkey: 'y',
+    ykeys: ['a', 'b'],
+    labels: ['Total esta semana','semana anterior'],
+    barColors: ['#23b7e5', '#2BAA7B'],
+    grid: true,
+    gridTextColor: '#777'
+});
+$('#total-ventas-cantidad').empty();
+totalVentasCantidad = Morris.Bar({
+    element: 'total-ventas-cantidad',
+    data: [
+        { y: "<%= (I18n.t 'date.abbr_day_names')[(@date - 6).strftime('%w').to_i]%>", a:"<%= DashboardController.get_ventas_cantidad(@date,-6)%>" , b: "<%= DashboardController.get_ventas_cantidad(@date,-13)%>" },
+        { y: "<%= (I18n.t 'date.abbr_day_names')[(@date - 5).strftime('%w').to_i]%>", a: "<%= DashboardController.get_ventas_cantidad(@date,-5)%>",  b: "<%= DashboardController.get_ventas_cantidad(@date,-12)%>" },
+        { y: "<%= (I18n.t 'date.abbr_day_names')[(@date - 4).strftime('%w').to_i]%>", a: "<%= DashboardController.get_ventas_cantidad(@date,-4)%>",  b: "<%= DashboardController.get_ventas_cantidad(@date,-11)%>" },
+        { y: "<%= (I18n.t 'date.abbr_day_names')[(@date - 3).strftime('%w').to_i] %>", a: "<%= DashboardController.get_ventas_cantidad(@date,-3)%>",  b: "<%= DashboardController.get_ventas_cantidad(@date,-10)%>" },
+        { y: "<%= (I18n.t 'date.abbr_day_names')[(@date - 2).strftime('%w').to_i] %>", a: "<%= DashboardController.get_ventas_cantidad(@date,-2)%>",  b: "<%= DashboardController.get_ventas_cantidad(@date,-9)%>" },
+        { y: "<%= (I18n.t 'date.abbr_day_names')[(@date - 1).strftime('%w').to_i] %>", a: "<%= DashboardController.get_ventas_cantidad(@date,-1)%>",  b: "<%= DashboardController.get_ventas_cantidad(@date,-8)%>" },
+        { y: "<%= (I18n.t 'date.abbr_day_names')[(@date).strftime('%w').to_i] %>", a: "<%= DashboardController.get_ventas_cantidad(@date,0)%>", b: "<%= DashboardController.get_ventas_cantidad(@date,-7)%>" }
+    ],
+    xkey: 'y',
+    ykeys: ['a', 'b'],
+    labels: ['Total esta semana','semana anterior'],
+    barColors: ['#23b7e5', '#2BAA7B'],
+    grid: true,
+    gridTextColor: '#777'
+});
+
+$('#trx-dia').hide().html( "<% DashboardController.get_trxs(@date,0).each do |transaction| %>"+
+        "<tr><td><%= transaction.monto %></td><td><%= transaction.grupo_o %></td><td><%= transaction.grupo_d %></td>"+
+"</tr><% end %>").fadeIn('slow');
+
+$('#totalSalesChart').fadeIn('slow');

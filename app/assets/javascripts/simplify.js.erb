@@ -79,6 +79,7 @@ $(function	()	{
 
 
     $('#transactions').click(function () {
+        $('.main-container').fadeOut( "slow" );
         $.ajax({
             type: "GET",
             url: "/transactions"
@@ -94,6 +95,7 @@ $(function	()	{
     });
 
     $('#invoices').click(function () {
+        $('.main-container').fadeOut( "slow" );
         $.ajax({
             type: "GET",
             url: "/facturas"
@@ -111,7 +113,7 @@ $(function	()	{
 
 
     $('#orders').click(function () {
-
+        $('.main-container').fadeOut( "slow" );
         $.ajax({
             type: "GET",
             url: "/orders"
@@ -128,6 +130,7 @@ $(function	()	{
     });
 
     $('#inicio').click(function () {
+        $('#panel').fadeOut( "slow" );
         $.ajax({
             type: "GET",
             url: "/panel"

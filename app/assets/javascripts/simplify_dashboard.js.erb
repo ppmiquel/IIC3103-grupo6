@@ -1,4 +1,7 @@
 var totalVisitChart;
+var factdiaria;
+var totalVentas;
+var totalVentasCantidad;
 $(function	()	{
 
   	//Flot Chart (Total Sales)
@@ -82,17 +85,16 @@ $(function	()	{
 	  gridTextColor: '#777'
 	});
 
-
-    totalVisitChart = Morris.Bar({
-        element: 'totalStock',
+    totalVentas = Morris.Bar({
+        element: 'total-ventas-precio',
         data: [
-            { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date - 6).strftime('%w').to_i]%>", a:"<%= DashboardController.get_stock_arroz(DashboardController.current_date,-6)%>" , b: "<%= DashboardController.get_stock_arroz(DashboardController.current_date,-13)%>" },
-            { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date - 5).strftime('%w').to_i]%>", a: "<%= DashboardController.get_stock_arroz(DashboardController.current_date,-5)%>",  b: "<%= DashboardController.get_stock_arroz(DashboardController.current_date,-12)%>" },
-            { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date - 4).strftime('%w').to_i]%>", a: "<%= DashboardController.get_stock_arroz(DashboardController.current_date,-4)%>",  b: "<%= DashboardController.get_stock_arroz(DashboardController.current_date,-11)%>" },
-            { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date - 3).strftime('%w').to_i] %>", a: "<%= DashboardController.get_stock_arroz(DashboardController.current_date,-3)%>",  b: "<%= DashboardController.get_stock_arroz(DashboardController.current_date,-10)%>" },
-            { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date - 2).strftime('%w').to_i] %>", a: "<%= DashboardController.get_stock_arroz(DashboardController.current_date,-2)%>",  b: "<%= DashboardController.get_stock_arroz(DashboardController.current_date,-9)%>" },
-            { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date - 1).strftime('%w').to_i] %>", a: "<%= DashboardController.get_stock_arroz(DashboardController.current_date,-1)%>",  b: "<%= DashboardController.get_stock_arroz(DashboardController.current_date,-8)%>" },
-            { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date).strftime('%w').to_i] %>", a: "<%= DashboardController.get_stock_arroz(DashboardController.current_date,0)%>", b: "<%= DashboardController.get_stock_arroz(DashboardController.current_date,-7)%>" }
+            { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date - 6).strftime('%w').to_i]%>", a:"<%= DashboardController.get_ventas(DashboardController.current_date,-6)%>" , b: "<%= DashboardController.get_ventas(DashboardController.current_date,-13)%>" },
+            { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date - 5).strftime('%w').to_i]%>", a: "<%= DashboardController.get_ventas(DashboardController.current_date,-5)%>",  b: "<%= DashboardController.get_ventas(DashboardController.current_date,-12)%>" },
+            { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date - 4).strftime('%w').to_i]%>", a: "<%= DashboardController.get_ventas(DashboardController.current_date,-4)%>",  b: "<%= DashboardController.get_ventas(DashboardController.current_date,-11)%>" },
+            { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date - 3).strftime('%w').to_i] %>", a: "<%= DashboardController.get_ventas(DashboardController.current_date,-3)%>",  b: "<%= DashboardController.get_ventas(DashboardController.current_date,-10)%>" },
+            { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date - 2).strftime('%w').to_i] %>", a: "<%= DashboardController.get_ventas(DashboardController.current_date,-2)%>",  b: "<%= DashboardController.get_ventas(DashboardController.current_date,-9)%>" },
+            { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date - 1).strftime('%w').to_i] %>", a: "<%= DashboardController.get_ventas(DashboardController.current_date,-1)%>",  b: "<%= DashboardController.get_ventas(DashboardController.current_date,-8)%>" },
+            { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date).strftime('%w').to_i] %>", a: "<%= DashboardController.get_ventas(DashboardController.current_date,0)%>", b: "<%= DashboardController.get_ventas(DashboardController.current_date,-7)%>" }
         ],
         xkey: 'y',
         ykeys: ['a', 'b'],
@@ -101,13 +103,52 @@ $(function	()	{
         grid: true,
         gridTextColor: '#777'
     });
-	
+    totalVentasCantidad = Morris.Bar({
+        element: 'total-ventas-cantidad',
+        data: [
+            { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date - 6).strftime('%w').to_i]%>", a:"<%= DashboardController.get_ventas_cantidad(DashboardController.current_date,-6)%>" , b: "<%= DashboardController.get_ventas_cantidad(DashboardController.current_date,-13)%>" },
+            { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date - 5).strftime('%w').to_i]%>", a: "<%= DashboardController.get_ventas_cantidad(DashboardController.current_date,-5)%>",  b: "<%= DashboardController.get_ventas_cantidad(DashboardController.current_date,-12)%>" },
+            { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date - 4).strftime('%w').to_i]%>", a: "<%= DashboardController.get_ventas_cantidad(DashboardController.current_date,-4)%>",  b: "<%= DashboardController.get_ventas_cantidad(DashboardController.current_date,-11)%>" },
+            { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date - 3).strftime('%w').to_i] %>", a: "<%= DashboardController.get_ventas_cantidad(DashboardController.current_date,-3)%>",  b: "<%= DashboardController.get_ventas_cantidad(DashboardController.current_date,-10)%>" },
+            { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date - 2).strftime('%w').to_i] %>", a: "<%= DashboardController.get_ventas_cantidad(DashboardController.current_date,-2)%>",  b: "<%= DashboardController.get_ventas_cantidad(DashboardController.current_date,-9)%>" },
+            { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date - 1).strftime('%w').to_i] %>", a: "<%= DashboardController.get_ventas_cantidad(DashboardController.current_date,-1)%>",  b: "<%= DashboardController.get_ventas_cantidad(DashboardController.current_date,-8)%>" },
+            { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date).strftime('%w').to_i] %>", a: "<%= DashboardController.get_ventas_cantidad(DashboardController.current_date,0)%>", b: "<%= DashboardController.get_ventas_cantidad(DashboardController.current_date,-7)%>" }
+        ],
+        xkey: 'y',
+        ykeys: ['a', 'b'],
+        labels: ['Total esta semana','semana anterior'],
+        barColors: ['#23b7e5', '#2BAA7B'],
+        grid: true,
+        gridTextColor: '#777'
+    });
+
+    factdiaria = Morris.Bar({
+        element: 'fact-diaria',
+        data: [
+            { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date - 6).strftime('%w').to_i]%>", a:"<%= DashboardController.get_fact(DashboardController.current_date,-6)%>" , b: "<%= DashboardController.get_fact(DashboardController.current_date,-13)%>" },
+            { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date - 5).strftime('%w').to_i]%>", a: "<%= DashboardController.get_fact(DashboardController.current_date,-5)%>",  b: "<%= DashboardController.get_fact(DashboardController.current_date,-12)%>" },
+            { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date - 4).strftime('%w').to_i]%>", a: "<%= DashboardController.get_fact(DashboardController.current_date,-4)%>",  b: "<%= DashboardController.get_fact(DashboardController.current_date,-11)%>" },
+            { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date - 3).strftime('%w').to_i] %>", a: "<%= DashboardController.get_fact(DashboardController.current_date,-3)%>",  b: "<%= DashboardController.get_fact(DashboardController.current_date,-10)%>" },
+            { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date - 2).strftime('%w').to_i] %>", a: "<%= DashboardController.get_fact(DashboardController.current_date,-2)%>",  b: "<%= DashboardController.get_fact(DashboardController.current_date,-9)%>" },
+            { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date - 1).strftime('%w').to_i] %>", a: "<%= DashboardController.get_fact(DashboardController.current_date,-1)%>",  b: "<%= DashboardController.get_fact(DashboardController.current_date,-8)%>" },
+            { y: "<%= (I18n.t 'date.abbr_day_names')[(DashboardController.current_date).strftime('%w').to_i] %>", a: "<%= DashboardController.get_fact(DashboardController.current_date,0)%>", b: "<%= DashboardController.get_fact(DashboardController.current_date,-7)%>" }
+        ],
+        xkey: 'y',
+        ykeys: ['a', 'b'],
+        labels: ['Total esta semana','semana anterior'],
+        barColors: ['#23b7e5', '#2BAA7B'],
+        grid: true,
+        gridTextColor: '#777'
+    });
+
+
+
 
 	//Datepicker
 	$('#calendar').DatePicker({
 		flat: true,
-		date: "<%= DashboardController.current_date %>",
-		current: "<%= DashboardController.current_date %>",
+		date: "<%= Date.today() %>",
+		current: "<%= Date.today() %>",
 		calendars: 1,
 		starts: 1
 	});
@@ -142,6 +183,18 @@ $(function	()	{
     var despachoWare = Morris.Donut({
         element: 'despacho',
         data: [ { label: 'Usado', value: despacho}, { label: 'Libre', value:free_despacho }] ,
+        colors: ['#e36159','#2BAA7B'],
+        formatter: function (y, data) { return y +'%' }
+    });
+    var bodegap1Ware = Morris.Donut({
+        element: 'bodegap1',
+        data: [ { label: 'Usado', value: bodegap1}, { label: 'Libre', value:free_bodegap1 }] ,
+        colors: ['#e36159','#2BAA7B'],
+        formatter: function (y, data) { return y +'%' }
+    });
+    var bodegap2Ware = Morris.Donut({
+        element: 'bodegap2',
+        data: [ { label: 'Usado', value: bodegap2}, { label: 'Libre', value:free_bodegap2 }] ,
         colors: ['#e36159','#2BAA7B'],
         formatter: function (y, data) { return y +'%' }
     });
