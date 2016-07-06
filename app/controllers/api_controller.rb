@@ -63,91 +63,83 @@ $ampq = 'amqp://ehtypuyg:FTCipJb52hxpiHxkaGIzJ6kVH_yJ1Qwc@jaguar.rmq.cloudamqp.c
 
 
 def hash
-	# total= 100
-	# idproveedor= $idGrupo
-	# cliente='lala'
-	# boleta= JSON.parse(HTTP.headers(:"Content-Type" => "application/json").put("http://"+$url+"/facturas/boleta", :json => {:proveedor => idproveedor,:cliente=>cliente,:total=> total}).to_s, :symbolize_names => true)
-	# idbol=boleta[:_id]
-	# cliente =boleta[:cliente]
+	# cantidad=100
+	# totalDespachados=0
+	# productos = getStock('13', $idDespacho)
+	# productos.each do |producto|
+	# 	if(totalDespachados < cantidad.to_i)
+	# 		ordendespachado = despacharStock(producto['_id'],"internacional",3858,"577bafc05ba56a030013f74d")
+	# 		totalDespachados += 1
+	# 		for i in 1..500000
+	# 			puts "despachados"+ totalDespachados.to_s
+	# 		end
+	# 	end
+	# end
+
+	ftps = Orden.where(sku:'13').order(:cantidad)
+	render :json => ftps
+
+	# conn = Bunny.new($ampq)
+	# conn.start
 	#
-	# proveedor = boleta[:proveedor]
-	# valor_bruto = boleta[:bruto]
-	# iva = boleta[:iva]
-	# total = boleta[:total]
-	# estado = boleta[:estado]
-	# created_at = boleta[:created_at]
-	# updated_at = boleta[:updated_at]
-	# oc = boleta[:oc]
+	# ch = conn.create_channel
+	# q = ch.queue('ofertas', :auto_delete => true, :exclusive => false, :durable => false)
 	#
-	# Boletum.create(created_at: created_at, updated_at: updated_at, cliente: cliente, proveedor: proveedor, bruto: valor_bruto, iva: iva, total: total, oc:oc,id_boleta:idbol,estado:estado)
+	# cantidad = q.message_count
+	# puts("Quedan: " + cantidad.to_s)
+	# while cantidad > 0
+	# 	promo = q.pop
+	# 	promocionJson = promo[2].to_s
+	# 	promocion = JSON.parse(promocionJson)
 	#
-	# render :json => boleta[:_id]
-	# ftps = Orden.all
+	# 	sku = promocion['sku']
+	# 	puts("El sku de la oferta es " + sku)
 	#
-	# # ftps = obtenerOC('575e325a9597ae0300849bb6')
-	# render :json => ftps
-
-	conn = Bunny.new($ampq)
-	conn.start
-
-	ch = conn.create_channel
-	q = ch.queue('ofertas', :auto_delete => true, :exclusive => false, :durable => false)
-
-	cantidad = q.message_count
-	puts("Quedan: " + cantidad.to_s)
-	while cantidad > 0
-		promo = q.pop
-		promocionJson = promo[2].to_s
-		promocion = JSON.parse(promocionJson)
-
-		sku = promocion['sku']
-		puts("El sku de la oferta es " + sku)
-
-		if(sku == '13' || sku == '17' || sku == '25' || sku == '53' )
-			precio = promocion['precio']
-			inicio = promocion['inicio']
-			fin = promocion['fin']
-			codigo = promocion['codigo']
-			publicar = promocion['publicar']
-			puts ("sku: " + sku)
-			puts (" precio: " + precio.to_s)
-			puts (" inicio: " + inicio.to_s)
-			puts (" fin: " + fin.to_s)
-			puts (" codigo: " + codigo)
-			Oferta.create(sku: sku, precio:precio, inicio: inicio, fin: fin, codigo: codigo)
-			if publicar
-				nombre = ""
-				imagen = ""
-				case sku
-				when "13"
-					nombre= "Arroz "
-					imagen= "http://integra6.ing.puc.cl/spree/products/1/product/arroz.jpg"
-				when "17"
-					nombre="Cereal de Arroz"
-					imagen = "http://integra6.ing.puc.cl/spree/products/3/product/cereal.jpg"
-				when "25"
-					nombre="Azucar "
-					imagen = "http://integra6.ing.puc.cl/spree/products/2/product/azucar.jpg"
-				else
-					nombre="Pan Integral "
-					imagen = "http://integra6.ing.puc.cl/spree/products/4/product/pan.jpg"
-				end
-				start = Time.strptime(inicio.to_s, '%Q').strftime("%Y-%m-%d %H:%M:%S")
-				ending = Time.strptime(fin.to_s, '%Q').strftime("%Y-%m-%d %H:%M:%S")
-				mensaje= " "+nombre+ "a solo $" + precio.to_s + " desde: " + start.to_s + " hasta: " + ending.to_s + "\nCódigo: " +codigo
-				publica mensaje , imagen
-			end
-
-
-		 end
-		cantidad = q.message_count
-		puts ("cantidad: " + cantidad.to_s)
-	end
-	ch.close
-	conn.stop
-
-	response = { :validado => true}
-	render :json =>response
+	# 	if(sku == '13' || sku == '17' || sku == '25' || sku == '53' )
+	# 		precio = promocion['precio']
+	# 		inicio = promocion['inicio']
+	# 		fin = promocion['fin']
+	# 		codigo = promocion['codigo']
+	# 		publicar = promocion['publicar']
+	# 		puts ("sku: " + sku)
+	# 		puts (" precio: " + precio.to_s)
+	# 		puts (" inicio: " + inicio.to_s)
+	# 		puts (" fin: " + fin.to_s)
+	# 		puts (" codigo: " + codigo)
+	# 		Oferta.create(sku: sku, precio:precio, inicio: inicio, fin: fin, codigo: codigo)
+	# 		if publicar
+	# 			nombre = ""
+	# 			imagen = ""
+	# 			case sku
+	# 			when "13"
+	# 				nombre= "Arroz "
+	# 				imagen= "http://integra6.ing.puc.cl/spree/products/1/product/arroz.jpg"
+	# 			when "17"
+	# 				nombre="Cereal de Arroz"
+	# 				imagen = "http://integra6.ing.puc.cl/spree/products/3/product/cereal.jpg"
+	# 			when "25"
+	# 				nombre="Azucar "
+	# 				imagen = "http://integra6.ing.puc.cl/spree/products/2/product/azucar.jpg"
+	# 			else
+	# 				nombre="Pan Integral "
+	# 				imagen = "http://integra6.ing.puc.cl/spree/products/4/product/pan.jpg"
+	# 			end
+	# 			start = Time.strptime(inicio.to_s, '%Q').strftime("%Y-%m-%d %H:%M:%S")
+	# 			ending = Time.strptime(fin.to_s, '%Q').strftime("%Y-%m-%d %H:%M:%S")
+	# 			mensaje= " "+nombre+ "a solo $" + precio.to_s + " desde: " + start.to_s + " hasta: " + ending.to_s + "\nCódigo: " +codigo
+	# 			publica mensaje , imagen
+	# 		end
+	#
+	#
+	# 	 end
+	# 	cantidad = q.message_count
+	# 	puts ("cantidad: " + cantidad.to_s)
+	# end
+	# ch.close
+	# conn.stop
+	#
+	# response = { :validado => true}
+	# render :json =>response
 
 end
 
@@ -175,7 +167,6 @@ def vars
 	response =  {:url => $url, :idGrupo => $idGrupo, :idBanco => $idBanco, :heroku_url => $heroku_url}
 	render :json => response
 end
-
 
 
 
@@ -238,17 +229,30 @@ def getStocks(id)
 end
 def leerFtp
 	leer_sftp()
-	response = { :validado => true}
+	response = Orden.where(estado: 'leido')
 	render :json =>response
 end
 
 def procesarFtp()
-	ftps = Orden.where(estado: 'leida')
-	ftps.each do |ftp|
-		if (ftp.cantidad<100)
-			despacharPedido(ftp.idoc, ftp.sku, ftp.cantidad, ftp.precio)
+	while(true)
+		ftps = Orden.where(idoc:['577bafc05ba56a030013f74d', '5773aa6eb96abe0300ee6998', '5779370ccd3916030067b9b6', '5770429bcd2073030060a686', '57788e1170a6ba0300ab21ab']).order(:cantidad)
+		ftps.each do |ftp|
+			orden = obtenerOC(ftp.idoc)
+			puts  orden[0][:cantidad].to_s
+			cantidad = orden[0][:cantidad] - orden[0][:cantidadDespachada]
+			puts cantidad.to_s
+			if ((cantidad>0)&&(cantidad<500))
+				if(cantidad>100)
+					despacharPedido(ftp.idoc, ftp.sku, 100, ftp.precio)
+				else
+					despacharPedido(ftp.idoc, ftp.sku, cantidad, ftp.precio)
 					ftp.estado = 'despachado'
 					ftp.save
+				end
+			else
+				ftp.estado = 'despachado'
+				ftp.save
+			end
 		end
 	end
 	render :json =>ftps
